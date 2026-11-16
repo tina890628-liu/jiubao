@@ -1,0 +1,1041 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Jiu Bao 英文樂園</title><style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:#fff8e8;font-family:sans-serif;color:#222;overflow-x:hidden}
+#top{position:fixed;top:0;left:0;right:0;height:64px;background:#ff9f1c;color:#fff;display:flex;align-items:center;padding:0 10px;z-index:5;gap:10px}
+#top .t{font-size:26px;font-weight:bold;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#top button{font-size:26px;background:#fff3;color:#fff;border:0;border-radius:12px;padding:6px 16px}
+#stars{font-size:24px;font-weight:bold}
+#main{padding:78px 12px 24px;max-width:900px;margin:0 auto}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.big{font-size:28px;font-weight:bold;border:0;border-radius:20px;padding:22px 10px;color:#fff;box-shadow:0 5px 0 #0003;min-height:110px}
+.big small{display:block;font-size:18px;font-weight:normal;margin-top:6px;opacity:.95}
+.c1{background:#ef476f}.c2{background:#06a77d}.c3{background:#118ab2}.c4{background:#8d6fd1}.c5{background:#f78c1f}.c6{background:#2b9348}
+.lv{display:flex;gap:10px;margin:6px 0 16px}
+.lv button{flex:1;font-size:24px;padding:14px 4px;border-radius:16px;border:3px solid #ff9f1c;background:#fff;color:#c66a00;font-weight:bold}
+.lv button.on{background:#ff9f1c;color:#fff}
+.card{background:#fff;border-radius:24px;box-shadow:0 5px 0 #0002;padding:20px;text-align:center;margin:10px 0}
+.pic{font-size:120px;line-height:1.1;min-height:130px}
+.dot{display:inline-block;width:110px;height:110px;border-radius:55px;border:4px solid #0002}
+.numpic{font-size:110px;font-weight:bold;color:#118ab2}
+.en{font-size:46px;font-weight:bold;color:#c1121f;margin:8px 0;word-break:break-word}
+.en.sm{font-size:32px}
+.zh{font-size:32px;color:#444}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:10px 0}
+.btn{font-size:26px;font-weight:bold;border:0;border-radius:16px;padding:16px 22px;background:#118ab2;color:#fff;box-shadow:0 4px 0 #0003}
+.btn.g{background:#06a77d}.btn.r{background:#ef476f}.btn.o{background:#f78c1f}.btn.gray{background:#999}
+.opt{display:block;width:100%;font-size:30px;font-weight:bold;border:4px solid #118ab2;background:#fff;color:#0b5c7a;border-radius:18px;padding:18px 10px;margin:10px 0;min-height:84px}
+.opt.ok{background:#06a77d;border-color:#06a77d;color:#fff}.opt.bad{background:#ef476f;border-color:#ef476f;color:#fff}
+.opt .p{font-size:70px;display:block;line-height:1.1}
+.opts2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.chip{font-size:22px;padding:10px 16px;border-radius:20px;border:2px solid #118ab2;background:#fff;color:#118ab2}
+.chip.on{background:#118ab2;color:#fff}
+.msg{font-size:26px;text-align:center;color:#555;margin:14px 0;min-height:36px}
+.bub{max-width:88%;padding:14px 18px;border-radius:22px;margin:10px 0;font-size:28px;line-height:1.35}
+.bub.b{background:#fff;border:3px solid #118ab2;margin-right:auto}
+.bub.u{background:#06a77d;color:#fff;margin-left:auto}
+.bub small{display:block;font-size:20px;opacity:.75;margin-top:6px}
+.score{font-size:80px;font-weight:bold;text-align:center}
+.w-ok{color:#06a77d;font-weight:bold}.w-bad{color:#ef476f;font-weight:bold;text-decoration:underline}
+.prog{height:16px;background:#eee;border-radius:8px;overflow:hidden;margin:8px 0}.prog i{display:block;height:100%;background:#06a77d}
+.toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%);background:#000c;color:#fff;font-size:24px;padding:14px 24px;border-radius:16px;z-index:9;max-width:90%;text-align:center}
+textarea,input[type=text]{font-size:26px;padding:12px;width:100%;border-radius:12px;border:3px solid #118ab2}
+.w-wait{color:#999}
+.micdot{display:inline-block;transition:transform .1s}
+.callcard{background:#fff;border:3px solid #ef476f;border-radius:24px;padding:16px;text-align:center;margin:10px 0}
+.micbig{display:inline-block;font-size:64px;width:110px;height:110px;line-height:110px;border-radius:55px;background:#ddd;transition:transform .1s}
+.micbig.listen{background:#ef476f}.micbig.talk{background:#06a77d}.micbig.think{background:#f78c1f}
+.callst{font-size:28px;font-weight:bold;margin-top:8px}
+.callpart{font-size:26px;color:#118ab2;min-height:34px;margin-top:6px}
+.bub small.fx{color:#06a77d;font-weight:bold;opacity:1}
+.c7{background:#7b5ea7}.c8{background:#2a9d8f}.c9{background:#e07a5f}.c10{background:#3d5a80}.c11{background:#d62839}
+.big small{display:block;font-size:17px;font-weight:normal;opacity:.9;margin-top:4px}
+.srow{display:flex;align-items:center;gap:12px;background:#fff;border-radius:16px;padding:10px 14px;margin:8px 0;box-shadow:0 2px 0 #0002}
+.hear{font-size:30px;border:0;background:#ff9f1c;color:#fff;border-radius:14px;width:60px;height:60px;flex:none}
+.stext{flex:1;min-width:0}.se{font-size:28px;font-weight:bold}.sz{font-size:21px;color:#666}
+.btn.sm{font-size:26px;padding:10px 16px;flex:none}
+.gt{font-size:24px;font-weight:bold;color:#3d5a80;margin:14px 4px 4px}
+.ipagrid{display:flex;flex-wrap:wrap;gap:10px}
+.ipab{font-size:36px;min-width:84px;height:76px;border:0;border-radius:16px;background:#7b5ea7;color:#fff;font-family:serif;box-shadow:0 4px 0 #0003}
+.ipabig{font-size:96px;font-family:serif;color:#7b5ea7;font-weight:bold}
+.rs{padding:8px 6px;border-bottom:1px dashed #ddd;font-size:26px}
+.rs.hi{background:#fff3c4}
+.zhhide{color:transparent;background:#eee;border-radius:8px;min-height:30px}.zhhide.show{color:#666;background:none}
+.opt:disabled{opacity:1}
+</style></head><body>
+<div id="top"><button id="back" style="display:none">◀</button><div class="t" id="title">Jiu Bao 英文樂園</div><div id="stars">⭐ 0</div></div>
+<div id="main"></div>
+<script>// ===== 內容(原創,免費,內建在 App 裡) =====
+function parseList(s){var r=[];s.split('\n').forEach(function(l){l=l.trim();if(l)r.push(l.split('|'));});return r;}
+var W1RAW={
+'動物':'dog|狗|🐶\ncat|貓|🐱\nbird|鳥|🐦\nfish|魚|🐟\nrabbit|兔子|🐰\nelephant|大象|🐘\nmonkey|猴子|🐵\npig|豬|🐷\ncow|牛|🐮\nhorse|馬|🐴\nbear|熊|🐻\ntiger|老虎|🐯\nfrog|青蛙|🐸\nmouse|老鼠|🐭\nsheep|綿羊|🐑\nchicken|雞|🐔\nturtle|烏龜|🐢\nsnake|蛇|🐍\nbee|蜜蜂|🐝\nwhale|鯨魚|🐳\nduck|鴨子\ngoat|山羊\nlion|獅子\ngiraffe|長頸鹿\nzebra|斑馬\npanda|熊貓\nkoala|無尾熊\nkangaroo|袋鼠\nwolf|狼\nfox|狐狸\ndeer|鹿\nsquirrel|松鼠\nhippo|河馬\ncrocodile|鱷魚\ndolphin|海豚\nshark|鯊魚\noctopus|章魚\ncrab|螃蟹\nbutterfly|蝴蝶\nant|螞蟻\nspider|蜘蛛\nladybug|瓢蟲\ndragonfly|蜻蜓\nowl|貓頭鷹\neagle|老鷹\nparrot|鸚鵡\npenguin|企鵝\nswan|天鵝\npigeon|鴿子\ncamel|駱駝\ndonkey|驢子\npuppy|小狗\nkitten|小貓\nlamb|小羊\nseal|海豹\nbat|蝙蝠\nworm|蟲\nsnail|蝸牛\ngoose|鵝\nrooster|公雞',
+'水果蔬菜':'apple|蘋果|🍎\nbanana|香蕉|🍌\norange|橘子|🍊\ngrape|葡萄|🍇\nstrawberry|草莓|🍓\nwatermelon|西瓜|🍉\npineapple|鳳梨|🍍\npeach|桃子|🍑\nlemon|檸檬|🍋\ncherry|櫻桃|🍒\npear|梨子|🍐\nmango|芒果\nmelon|甜瓜\nplum|李子\nkiwi|奇異果\ncoconut|椰子\npapaya|木瓜\nguava|芭樂\nlychee|荔枝\ntomato|番茄|🍅\npotato|馬鈴薯|🍠\ncarrot|紅蘿蔔\ncorn|玉米|🌽\nonion|洋蔥\ncabbage|高麗菜\nlettuce|萵苣\ncucumber|小黃瓜\npumpkin|南瓜\nbroccoli|花椰菜\nspinach|菠菜\npepper|胡椒\ngarlic|大蒜\nmushroom|香菇\nbean|豆子\npea|豌豆\neggplant|茄子\nradish|蘿蔔\ncelery|芹菜\nginger|薑\nvegetable|蔬菜\nfruit|水果\nberry|莓果\nseed|種子',
+'食物飲料':'bread|麵包|🍞\nrice|米飯|🍚\ncake|蛋糕|🍰\npizza|披薩|🍕\nhamburger|漢堡|🍔\ncookie|餅乾|🍪\nice cream|冰淇淋|🍦\negg|蛋|🍳\nmilk|牛奶\nwater|水\njuice|果汁\ntea|茶\ncoffee|咖啡\nsoup|湯\nnoodle|麵條|🍜\nmeat|肉\nbeef|牛肉\npork|豬肉\nchicken meat|雞肉\nfish meat|魚肉\nsandwich|三明治\ncandy|糖果|🍬\nchocolate|巧克力|🍫\ncheese|起司\nbutter|奶油\njam|果醬\nhoney|蜂蜜\nsugar|糖\nsalt|鹽\noil|油\nsauce|醬汁\nsalad|沙拉\npie|派\npancake|鬆餅\ndonut|甜甜圈|🍩\npopcorn|爆米花\nchips|洋芋片\nfrench fries|薯條\nhot dog|熱狗\nsausage|香腸\ntoast|吐司\ncereal|穀片\nyogurt|優格\npudding|布丁\nsnack|點心\nbreakfast|早餐\nlunch|午餐\ndinner|晚餐\nmeal|餐點\nfood|食物\ndrink|飲料\nsoda|汽水\nlemonade|檸檬汁\ndumpling|水餃\nfried rice|炒飯\nsteak|牛排\nbacon|培根\nflour|麵粉\nsweet|甜點',
+'身體':'head|頭\nface|臉\nhair|頭髮\neye|眼睛|👀\near|耳朵|👂\nnose|鼻子|👃\nmouth|嘴巴|👄\ntooth|牙齒|🦷\nteeth|牙齒(複數)\ntongue|舌頭\nlip|嘴唇\ncheek|臉頰\nchin|下巴\nneck|脖子\nshoulder|肩膀\narm|手臂\nelbow|手肘\nhand|手|✋\nfinger|手指\nthumb|大拇指\nnail|指甲\nchest|胸口\nback|背\nstomach|肚子\nbelly|肚皮\nleg|腿\nknee|膝蓋\nfoot|腳\nfeet|雙腳\ntoe|腳趾\nheel|腳跟\nskin|皮膚\nbone|骨頭\nheart|心臟\nbrain|大腦\nblood|血\nbody|身體\nbeard|鬍子\neyebrow|眉毛\neyelash|睫毛\nforehead|額頭\nwrist|手腕\nankle|腳踝\nhip|臀部\nwaist|腰',
+'家人人物':'mom|媽媽|👩\ndad|爸爸|👨\nbaby|寶寶|👶\nboy|男孩|👦\ngirl|女孩|👧\nmother|母親\nfather|父親\ngrandma|奶奶外婆\ngrandpa|爺爺外公\naunt|阿姨姑姑\nuncle|叔叔舅舅\ncousin|表兄弟姊妹\nson|兒子\ndaughter|女兒\nparents|父母\nfamily|家庭\nfriend|朋友\nman|男人\nwoman|女人\nchild|小孩\nchildren|孩子們\npeople|人們\nperson|人\nteacher|老師\nstudent|學生\nclassmate|同學\nneighbor|鄰居\nbaby sister|妹妹\nbaby brother|弟弟\ntwin|雙胞胎\nking|國王\nqueen|女王\nprince|王子\nprincess|公主\ndoctor|醫生\nnurse|護士\npolice|警察\nfarmer|農夫\ncook|廚師\ndriver|司機\npilot|飛行員\nsinger|歌手\ndancer|舞者\nartist|藝術家\nfireman|消防員\nsoldier|士兵\nbaker|麵包師傅\nclown|小丑\npirate|海盜\nmonster|怪物\nghost|鬼\nangel|天使\nrobot|機器人|🤖',
+'衣服':'shirt|襯衫\nT-shirt|T恤\ndress|洋裝|👗\nskirt|裙子\npants|褲子\njeans|牛仔褲\nshorts|短褲\ncoat|外套\njacket|夾克\nsweater|毛衣\nhat|帽子|🎩\ncap|鴨舌帽\nshoe|鞋子|👟\nshoes|鞋子們\nboot|靴子|👢\nsock|襪子\nsocks|襪子們\nglove|手套\nscarf|圍巾\nbelt|皮帶\ntie|領帶\npocket|口袋\nbutton|鈕扣\nzipper|拉鍊\nuniform|制服\npajamas|睡衣\nraincoat|雨衣\numbrella|雨傘|☂\nglasses|眼鏡|👓\nbag|包包|👜\nbackpack|背包|🎒\nwallet|錢包\nwatch|手錶|⌚\nring|戒指|💍\nnecklace|項鍊\ncrown|皇冠|👑\nmask|口罩\ncostume|服裝\nclothes|衣服\nswimsuit|泳衣\nslipper|拖鞋\nsandal|涼鞋\napron|圍裙',
+'家裡':'house|房子|🏠\nhome|家\nroom|房間\ndoor|門|🚪\nwindow|窗戶\nwall|牆\nfloor|地板\nroof|屋頂\nstairs|樓梯\nkitchen|廚房\nbedroom|臥室\nbathroom|浴室\nliving room|客廳\ngarden|花園\nyard|院子\ngarage|車庫\nbalcony|陽台\nbed|床|🛏\nchair|椅子\ntable|桌子\ndesk|書桌\nsofa|沙發\nlamp|檯燈\nlight|燈\nclock|時鐘\nmirror|鏡子\npicture|圖畫\ncarpet|地毯\ncurtain|窗簾\nshelf|架子\ndrawer|抽屜\ncloset|衣櫃\nbox|箱子\nkey|鑰匙|🔑\nlock|鎖\nfan|電風扇\nTV|電視|📺\nradio|收音機|📻\nphone|電話|📞\ncomputer|電腦|💻\nfridge|冰箱\noven|烤箱\nstove|爐子\nsink|水槽\ntoilet|馬桶\nshower|淋浴\nbathtub|浴缸\ntowel|毛巾\nsoap|肥皂\ntoothbrush|牙刷\ntoothpaste|牙膏\ncomb|梳子\nbrush|刷子\nbroom|掃把\nbucket|水桶\ntrash can|垃圾桶\ncup|杯子\nglass|玻璃杯\nbowl|碗\nplate|盤子\nspoon|湯匙\nfork|叉子\nknife|刀子\nchopsticks|筷子\nbottle|瓶子\npot|鍋子\npan|平底鍋\nkettle|水壺\ntray|托盤\ncandle|蠟燭\npillow|枕頭\nblanket|毯子\nsheet|床單\ntoy|玩具',
+'學校文具':'school|學校|🏫\nclassroom|教室\ndesk chair|課桌椅\nblackboard|黑板\nwhiteboard|白板\nchalk|粉筆\npencil|鉛筆|✏\npen|原子筆|🖊\neraser|橡皮擦\nruler|尺\nscissors|剪刀|✂\nglue|膠水\npaper|紙\nnotebook|筆記本|📓\nbook|書|📖\ntextbook|課本\ndictionary|字典\nbookbag|書包\ncrayon|蠟筆\nmarker|馬克筆\npaint|顏料\npaintbrush|畫筆\ncolor|顏色\nmap|地圖\nglobe|地球儀\ncalendar|日曆\npage|頁\nletter|字母\nword|單字\nsentence|句子\nstory|故事\nsong|歌曲\npoem|詩\nhomework|作業\ntest|測驗\nexam|考試\nlesson|課程\nclass|班級\nlibrary|圖書館|📚\nplayground|操場\ngym|體育館\nhall|走廊\nbell|鈴聲|🔔\nlunch box|便當盒\nquestion|問題\nanswer|答案\nidea|想法\nname|名字\nnumber|號碼\npicture book|繪本\ncartoon|卡通\ngame|遊戲\nquiz|小考\ngrade|成績\nscore|分數\nprize|獎品\nmedal|獎牌\nstar|星星|⭐\nsticker|貼紙\nbadge|徽章\ncard|卡片\nenvelope|信封\nstamp|郵票\ntape|膠帶\nclip|迴紋針\nfolder|資料夾\nbackpack strap|背帶\npencil case|鉛筆盒\nsharpener|削鉛筆機\ncalculator|計算機',
+'玩具遊戲':'ball|球|⚽\ndoll|娃娃\nteddy bear|泰迪熊\nblock|積木\npuzzle|拼圖\nkite|風箏|🎏\nballoon|氣球|🎈\ndrum|鼓|🥁\nguitar|吉他|🎸\npiano|鋼琴|🎹\nviolin|小提琴|🎻\ntrumpet|小喇叭|🎺\nflute|長笛\nmusic|音樂|🎵\nvideo game|電玩\ntoy car|玩具車\ntoy train|玩具火車\nrobot toy|機器人玩具\nswing|盪鞦韆\nslide|溜滑梯\nseesaw|蹺蹺板\nsandbox|沙坑\nbicycle|腳踏車|🚲\nscooter|滑板車\nskateboard|滑板\njump rope|跳繩\nhula hoop|呼拉圈\nmarble|彈珠\ndice|骰子|🎲\ncards|撲克牌\nchess|西洋棋\ncheckers|跳棋\nbingo|賓果\nhide and seek|捉迷藏\ntag|鬼抓人\nparty|派對|🎉\ngift|禮物|🎁\npresent|禮物\nbirthday|生日|🎂\nholiday|假日\npicnic|野餐\ncamp|露營\ntent|帳篷|⛺\nmagic|魔術\ncircus|馬戲團\nzoo|動物園\npark|公園\nfun|樂趣\nteam|隊伍\nplayer|球員\nwinner|贏家\nfairy|仙女\ndragon|龍|🐲\nunicorn|獨角獸\ntreasure|寶藏\ncastle|城堡|🏰\nadventure|冒險',
+'顏色形狀':'red|紅色|#e53935\nblue|藍色|#1e88e5\nyellow|黃色|#fdd835\ngreen|綠色|#43a047\npurple|紫色|#8e24aa\nblack|黑色|#212121\nwhite|白色|#ffffff\npink|粉紅色|#ec407a\nbrown|棕色|#6d4c41\ngray|灰色|#9e9e9e\norange color|橘色|#fb8c00\ngold|金色|#ffd700\nsilver|銀色|#c0c0c0\ndark|深色\nlight color|淺色\ncolorful|彩色的\nrainbow|彩虹|🌈\ncircle|圓形|⚪\nsquare|正方形|⬛\ntriangle|三角形|🔺\nrectangle|長方形\nstar shape|星形\ndiamond|菱形\noval|橢圓形\nline|線\ndot|點\nshape|形狀\nbig|大的\nsmall|小的\nround|圓的\nflat|扁平的\nstraight|直的\ncurve|曲線\nside|邊\ncorner|角落\ntop|頂部\nbottom|底部\nmiddle|中間\ncenter|中心\nleft|左邊\nright|右邊\nfront|前面\nback side|後面\ninside|裡面\noutside|外面\nup|上\ndown|下',
+'數字':'zero|零\none|一|1\ntwo|二|2\nthree|三|3\nfour|四|4\nfive|五|5\nsix|六|6\nseven|七|7\neight|八|8\nnine|九|9\nten|十|10\neleven|十一\ntwelve|十二\nthirteen|十三\nfourteen|十四\nfifteen|十五\nsixteen|十六\nseventeen|十七\neighteen|十八\nnineteen|十九\ntwenty|二十\nthirty|三十\nforty|四十\nfifty|五十\nsixty|六十\nseventy|七十\neighty|八十\nninety|九十\nhundred|一百\nthousand|一千\nmillion|一百萬\nfirst|第一\nsecond|第二\nthird|第三\nfourth|第四\nfifth|第五\nsixth|第六\nseventh|第七\neighth|第八\nninth|第九\ntenth|第十\nhalf|一半\ndouble|兩倍\npair|一對\ndozen|一打\nmany|很多\nfew|很少\nsome|一些\nall|全部\nnone|沒有\nmore|更多\nless|更少\nplus|加\nminus|減\ncount|數數\nadd|加起來\nzero point|零點',
+'時間日期':'time|時間\nminute|分鐘\nhour|小時\nday|天\nweek|週\nmonth|月\nyear|年\nmorning|早上\nnoon|中午\nafternoon|下午\nevening|傍晚\nnight|晚上\nmidnight|午夜\ntoday|今天\ntomorrow|明天\nyesterday|昨天\nnow|現在\nlater|稍後\nsoon|很快\nearly|早的\nlate|晚的\nalways|總是\nnever|從不\nsometimes|有時候\noften|經常\nagain|再一次\nbefore|之前\nafter|之後\nMonday|星期一\nTuesday|星期二\nWednesday|星期三\nThursday|星期四\nFriday|星期五\nSaturday|星期六\nSunday|星期日\nweekend|週末\nJanuary|一月\nFebruary|二月\nMarch|三月\nApril|四月\nMay|五月\nJune|六月\nJuly|七月\nAugust|八月\nSeptember|九月\nOctober|十月\nNovember|十一月\nDecember|十二月\nspring|春天\nsummer|夏天\nautumn|秋天\nwinter|冬天\nseason|季節\nbirthday date|生日日期\nclock face|鐘面\nalarm|鬧鐘\ncalendar page|日曆頁',
+'天氣自然':'sun|太陽|☀\nmoon|月亮|🌙\nstar shine|星光\nsky|天空\ncloud|雲|☁\nrain|雨|🌧\nsnow|雪|❄\nwind|風\nstorm|暴風雨\nthunder|雷\nlightning|閃電|⚡\nfog|霧\nice|冰\nhot weather|炎熱\ncold weather|寒冷\nsunny|晴朗的\ncloudy|多雲的\nrainy|下雨的\nwindy|有風的\nsnowy|下雪的\nweather|天氣\nrainbow sky|彩虹天空\ntree|樹|🌳\nflower|花|🌸\ngrass|草\nleaf|葉子|🍃\nbranch|樹枝\nroot|根\nforest|森林\njungle|叢林\nmountain|山|⛰\nhill|小山\nriver|河流\nlake|湖\nsea|海洋|🌊\nocean|大洋\nbeach|海灘|🏖\nisland|島嶼|🏝\npond|池塘\nwaterfall|瀑布\ncave|山洞\ndesert|沙漠\nfield|田野\nfarm|農場\nrock|岩石\nstone|石頭\nsand|沙子\nmud|泥巴\ndirt|泥土\nearth|地球|🌍\nworld|世界\nair|空氣\nfire|火|🔥\nwater drop|水滴|💧\nsmoke|煙\nwave|海浪\nbridge|橋|🌉\nroad|道路\npath|小路\ngarden flower|花園花朵\nbush|灌木\nplant|植物\nseed grow|發芽\nnature|大自然\nplanet|行星\nspace|太空\nrocket|火箭|🚀\nsun light|陽光',
+'地點交通':'city|城市\ntown|小鎮\nvillage|村莊\nstreet|街道\nshop|商店\nstore|商店\nmarket|市場\nsupermarket|超市\nbakery|麵包店\nrestaurant|餐廳\ncafe|咖啡店\nhospital|醫院\nclinic|診所\nbank|銀行\npost office|郵局\npolice station|警察局\nfire station|消防局\nschool bus|校車\nchurch|教堂|⛪\ntemple|廟\nmuseum|博物館\ncinema|電影院\ntheater|劇院\nstadium|體育場\nairport|機場\nstation|車站\nbus stop|公車站\nparking lot|停車場\ntraffic light|紅綠燈|🚦\ncrosswalk|斑馬線\ncorner shop|轉角商店\ntoy store|玩具店\nbookstore|書店\npharmacy|藥局\nhotel|旅館\noffice|辦公室\nfactory|工廠\nbuilding|大樓\ntower|塔\ncar|汽車|🚗\nbus|公車|🚌\ntrain|火車|🚆\nairplane|飛機|✈\nbike|腳踏車|🚲\nboat|船|⛵\nship|大船|🚢\ntaxi|計程車|🚕\ntruck|卡車|🚚\nmotorcycle|機車|🏍\nhelicopter|直升機|🚁\nsubway|地鐵|🚇\nambulance|救護車|🚑\nfire truck|消防車|🚒\npolice car|警車|🚓\ntractor|拖拉機|🚜\ntram|電車\nticket|車票\nroad sign|路標\nseat belt|安全帶\nwheel|輪子\nengine|引擎\ndriver seat|駕駛座',
+'動作':'eat|吃\nsleep|睡覺\nwake up|醒來\nrun|跑\nwalk|走路\njump|跳\nhop|單腳跳\nclimb|爬\nswim|游泳\nfly|飛\ndance|跳舞\nsing|唱歌\nplay|玩\nread|閱讀\nwrite|寫\ndraw|畫畫\ncut|剪\nbuild|建造\nmake|做\nbake|烘焙\nwash|洗\nclean|打掃\nwear|穿\nput on|穿上\ntake off|脫掉\nopen|打開\nclose|關上\npush|推\npull|拉\ncarry|搬\nthrow|丟\ncatch|接住\nkick|踢\nhit|打\nhold|握住\ngive|給\ntake|拿\nbring|帶來\nget|得到\nput|放\npick|挑\npick up|撿起\ndrop|掉下\nfind|找到\nlook|看\nsee|看見\nlisten|聽\nhear|聽見\ntalk|說話\nspeak|說\nsay|說\ntell|告訴\nask|問\ncall|打電話\nshout|大喊\nlaugh|笑\nsmile|微笑\ncry|哭\nsit|坐\nstand|站\nlie down|躺下\nturn|轉\nstop|停\ngo|去\ncome|來\nleave|離開\narrive|到達\nenter|進入\nfollow|跟隨\nwait|等待\nhurry|趕快\nrest|休息\nwork|工作\nstudy|學習\nlearn|學會\nteach|教\nknow|知道\nthink|想\nremember|記得\nforget|忘記\nunderstand|了解\nlike|喜歡\nlove|愛\nwant|想要\nneed|需要\nhave|有\nhelp|幫助\nshare|分享\nbuy|買\nsell|賣\npay|付錢\nuse|使用\ntry|嘗試\nvisit|拜訪\ntravel|旅行\nsweep|掃\nmix|混合\npour|倒\nfill|裝滿\nchoose|選擇\nwin|贏\nlose|輸\nstart|開始\nfinish|完成\nhug|擁抱\nkiss|親\nclap|拍手\nbounce|彈跳\nroll|滾\nspin|旋轉\nfold|摺\nbreak|弄壞\nfix|修理\nfeed|餵\npet|撫摸\nhide|躲藏\nseek|尋找\npoint|指\ntouch|摸\nsmell|聞\ntaste|嚐\nbreathe|呼吸\nblow|吹\nkick ball|踢球\nride|騎\ndrive|開車\nsail|航行',
+'形容詞副詞':'little|小小的\nlong|長的\nshort|短的\ntall|高的\nhigh|高的(位置)\nlow|低的\nfat|胖的\nthin|瘦的\nheavy|重的\nlight weight|輕的\nfast|快的\nslow|慢的\nhot|熱的\ncold|冷的\nwarm|溫暖的\ncool|涼爽的\nwet|濕的\ndry|乾的\ndirty|髒的\nnew|新的\nold|舊的\nyoung|年輕的\ngood|好的\nbad|壞的\nnice|好心的\nkind|親切的\nhappy|快樂的\nsad|難過的\nangry|生氣的\ntired|累的\nhungry|餓的\nthirsty|渴的\nsleepy|想睡的\nsick|生病的\nhealthy|健康的\nstrong|強壯的\nweak|虛弱的\nbrave|勇敢的\nshy|害羞的\nfunny|好笑的\nsilly|傻氣的\nsmart|聰明的\nclever|機靈的\ncareful|小心的\nquiet|安靜的\nloud|大聲的\nnoisy|吵鬧的\nbusy|忙碌的\nfree|自由的\nready|準備好的\nsafe|安全的\ndangerous|危險的\neasy|容易的\nhard|困難的\nsoft|柔軟的\nsharp|鋒利的\nsmooth|光滑的\nrough|粗糙的\nsour|酸的\nbitter|苦的\nsalty|鹹的\nspicy|辣的\ndelicious|好吃的\nyummy|美味的\nfresh|新鮮的\nempty|空的\nfull|滿的\nclosed|關著的\nsame|一樣的\ndifferent|不同的\nwrong|錯的\ntrue|真的\nfalse|假的\nreal|真實的\npretty|漂亮的\nbeautiful|美麗的\nugly|醜的\ncute|可愛的\nlovely|討人喜愛的\nspecial|特別的\nfavorite|最愛的\nlucky|幸運的\nrich|富有的\npoor|貧窮的\nnext|下一個\nlast|最後的\nonly|唯一的\nevery|每一個\nvery|非常\ntoo|太\nso|如此\nalso|也\nagain adv|再一次\nhere|這裡\nthere|那裡\nwell|好地\nquickly|快速地\nslowly|慢慢地\ncarefully|小心地\ntogether|一起\nalone|獨自\naway|離開\nnear|近的\nfar|遠的\nout|外出\noff|關掉\non|開啟\njust|剛好\nstill|仍然\nalready|已經\nenough|足夠',
+'情緒':'happy mood|高興\nexcited|興奮的\nsurprised|驚訝的\nscared|害怕的\nafraid|恐懼的\nworried|擔心的\nnervous|緊張的\nproud|驕傲的\nlonely|寂寞的\nbored|無聊的\njealous|嫉妒的\nsorry|抱歉的\nthankful|感謝的\ncalm|冷靜的\nupset|不開心的\nembarrassed|尷尬的\nconfused|困惑的\ncurious|好奇的\nhopeful|有希望的\nlove feeling|愛\nhate|討厭\nfear|恐懼\njoy|喜悅\nsmile face|笑臉\ntear|眼淚\nhug feeling|擁抱的感覺\nlaugh out loud|大笑',
+'常用小字':'I|我\nyou|你\nhe|他\nshe|她\nit|它\nwe|我們\nthey|他們\nme|我(受格)\nhim|他(受格)\nher|她(受格)\nus|我們(受格)\nthem|他們(受格)\nmy|我的\nyour|你的\nhis|他的\nour|我們的\ntheir|他們的\nthis|這個\nthat|那個\nthese|這些\nthose|那些\na|一個\nan|一個(母音前)\nthe|這個(定冠詞)\nand|和\nor|或\nbut|但是\nbecause|因為\nif|如果\nwhen|當…時\nthen|然後\nso that|所以\nwith|和…一起\nwithout|沒有\nfor|為了\nfrom|從\nto|到\nof|…的\nin|在…裡\non top|在…上面\nat|在\nby|藉由\nabout|關於\nover|越過\nunder|在…下面\nbehind|在…後面\nbetween|在…之間\nbeside|在…旁邊\nnext to|在…隔壁\nin front of|在…前面\naround|周圍\nthrough|穿過\nacross|橫過\ninto|進入\nonto|到…上\nup to|到…為止\nwho|誰\nwhat|什麼\nwhere|哪裡\nwhen question|何時\nwhy|為什麼\nhow|如何\nwhich|哪一個\nwhose|誰的\nhow many|多少個\nhow much|多少\nyes|是\nno|不\nnot|不是\nplease|請\nthank you|謝謝\nsorry word|對不起\nhello|哈囉\nhi|嗨\ngoodbye|再見\nbye|掰掰\nwelcome|歡迎\nexcuse me|不好意思\ngood morning|早安\ngood night|晚安\nokay|好的\nmaybe|也許\nsure|當然\ncan|能夠\nwill|將要\nmust|必須\nshould|應該\nlet|讓\ncome on|來吧',
+'職業':'farmer job|農夫職業\nfisherman|漁夫\nbuilder|建築工人\nmailman|郵差\ncleaner|清潔員\nwaiter|服務生\nwaitress|女服務生\ncashier|收銀員\nbarber|理髮師\ndentist|牙醫\nvet|獸醫\nscientist|科學家\nastronaut|太空人\nengineer|工程師\nlawyer|律師\njudge|法官\nreporter|記者\nphotographer|攝影師\nactor|演員\nactress|女演員\nwriter|作家\npainter|畫家\nmusician|音樂家\ncoach|教練\nguard|警衛\ncaptain|船長\nsailor|水手\nmagician|魔術師\ngardener|園丁\nmechanic|技師',
+'體育活動':'soccer|足球\nbasketball|籃球\nbaseball|棒球\nvolleyball|排球\ntennis|網球\nbadminton|羽毛球\ntable tennis|桌球\ngolf|高爾夫\nswimming|游泳運動\nrunning|跑步\njogging|慢跑\nyoga|瑜伽\njudo|柔道\nkarate|空手道\nskating|溜冰\nskiing|滑雪\nfishing|釣魚\nhiking|健行\nexercise|運動\nsport|體育\nrace|比賽\ngoal|進球\nnet|球網\nracket|球拍\nhelmet|安全帽\nwhistle|哨子\ntrophy|獎盃\ngym class|體育課\nstretch|伸展',
+'感官與日常':'sound|聲音\nnoise|噪音\nvoice|聲音(人聲)\ncolor sense|顏色感覺\ndream|夢\nbath|洗澡\nhaircut|剪髮\nbedtime|就寢時間\nmorning routine|晨間習慣\nchore|家事\njob|工作\ntrip|旅行\nvacation|假期\nproblem|問題\nsecret|秘密\nsurprise|驚喜\njoke|笑話\nriddle|謎語\nwish|願望\npromise|承諾\nrule|規則\ngroup|小組\npair work|兩人活動\nmoney|錢\ncoin|硬幣\nprice|價錢\ncheap|便宜的\nexpensive|昂貴的\nshopping bag|購物袋\nbasket|籃子\ncart|推車\nchange|零錢\ngift shop|禮品店'
+};
+var W2RAW={
+'學校學習':'subject|科目\nmath|數學\nscience|自然科學\nhistory|歷史\ngeography|地理\nEnglish|英文\nChinese|國文\nart|美術\nmusic class|音樂課\nphysical education|體育\ncomputer class|電腦課\nlecture|演講課\nsemester|學期\nterm|學期\nprincipal|校長\ngraduate|畢業\ngraduation|畢業典禮\ndiploma|畢業證書\ncertificate|證書\nscholarship|獎學金\ncampus|校園\ndormitory|宿舍\ncafeteria|餐廳(學校)\nlaboratory|實驗室\ntextbook page|課本頁\nchapter|章節\nparagraph|段落\nvocabulary|字彙\ngrammar|文法\nspelling|拼字\npronunciation|發音\ntranslation|翻譯\nmeaning|意思\nexample|例子\nexercise book|練習本\nworkbook|習作\nessay|作文\nreport|報告\nproject|專題\npresentation|簡報\ndiscussion|討論\ndebate|辯論\nexperiment|實驗\nresearch|研究\nknowledge|知識\neducation|教育\nskill|技能\nability|能力\ntalent|才能\npractice|練習\nreview|複習\npreview|預習\nmemory|記憶\nattention|注意力\neffort|努力\nprogress|進步\nmistake|錯誤\ncorrect|正確的\nwrong answer|錯誤答案\nsolution|解答\nproblem solving|解決問題\nfact|事實\nopinion|意見\nreason|理由\nresult|結果\ntopic|主題\ntitle|標題\nsubject line|主旨\nnote|筆記\nmark|分數記號\npass|通過\nfail|不及格\nattend|出席\nabsent|缺席\ntardy|遲到\nschedule|課表\ntimetable|時間表\ndeadline|截止日期\nassignment|作業任務\nmidterm|期中考\nfinal exam|期末考\nentrance exam|入學考試\nclub|社團\nactivity|活動\ncompetition|競賽\ncontest|比賽\nfield trip|校外教學\nsports day|運動會\nschool festival|校慶\nuniform rule|制服規定\nlocker|置物櫃\nprincipal office|校長室\nteacher office|教師辦公室\nbulletin board|布告欄\nprojector|投影機\nmicrophone|麥克風\nspeaker|喇叭\nblackboard eraser|板擦',
+'科學自然':'science class|科學課\nbiology|生物學\nchemistry|化學\nphysics|物理學\nastronomy|天文學\nenvironment|環境\nenergy|能量\nelectricity|電\nmagnet|磁鐵\ngravity|重力\nforce|力量\nspeed|速度\nheat|熱\ntemperature|溫度\npressure|壓力\ngas|氣體\nliquid|液體\nsolid|固體\nmetal|金屬\nplastic|塑膠\nglass material|玻璃\nwood|木頭\npaper material|紙張\niron|鐵\ngold metal|黃金\nsilver metal|白銀\ncopper|銅\nsteel|鋼\nrubber|橡膠\ncotton|棉花\nsilk|絲綢\nwool|羊毛\nleather|皮革\ncloth|布料\noxygen|氧氣\nhydrogen|氫\ncarbon|碳\natom|原子\ncell|細胞\norgan|器官\nmuscle|肌肉\nnerve|神經\nlung|肺\nliver|肝\nkidney|腎\nthroat|喉嚨\nspine|脊椎\nskeleton|骨骼\ndisease|疾病\ngerm|細菌\nvirus|病毒\nmedicine|藥\nvaccine|疫苗\nmicroscope|顯微鏡\ntelescope|望遠鏡\nthermometer|溫度計\nscale|磅秤\nlab|實驗室\nsample|樣本\ndata|資料\nchart|圖表\ngraph|圖形\ndiagram|圖表圖解\ntheory|理論\nlaw|法則\ndiscovery|發現\ninvention|發明\ninventor|發明家\nplanet earth|地球行星\nMercury|水星\nVenus|金星\nMars|火星\nJupiter|木星\nSaturn|土星\nUranus|天王星\nNeptune|海王星\ngalaxy|銀河\nuniverse|宇宙\nsatellite|衛星\norbit|軌道\ncomet|彗星\neclipse|日蝕月蝕\nvolcano|火山\nearthquake|地震\nflood|洪水\ndrought|乾旱\ntyphoon|颱風\ntornado|龍捲風\nhurricane|颶風\nclimate|氣候\npollution|汙染\nrecycle|回收\nwaste|廢棄物\ngarbage|垃圾\nresource|資源\nfossil|化石\nspecies|物種\ninsect|昆蟲\nmammal|哺乳動物\nreptile|爬蟲類\ntail|尾巴\nwing|翅膀\nfeather|羽毛\nfur|毛皮\nshell|殼\nclaw|爪\nhorn|角\nnest|巢\ncage|籠子\nwild|野生的\nendangered|瀕臨絕種的',
+'社區與生活':'community|社區\nneighborhood|鄰近地區\ndowntown|市中心\nsuburb|郊區\ncountryside|鄉下\ncapital|首都\ncountry|國家\nnation|國家民族\nborder|邊界\ncontinent|大陸\nAsia|亞洲\nEurope|歐洲\nAfrica|非洲\nAmerica|美洲\nAustralia|澳洲\nTaiwan|臺灣\nChina|中國\nJapan|日本\nKorea|韓國\nCanada|加拿大\nEngland|英國\nFrance|法國\nGermany|德國\nItaly|義大利\nSpain|西班牙\nThailand|泰國\nVietnam|越南\nIndia|印度\nRussia|俄羅斯\nBrazil|巴西\nMexico|墨西哥\nEgypt|埃及\nSingapore|新加坡\nPhilippines|菲律賓\nIndonesia|印尼\nMalaysia|馬來西亞\nHong Kong|香港\ncity hall|市政府\ngovernment|政府\nmayor|市長\npresident|總統\ncitizen|公民\nforeigner|外國人\ntourist|觀光客\nvisitor|訪客\nguest|客人\nhost|主人\ncustomer|顧客\nclerk|店員\nmanager|經理\nboss|老闆\nstaff|員工\nworker|工人\ncompany|公司\nbusiness|生意\nmall|購物中心\ndepartment store|百貨公司\nconvenience store|便利商店\nnight market|夜市\ngrocery|雜貨\npharmacy store|藥房\nlaundry|洗衣店\nbarber shop|理髮店\nsalon|美容院\ngas station|加油站\nrepair shop|修理店\nlibrary card|借書證\npost card|明信片\npackage|包裹\nmail|郵件\naddress|地址\nzip code|郵遞區號\nstamp collecting|集郵\nelevator|電梯\nescalator|手扶梯\nsidewalk|人行道\nintersection|十字路口\nhighway|高速公路\ntunnel|隧道\nbridge road|橋樑道路\nfountain|噴泉\nstatue|雕像\nmonument|紀念碑\npalace|宮殿\ntower building|高塔\nskyscraper|摩天大樓\napartment|公寓\nneighbor house|鄰居家\nfence|籬笆\ngate|大門\nmailbox|信箱\ndoorbell|門鈴\naddress book|通訊錄\nrent|租金\nlandlord|房東\ntenant|房客\nfurniture|家具\nappliance|家電\nwashing machine|洗衣機\ndryer|烘乾機\nvacuum cleaner|吸塵器\nair conditioner|冷氣\nheater|暖氣機\nmicrowave|微波爐\nrice cooker|電鍋\nblender|果汁機\ntoaster|烤麵包機\niron appliance|熨斗\nhanger|衣架\nlaundry basket|洗衣籃\nbattery|電池\nplug|插頭\nsocket|插座\nswitch|開關\ncable|電線\nbulb|燈泡\nflashlight|手電筒\ncandle light|燭光',
+'興趣娛樂':'hobby|嗜好\ncollection|收藏\ncollect|收集\ncoin collection|錢幣收藏\nphotography|攝影\ncamera|相機\nphoto|照片\nalbum|相簿\nvideo|影片\nmovie|電影\nfilm|影片\ndirector|導演\nscript|劇本\nscene|場景\ncharacter|角色\nhero|英雄\nvillain|壞人\ncomedy|喜劇\ndrama|戲劇\nhorror|恐怖片\naction|動作片\nanimation|動畫\nconcert|演唱會\nband|樂團\norchestra|管弦樂團\nchoir|合唱團\nmelody|旋律\nrhythm|節奏\nlyrics|歌詞\nalbum music|專輯\nheadphones|耳機\nvolume|音量\nradio station|電台\nchannel|頻道\nprogram|節目\nnews|新聞\nmagazine|雜誌\nnewspaper|報紙\nnovel|小說\ncomic|漫畫\nfiction|小說類\nauthor|作者\npoet|詩人\npublisher|出版社\nreader|讀者\nbookshelf|書架\nchess game|棋局\npuzzle game|益智遊戲\nboard game|桌遊\nvideo game console|遊戲機\ngamer|玩家\nlevel|關卡\nscore points|得分\nchampion|冠軍\ncoach team|教練團隊\nreferee|裁判\naudience|觀眾\nticket office|售票處\nseat number|座位號碼\nstage|舞台\ncostume party|變裝派對\nfestival|節慶\nparade|遊行\nfireworks|煙火\nlantern|燈籠\nChristmas|聖誕節\nNew Year|新年\nHalloween|萬聖節\nEaster|復活節\nValentine|情人節\nMid-Autumn Festival|中秋節\nDragon Boat Festival|端午節\nLunar New Year|農曆新年\nred envelope|紅包\nwedding|婚禮\nfuneral|喪禮\nanniversary|週年紀念\ncelebration|慶祝\ngathering|聚會\nreunion|團圓\ninvitation|邀請\ngreeting|問候\ncongratulations|恭喜\ncheers|乾杯\napplause|掌聲\ncartoon character|卡通角色\ndrawing|繪畫\nsketch|素描\ncanvas|畫布\nsculpture|雕塑\ngallery|畫廊\nexhibition|展覽\ncraft|手工藝\norigami|摺紙\nknitting|編織\nsewing|縫紉\nneedle|針\nthread|線\ncloth fabric|布料\npattern|圖案\ndesign|設計\nmodel|模型\ngardening|園藝\nhiking trail|登山步道\nbackpacking|背包旅行\nfishing rod|釣竿\ncampfire|營火\nsleeping bag|睡袋\ncompass|指南針\nbinoculars|望遠鏡',
+'科技網路':'technology|科技\nmachine|機器\ndevice|裝置\ntool|工具\nequipment|設備\nsoftware|軟體\nhardware|硬體\nprogram code|程式碼\napp|應用程式\nwebsite|網站\nwebpage|網頁\nlink|連結\nclick|點擊\ndownload|下載\nupload|上傳\ninstall|安裝\nupdate|更新\ndelete|刪除\nsave|儲存\ncopy|複製\npaste|貼上\nprint|列印\nscan|掃描\nsearch|搜尋\nbrowser|瀏覽器\ninternet|網際網路\nnetwork|網路\nwifi|無線網路\nonline|線上的\noffline|離線的\nemail|電子郵件\nmessage|訊息\ntext message|簡訊\nchat|聊天\nvideo call|視訊通話\nsocial media|社群媒體\npost|貼文\ncomment|留言\nshare post|分享\nlike button|按讚\nfollow account|追蹤\naccount|帳號\npassword|密碼\nusername|使用者名稱\nlogin|登入\nlogout|登出\nsign up|註冊\nprofile|個人檔案\nsetting|設定\nscreen|螢幕\nkeyboard|鍵盤\nmouse device|滑鼠\nlaptop|筆記型電腦\ntablet|平板\nsmartphone|智慧型手機\ncharger|充電器\nUSB|隨身碟\nmemory card|記憶卡\nhard drive|硬碟\nfile|檔案\ndocument|文件\npicture file|圖片檔\nfolder item|資料夾\nicon|圖示\nmenu|選單\nbutton click|按鈕\nwindow screen|視窗\ntab|分頁\ncloud storage|雲端儲存\nserver|伺服器\ndatabase|資料庫\nvirus software|電腦病毒\nsecurity|安全\nprivacy|隱私\nhacker|駭客\nrobot machine|機器人\ndrone|無人機\nartificial intelligence|人工智慧\nvoice assistant|語音助理\nsmart watch|智慧手錶\nGPS|衛星定位\nsensor|感應器\nsignal|訊號\nbattery power|電量\npower|電力\nwire|電線\nremote control|遙控器\nspeaker device|喇叭裝置\nearphone|耳塞\nprinter|印表機\nprojector device|投影機裝置\ncamera lens|鏡頭\nflash|閃光燈\nfilter|濾鏡\nemoji|表情符號\nmeme|迷因\nblog|部落格\npodcast|播客\nlivestream|直播\nsubscribe|訂閱\nadvertisement|廣告\ngame app|遊戲程式\nlevel up|升級',
+'食物烹飪':'ingredient|食材\nrecipe|食譜\nkitchen tool|廚具\ncut food|切\nslice|切片\nchop|剁碎\npeel|削皮\nboil|煮沸\nfry|煎炒\nsteam|蒸\nroast|烤\ngrill|燒烤\nstir|攪拌\nmix food|拌勻\npour water|倒水\ntaste test|試吃\nflavor|口味\nspice|香料\nherb|香草\nvinegar|醋\nsoy sauce|醬油\nketchup|番茄醬\nmustard|芥末醬\nmayonnaise|美乃滋\npepper powder|胡椒粉\nchili|辣椒\ncurry|咖哩\ntofu|豆腐\nseaweed|海苔\nsushi|壽司\nramen|拉麵\nspaghetti|義大利麵\npasta|麵食\nmacaroni|通心粉\nbeef noodle|牛肉麵\nbubble tea|珍珠奶茶\nmilk tea|奶茶\ngreen tea|綠茶\nblack tea|紅茶\nherbal tea|花草茶\nsmoothie|冰沙\nmilkshake|奶昔\nwine|葡萄酒\nbeer|啤酒\nalcohol|酒精\ncocktail|雞尾酒\nmenu list|菜單\norder|點餐\nwaiter service|服務生服務\ntip|小費\nbill|帳單\nreceipt|收據\ntakeout|外帶\ndelivery|外送\nbuffet|自助餐\nappetizer|開胃菜\nmain dish|主菜\ndessert|甜點\nside dish|配菜\nvegetarian|素食者\ndiet|飲食\ncalorie|卡路里\nprotein|蛋白質\nvitamin|維他命\nfiber|纖維\nfat food|脂肪\ncarbohydrate|碳水化合物\nnutrition|營養\nhealthy food|健康食品\njunk food|垃圾食物\nfast food|速食\norganic|有機的\nfrozen|冷凍的\ncanned|罐頭的\nfried|油炸的\nboiled|煮過的\nbaked|烘烤的\nraw|生的\ncooked|煮熟的\ntasty|好吃的\nbland|清淡的\ngreasy|油膩的\ncrispy|酥脆的\njuicy|多汁的\ntender|嫩的\nchewy|有嚼勁的\nsticky|黏的\ncreamy|濃郁滑順的\nhot sauce|辣醬\npeanut|花生\nalmond|杏仁\nwalnut|核桃\nnut|堅果\nchestnut|栗子\nsesame|芝麻\nolive|橄欖\navocado|酪梨\nblueberry|藍莓\nraspberry|覆盆子\ncranberry|蔓越莓\ngrapefruit|葡萄柚\ntangerine|橘子(柑)\napricot|杏桃\nfig|無花果\ndate fruit|椰棗\npomegranate|石榴\ndragon fruit|火龍果\ndurian|榴槤\npersimmon|柿子\nsweet potato|地瓜\nyam|山藥\ntaro|芋頭\nbamboo shoot|竹筍\nbean sprout|豆芽\ngreen onion|青蔥\ncauliflower|白花椰菜\nasparagus|蘆筍\nzucchini|櫛瓜\nturnip|蕪菁\nbeet|甜菜\nleek|韭蔥\nchive|韭菜\nbok choy|青江菜\nkale|羽衣甘藍',
+'旅行交通':'trip plan|旅遊計畫\njourney|旅程\ntour|旅遊團\ntour guide|導遊\npassport|護照\nvisa|簽證\nluggage|行李\nsuitcase|行李箱\ncarry-on|隨身行李\nbackpack travel|背包客\nboarding pass|登機證\nflight|航班\ndeparture|出發\narrival|抵達\ngate number|登機門\nrunway|跑道\ncustoms|海關\nimmigration|入境審查\npassenger|乘客\ncrew|機組人員\nflight attendant|空服員\nseat window|靠窗座位\naisle|走道\ndelay|延誤\ncancel|取消\nreservation|預約\nbooking|訂位\ncheck in|報到\ncheck out|退房\nhotel room|旅館房間\nsingle room|單人房\ndouble room|雙人房\nreception|櫃檯\nlobby|大廳\nkey card|房卡\nroom service|客房服務\nbreakfast included|含早餐\nhostel|青年旅館\nresort|度假村\ninn|旅店\ncabin|小木屋\nsouvenir|紀念品\npostcard|明信片\nsightseeing|觀光\nlandmark|地標\nattraction|景點\ntemple visit|參觀寺廟\nbeach trip|海邊旅行\ntheme park|主題樂園\namusement park|遊樂園\nroller coaster|雲霄飛車\nferris wheel|摩天輪\nmap reading|看地圖\ndirection|方向\nnorth|北\nsouth|南\neast|東\nwest|西\nnortheast|東北\nnorthwest|西北\nsoutheast|東南\nsouthwest|西南\ndistance|距離\nkilometer|公里\nmeter|公尺\nmile|英里\nspeed limit|速限\ntraffic|交通\ntraffic jam|塞車\nrush hour|尖峰時間\nparking|停車\nfare|車資\nticket machine|售票機\nplatform|月台\ntrack|軌道\nexpress|快車\nlocal train|慢車\nhigh speed rail|高鐵\nMRT|捷運\nscooter ride|騎機車\ncarpool|共乘\nseat belt use|繫安全帶\ndriver license|駕照\nlicense plate|車牌\nfuel|燃料\ntire|輪胎\nbrake|煞車\nsteering wheel|方向盤\naccident|意外\nemergency|緊急狀況\nlost and found|失物招領\nexchange|兌換\ncurrency|貨幣\ndollar|元\ncoin money|硬幣\ncash|現金\ncredit card|信用卡\nATM|提款機\ndiscount|折扣\nsale|特價\nbargain|議價\nrefund|退款\nreceipt paper|收據紙\ntax|稅\ntax free|免稅',
+'動詞':'accept|接受\nachieve|達成\nact|行動\nadmire|欽佩\nadopt|領養\nadvise|建議\nagree|同意\nallow|允許\nannounce|宣布\napologize|道歉\nappear|出現\napply|申請\narrange|安排\nattack|攻擊\navoid|避免\nbake bread|烤麵包\nbark|吠\nbeat|打敗\nbecome|變成\nbegin|開始\nbehave|行為舉止\nbelieve|相信\nbelong|屬於\nbend|彎曲\nbite|咬\nblame|責怪\nborrow|借入\nbother|打擾\nbury|埋\ncalculate|計算\ncancel plan|取消\ncare|在乎\ncelebrate|慶祝\ncharge|收費\nchase|追趕\ncheat|作弊\ncheck|檢查\ncheer|歡呼\nchew|咀嚼\nclap hands|拍手\ncollect coins|收集\ncompare|比較\ncompete|競爭\ncomplain|抱怨\ncomplete|完成\nconnect|連接\nconsider|考慮\ncontinue|繼續\ncontrol|控制\ncover|覆蓋\ncreate|創造\ncross|穿越\ncrush|壓碎\ndare|敢\ndecide|決定\ndecorate|裝飾\ndeliver|遞送\ndepend|依賴\ndescribe|描述\ndeserve|值得\ndestroy|破壞\ndevelop|發展\ndie|死亡\ndig|挖\ndisappear|消失\ndiscover|發現\ndiscuss|討論\ndivide|分開\nearn|賺\neducate|教育\nencourage|鼓勵\nend|結束\nenjoy|享受\nescape|逃走\nexcuse|原諒\nexpect|期待\nexplain|解釋\nexplore|探索\nfail test|失敗\nfall|跌倒\nfasten|繫緊\nfetch|去拿來\nfight|打架\nfit|適合\nfloat|漂浮\nflow|流動\nfold paper|摺\nforgive|原諒別人\ngain|獲得\ngather|聚集\nguess|猜\nguide|引導\nhandle|處理\nhang|懸掛\nhappen|發生\nheal|治癒\nhire|僱用\nhope|希望\nhunt|打獵\nhurt|傷害\nimagine|想像\nimprove|改善\ninclude|包括\nincrease|增加\ndecrease|減少\ninform|通知\ninjure|受傷\ninsist|堅持\nintroduce|介紹\ninvent|發明\ninvite|邀請\njoin|加入\nkeep|保持\nkill|殺死\nknock|敲\nlead|帶領\nlend|借出\nlift|舉起\nlimit|限制\nload|裝載\nmanage|管理\nmatter|要緊\nmeasure|測量\nmeet|遇見\nmention|提到\nmiss|想念\nmove|移動\nnotice|注意到\nobey|服從\noffer|提供\nown|擁有\npack|打包\nperform|表演\npermit|允許許可\npersuade|說服\nplan|計畫\npray|祈禱\nprefer|偏好\nprepare|準備\npress|按\npretend|假裝\nprevent|防止\nproduce|生產\nprotect|保護\nprove|證明\nprovide|提供資源\npunish|處罰\npush button|按鈕\nquit|放棄\nraise|舉起養育\nreach|到達\nreceive|收到\nrecognize|認出\nrecommend|推薦\nrecord|記錄\nreduce|減少量\nrefuse|拒絕\nrelax|放鬆\nremind|提醒\nremove|移除\nrepair|修理好\nrepeat|重複\nreplace|取代\nreply|回覆\nrescue|拯救\nrespect|尊重\nreturn|歸還\nreveal|揭露\nreward|獎賞\nsave life|拯救\nscare|驚嚇\nserve|服務\nsettle|解決\nshake|搖\nshine|發光\nshoot|射擊\nshut|關閉\nsign|簽名\nsolve|解決問題\nsort|分類\nspell|拼字\nspend|花費\nspread|散布\nsteal|偷\nstick|黏住\nsucceed|成功\nsuffer|受苦\nsuggest|建議提議\nsupply|供應\nsupport|支持\nsuppose|假設\nsurvive|生存\nsuspect|懷疑\nswallow|吞下\nsweat|流汗\ntap|輕拍\ntease|取笑\ntend|傾向\nthank|感謝\ntrade|交易\ntranslate|翻譯成\ntrap|困住\ntreat|對待\ntrust|信任\nwarn|警告\nweigh|秤重\nwonder|想知道\nworry|擔心\nwrap|包裝',
+'形容詞':'able|有能力的\nactive|活躍的\nalive|活著的\namazing|驚人的\nancient|古老的\nannoying|煩人的\nanxious|焦慮的\nasleep|睡著的\nawake|醒著的\nawful|糟糕的\nbare|赤裸的\nbasic|基本的\nblind|盲的\nblank|空白的\nbold|大膽的\nboring|無聊的\nbright|明亮的\nbroad|寬廣的\nbroken|壞掉的\nbusy street|繁忙的\ncalm down|冷靜下來\ncareless|粗心的\ncertain|確定的\ncheerful|開朗的\nchief|主要的\ncivil|公民的\nclear|清楚的\ncloudless|無雲的\ncommon|常見的\ncomplex|複雜的\nconfident|有自信的\nconvenient|方便的\ncruel|殘忍的\ncurly|捲的\ncurrent|目前的\ndaily|每日的\ndamp|潮濕的\ndeaf|聾的\ndear|親愛的\ndeep|深的\ndelicate|細緻的\ndense|濃密的\ndull|遲鈍的\neager|渴望的\nelectric|電的\nelderly|年長的\nelectronic|電子的\nenormous|巨大的\nentire|整個的\nequal|相等的\nexact|精確的\nexcellent|優秀的\nexciting|令人興奮的\nexhausted|筋疲力盡的\nextra|額外的\nfamiliar|熟悉的\nfamous|有名的\nfancy|華麗的\nfair|公平的\nfashionable|時髦的\nfine|很好的\nfirm|堅固的\nfond|喜愛的\nfoolish|愚蠢的\nforeign|外國的\nformal|正式的\nfrank|坦白的\nfrequent|頻繁的\nfriendly|友善的\nfrightened|受驚的\ngentle|溫和的\ngiant|巨大的\nglad|高興的\nglobal|全球的\ngorgeous|極美的\ngrand|宏偉的\ngrateful|感激的\nguilty|有罪的\nhandsome|英俊的\nhandy|便利的\nhelpful|有幫助的\nhonest|誠實的\nhuge|巨大的\nhumble|謙虛的\nideal|理想的\nidentical|相同的\nill|生病的\nimportant|重要的\nimpossible|不可能的\nincredible|難以置信的\nindependent|獨立的\ninnocent|無辜的\nintelligent|聰明的\ninteresting|有趣的\njoyful|快樂的\njunior|年少的\nkeen|熱衷的\nlazy|懶惰的\nlegal|合法的\nlikely|可能的\nlively|活潑的\nloose|鬆的\nloyal|忠誠的\nmad|瘋狂的\nmain|主要的\nmajor|主要重大的\nmassive|大量的\nmean|刻薄的\nmental|心理的\nmild|溫和的\nminor|次要的\nmodern|現代的\nmoist|潮濕的\nmoral|道德的\nmysterious|神祕的\nnarrow|窄的\nnatural|自然的\nnaughty|頑皮的\nnecessary|必要的\nnegative|負面的\nnormal|正常的\nnumerous|許多的\nobvious|明顯的\nodd|奇怪的\nofficial|官方的\nordinary|普通的\noriginal|原本的\npainful|疼痛的\npale|蒼白的\npatient|有耐心的\npeaceful|和平的\nperfect|完美的\npersonal|個人的\nplain|樸素的\npleasant|愉快的\npolite|有禮貌的\npopular|受歡迎的\npositive|正面的\npossible|可能的\npowerful|強大的\nprecious|珍貴的\nprivate|私人的\nproper|適當的\npublic|公共的\npure|純淨的\nrapid|快速的\nrare|稀有的\nregular|規律的\nrelaxed|放鬆的\nresponsible|負責的\nrude|無禮的\nselfish|自私的\nsenior|資深的\nserious|嚴肅的\nseveral|幾個的\nsevere|嚴重的\nshiny|閃亮的\nsincere|真誠的\nsingle|單一的\nskillful|熟練的\nslim|纖細的\nsocial|社交的\nsore|痠痛的\nspecific|特定的\nsteady|穩定的\nsteep|陡峭的\nstiff|僵硬的\nstrange|奇怪的\nstrict|嚴格的\nstubborn|固執的\nsuccessful|成功的\nsudden|突然的\nsuitable|合適的\nsuper|超級的\ntalented|有才華的\nterrible|可怕的\nthick|厚的\ntight|緊的\ntiny|極小的\ntotal|總共的\ntough|堅韌的\ntraditional|傳統的\ntremendous|極大的\ntypical|典型的\nunable|無法的\nunhappy|不快樂的\nunique|獨特的\nunusual|不尋常的\nuseful|有用的\nuseless|無用的\nusual|平常的\nvaluable|有價值的\nvarious|各種的\nvast|廣大的\nvisible|看得見的\nvivid|鮮明的\nwealthy|富裕的\nweird|怪異的\nwhole|整個的\nwide|寬的\nwilling|願意的\nwise|明智的\nwonderful|極好的\nworth|值得的',
+'副詞連接詞':'absolutely|絕對地\nactually|實際上\nalmost|幾乎\nalthough|雖然\nanyway|無論如何\napart|分開\nbadly|糟糕地\nbarely|幾乎不\nbesides|此外\nbeyond|超過\ncertainly|當然\nclearly|清楚地\ncompletely|完全地\ndefinitely|肯定地\ndirectly|直接地\neasily|輕易地\neventually|最終\nexactly|正是\nespecially|尤其\nextremely|極度地\nfairly|相當地\nfinally|最後\nfirstly|首先\nfortunately|幸運地\nfrankly|坦白說\ngenerally|一般來說\ngently|溫柔地\nhappily|快樂地\nhardly|幾乎不\nhowever|然而\nimmediately|立刻\nindeed|確實\ninstead|取而代之\nlately|最近\nlikely adv|很可能\nmainly|主要地\nmeanwhile|同時\nmerely|僅僅\nmostly|大部分\nnaturally|自然地\nnearly|幾乎\nneither|兩者都不\nnevertheless|儘管如此\nnowadays|現今\notherwise|否則\nperhaps|或許\npossibly|可能\nprobably|大概\nquickly adv|迅速地\nquite|相當\nrarely|很少\nrather|寧可\nreally|真的\nrecently|最近\nseldom|很少\nseriously|認真地\nshortly|不久\nsimply|簡單地\nslightly|稍微\nsomehow|不知怎地\nsomewhere|某處\nsuddenly|突然地\nsurely|一定\ntherefore|因此\nthus|因而\ntruly|真正地\nunfortunately|不幸地\nunless|除非\nuntil|直到\nusually|通常\nwhatever|無論什麼\nwhenever|每當\nwherever|無論哪裡\nwhether|是否\nwhile|當…的時候\nwhom|誰(受格)\nwithin|在…之內\nyet|還\neither|任一\nboth|兩者\neach|每個\nanother|另一個\nother|其他的\nsuch|這樣的\nanything|任何事\nsomething|某事\nnothing|沒事\neverything|每件事\nanyone|任何人\nsomeone|某人\neveryone|每個人\nnobody|沒有人\nsomewhere else|別處\nanywhere|任何地方\neverywhere|到處\nnowhere|無處'
+};
+var W3RAW={
+'職場':'career|職涯\nprofession|專業\noccupation|職業\nemployer|雇主\nemployee|員工\ncolleague|同事\ncoworker|同僚\nsupervisor|主管\nexecutive|主管人員\nCEO|執行長\nintern|實習生\napplicant|應徵者\ncandidate|候選人\nresume|履歷\ninterview|面試\nposition|職位\nvacancy|職缺\nsalary|薪水\nwage|工資\nbonus|獎金\nraise pay|加薪\npromotion|升遷\nbenefit|福利\ninsurance|保險\npension|退休金\ncontract|合約\nagreement|協議\ndeal|交易\nnegotiation|協商\nproposal|提案\nstrategy|策略\ngoal setting|設定目標\nobjective|目標\ntarget|目標對象\ndeadline work|期限\nschedule meeting|排定會議\nmeeting|會議\nagenda|議程\nminutes|會議紀錄\nconference|研討會\nseminar|研討會議\nworkshop|工作坊\ntraining|訓練\norientation|新人訓練\ndepartment|部門\nheadquarters|總部\ndivision|分部\nteam leader|組長\nteamwork|團隊合作\ncooperation|合作\ncollaboration|協作\npartnership|夥伴關係\nclient|客戶\ncustomer service|客服\nsupplier|供應商\nvendor|廠商\ndistributor|經銷商\ncompetitor|競爭者\nmarket share|市占率\nindustry|產業\nsector|部門領域\nexport|出口\nimport|進口\nshipment|出貨\ninventory|庫存\nwarehouse|倉庫\nlogistics|物流\nproduction|生產\nmanufacture|製造\nassembly|組裝\nquality|品質\nstandard|標準\nprocedure|程序\npolicy|政策\nregulation|規定\nrequirement|要求\nresponsibility|責任\nduty|職責\ntask|任務\nassignment work|交辦事項\nworkload|工作量\novertime|加班\nshift|輪班\nfull-time|全職\npart-time|兼職\nfreelance|自由接案\nremote work|遠端工作\ncommute|通勤\nresign|辭職\nretire|退休\ndismiss|解雇\nlayoff|裁員\nunemployment|失業\nrecruit|招募\nhire staff|聘僱\npromote|晉升\ntransfer|調職\nevaluate|評估\nperformance|表現\nfeedback|回饋\nappraisal|考核\nproductivity|生產力\nefficiency|效率\nefficient|有效率的\neffective|有效的\nprofessional|專業的\nexperienced|有經驗的\nqualified|合格的\nreliable|可靠的\nflexible|有彈性的\ncreative|有創意的\ninnovative|創新的\nambitious|有野心的\ndiligent|勤奮的\ncompetent|稱職的',
+'商業財務':'business plan|營運計畫\nstartup|新創公司\nenterprise|企業\ncorporation|公司法人\nbrand|品牌\nlogo|標誌\nslogan|口號\nadvertising|廣告業\nmarketing|行銷\npromotion campaign|促銷活動\ncampaign|活動宣傳\nsales|銷售\nrevenue|營收\nincome|收入\nprofit|利潤\nloss|虧損\ncost|成本\nexpense|開銷\nbudget|預算\ninvoice|發票\npayment|付款\ndeposit|存款\nwithdraw|提領\nbalance|餘額\ntransfer money|轉帳\nloan|貸款\nmortgage|房貸\ninterest|利息\ndebt|債務\ncredit|信用\ndebit|借方\naccount bank|銀行帳戶\nsavings|儲蓄\nchecking|支票\ncheck bank|支票\nexchange rate|匯率\ninflation|通貨膨脹\neconomy|經濟\neconomic|經濟的\nrecession|衰退\ngrowth|成長\ninvestment|投資\ninvestor|投資人\nstock|股票\nshare stock|股份\nbond|債券\nfund|基金\nasset|資產\nproperty|財產\nestate|房地產\ncapital money|資本\ntax return|報稅\nincome tax|所得稅\nsales tax|營業稅\nfee|費用\ncharge fee|收費\nrate|費率\nprice tag|價格標籤\nquote|報價\nestimate|估價\norder form|訂單\npurchase|購買\nrefund policy|退款政策\nwarranty|保固\nguarantee|保證\nreceipt copy|收據副本\ncustomer complaint|客訴\nsatisfaction|滿意度\ndemand|需求\nsupply chain|供應鏈\nshortage|短缺\nsurplus|剩餘\nwholesale|批發\nretail|零售\ncommerce|商業\ntrade fair|商展\nexhibition booth|展位\nbrochure|小冊子\ncatalog|型錄\nsample product|樣品\nprototype|原型\npatent|專利\ncopyright|版權\ntrademark|商標\nlicense|執照\npermit document|許可證\nlawyer office|律師事務所\ncourt|法院\nlawsuit|訴訟\nsue|控告\nwitness|證人\nevidence|證據\nverdict|判決\npenalty|罰則\ncrime|犯罪\npolice report|警方報告\ntheft|竊盜\nfraud|詐欺\nscam|騙局\nbankrupt|破產\nmerger|合併\nacquisition|收購\nshareholder|股東\nboard|董事會\nchairman|董事長\naudit|稽核\naccountant|會計師\nstatistics|統計\npercentage|百分比\naverage|平均\ntotal sum|總額\namount|數量金額\nfigure|數字\nratio|比率\ntrend|趨勢\nforecast|預測\nanalysis|分析\nsurvey|問卷調查\npoll|民調',
+'旅遊生活':'accommodation|住宿\nitinerary|行程表\ndestination|目的地\ndeparture gate|出發門\nlayover|轉機停留\ntransit|轉運\nbaggage claim|行李提領\nlost luggage|遺失行李\noverbooked|超賣\nupgrade|升等\neconomy class|經濟艙\nbusiness class|商務艙\nfirst class|頭等艙\nround trip|來回\none-way|單程\nboarding|登機\nlanding|降落\nturbulence|亂流\njet lag|時差\nduty free|免稅店\ncurrency exchange|換匯\ntravel insurance|旅遊保險\ntravel agency|旅行社\npackage tour|套裝行程\nguidebook|旅遊指南\nphrasebook|會話手冊\nlocal|當地的\nnative|本地人\nculture|文化\ncustom|習俗\ntradition|傳統\nheritage|遺產\ncuisine|料理\nspecialty|特產\nstreet food|街頭小吃\nvendor stall|攤販\nbargaining|討價還價\ntip service|小費服務\nreservation table|訂桌\nvegetarian meal|素食餐\nallergy|過敏\ndietary|飲食的\ncomplimentary|免費贈送的\nhousekeeping|房務\nconcierge|禮賓\nwake-up call|晨喚\nminibar|迷你吧\nsafe box|保險箱\ncheckout time|退房時間\nlate fee|逾時費\ndeposit refund|退押金\ncabin crew|空服團隊\nshuttle|接駁車\nrental car|租車\nGPS navigation|導航\ndetour|繞道\ntoll|過路費\nroadwork|道路施工\nroundabout|圓環\npedestrian|行人\ncyclist|單車騎士\ncommuter|通勤者\npassenger seat|乘客座位\ncompartment|車廂\nconductor|車掌\ntimetable train|列車時刻表\ntransfer train|轉乘\nterminal|終點站\nharbor|港口\nferry|渡輪\ncruise|郵輪\ndeck|甲板\nlifeboat|救生艇\nsunscreen|防曬乳\ninsect repellent|驅蚊液\nfirst aid kit|急救箱\nadapter|轉接頭\npower bank|行動電源\nSIM card|網卡\nroaming|漫遊\nhotspot|熱點\nsouvenir shop|紀念品店\nphoto spot|拍照景點\nscenic|風景優美的\nspectacular|壯觀的\ncrowded|擁擠的\nremote|偏遠的\nhistoric|歷史悠久的\nromantic|浪漫的\nadventurous|愛冒險的\nluxury|奢華\nbudget travel|經濟旅行\nbackpacker|背包客\nexpedition|探險\nwildlife|野生動物\nnational park|國家公園\ntrail|小徑\nsummit|山頂\ncliff|懸崖\ncanyon|峽谷\nglacier|冰河\ncoast|海岸\nbay|海灣\npeninsula|半島\nharbour town|港城\ncoastline|海岸線\nreef|珊瑚礁\ndiving|潛水\nsnorkeling|浮潛\nsurfing|衝浪\nsailing|帆船\nkayak|獨木舟\nrafting|泛舟\nparagliding|滑翔翼\nbungee jumping|高空彈跳',
+'健康醫療':'symptom|症狀\ndiagnosis|診斷\ntreatment|治療\ntherapy|療法\nprescription|處方\npill|藥丸\ncapsule|膠囊\ndose|劑量\ninjection|注射\nsurgery|手術\noperation|手術操作\nemergency room|急診室\nambulance service|救護車服務\nspecialist|專科醫生\nphysician|內科醫生\npediatrician|小兒科醫生\nsurgeon|外科醫生\ndentist office|牙科診所\ncheck-up|健康檢查\nappointment|預約看診\nwaiting room|候診室\nblood pressure|血壓\npulse|脈搏\nfever|發燒\ncough|咳嗽\ncold illness|感冒\nflu|流行性感冒\nheadache|頭痛\nstomachache|胃痛\ntoothache|牙痛\nbackache|背痛\nsore throat|喉嚨痛\nrunny nose|流鼻水\nsneeze|打噴嚏\nnausea|噁心\nvomit|嘔吐\ndiarrhea|腹瀉\nconstipation|便秘\nrash|皮疹\nitch|癢\nswelling|腫脹\nbruise|瘀青\nwound|傷口\ncut wound|割傷\nburn|燒燙傷\nsprain|扭傷\nfracture|骨折\ncast|石膏\nbandage|繃帶\nstitches|縫線\ncrutch|拐杖\nwheelchair|輪椅\ninfection|感染\ninflammation|發炎\nallergic reaction|過敏反應\nasthma|氣喘\ndiabetes|糖尿病\ncancer|癌症\nheart attack|心臟病發\nstroke|中風\nhigh blood pressure|高血壓\ncholesterol|膽固醇\nobesity|肥胖\ndepression|憂鬱症\nanxiety|焦慮症\nstress|壓力\ninsomnia|失眠\nfatigue|疲勞\nexhaustion|筋疲力竭\nrecovery|康復\nimmune system|免疫系統\nsymptom relief|緩解症狀\nside effect|副作用\noverdose|服藥過量\npharmacist|藥劑師\ndosage|用藥量\nvitamin supplement|維他命補充品\nhygiene|衛生\nsanitizer|消毒液\ndisinfect|消毒\nquarantine|隔離\nepidemic|流行病\npandemic|大流行\noutbreak|爆發\ncontagious|傳染的\nchronic|慢性的\nacute|急性的\nworkout|健身\nmuscle training|肌力訓練\ncardio|有氧運動\nstretching|伸展運動\nposture|姿勢\nflexibility|柔軟度\nendurance|耐力\nstamina|體力\nmetabolism|新陳代謝\nweight loss|減重\ndiet plan|飲食計畫\nnutritionist|營養師\nmental health|心理健康\ncounselor|諮商師\nmeditation|冥想\nrelaxation|放鬆\nwell-being|幸福安康\nlifestyle|生活方式',
+'人際情感':'relationship|關係\ncouple|情侶\npartner|伴侶\nspouse|配偶\nhusband|丈夫\nwife|妻子\nfiance|未婚夫\nengagement|訂婚\nmarriage|婚姻\ndivorce|離婚\ndating|約會\nromance|戀愛\naffection|情感\njealousy|嫉妒心\ntrust issue|信任\nloyalty|忠誠\nhonesty|誠實\nbetrayal|背叛\nargument|爭吵\nconflict|衝突\nmisunderstanding|誤會\napology|道歉\nforgiveness|原諒\ncompromise|妥協\ncommunication|溝通\nconversation|對話\ndialogue|對話\ngossip|閒話\nrumor|謠言\nsecret keeping|保密\nfriendship|友誼\nacquaintance|熟人\nstranger|陌生人\nroommate|室友\nflatmate|同住者\nhousemate|同屋者\nlandlady|女房東\nin-law|姻親\nstepmother|繼母\nstepfather|繼父\nhalf-sister|同父異母姊妹\norphan|孤兒\nadopted|領養的\nguardian|監護人\nelder|長輩\nancestor|祖先\ngeneration|世代\nteenager|青少年\nadolescent|青春期的人\nyouth|青年\nadult|成人\nsenior citizen|年長者\nretiree|退休人士\nnewborn|新生兒\ntoddler|學步幼兒\ninfant|嬰兒\npregnancy|懷孕\npregnant|懷孕的\nbirth|出生\ndelivery room|產房\nmidwife|助產士\nnursery|育嬰室\nbabysitter|保母\nchildcare|托育\nparenting|育兒\ndiscipline|管教\nupbringing|養育\nbehavior|行為\nmanner|禮貌舉止\netiquette|禮儀\ncourtesy|禮貌\ngratitude|感激\ngenerosity|慷慨\nkindness|善良\ncompassion|同情心\nsympathy|同情\nempathy|同理心\npatience|耐心\ntolerance|包容\nhumility|謙遜\npride|自尊驕傲\nconfidence|自信\nself-esteem|自尊心\npersonality|個性\ncharacter trait|個性特質\ntemper|脾氣\nmood|心情\nemotion|情緒\nsensitive|敏感的\nsociable|善於交際的\noutgoing|外向的\nintroverted|內向的\noptimistic|樂觀的\npessimistic|悲觀的\ngrumpy|愛發牢騷的\nmoody|情緒化的\nreserved|矜持的\ntalkative|多話的\nsarcastic|諷刺的\nwitty|機智的\ncharming|迷人的\nattractive|有吸引力的\nelegant|優雅的\ngraceful|優美的\nclumsy|笨拙的\nenergetic|精力充沛的\nenthusiastic|熱情的\npassionate|熱愛的\ndetermined|有決心的\npersistent|堅持不懈的\ncourageous|有勇氣的\nfearless|無畏的\ncautious|謹慎的\nthoughtful|體貼的\nconsiderate|體諒的\ngenerous|慷慨的\ngreedy|貪心的\nstingy|小氣的\narrogant|傲慢的\nmodest|謙虛的\nhumorous|幽默的',
+'社會新聞':'society|社會\ncommunity service|社區服務\nvolunteer|志工\ncharity|慈善\ndonation|捐款\ndonate|捐贈\nfundraiser|募款活動\npoverty|貧窮\nhomeless|無家可歸的\nwelfare|福利\njustice|正義\nequality|平等\nfreedom|自由\ndemocracy|民主\nelection|選舉\nvote|投票\nparliament|國會\ncongress|國會議會\nsenator|參議員\nminister|部長\nambassador|大使\ndiplomat|外交官\nembassy|大使館\ntreaty|條約\nalliance|聯盟\nwar|戰爭\npeace|和平\narmy|軍隊\nnavy|海軍\nair force|空軍\nweapon|武器\nbomb|炸彈\nterrorism|恐怖主義\nrefugee|難民\nimmigrant|移民\ncitizenship|公民身分\npopulation|人口\ncensus|人口普查\nurban|都市的\nrural|鄉村的\ncrowd|人群\nprotest|抗議\nstrike|罷工\nriot|暴動\nrevolution|革命\nreform|改革\npolicy change|政策改變\nlaw enforcement|執法\nlegislation|立法\nconstitution|憲法\nhuman rights|人權\nprivilege|特權\ndiscrimination|歧視\nprejudice|偏見\nstereotype|刻板印象\ndiversity|多元\nminority|少數\nmajority|多數\nheadline|頭條\narticle|文章\neditor|編輯\njournalist|記者\nbroadcast|廣播\nmedia|媒體\npropaganda|宣傳\nrumor spread|謠言散布\nscandal|醜聞\ninvestigation|調查\nauthority|當局\nspokesman|發言人\nstatement|聲明\nannouncement|公告\nbreaking news|快訊\nreport news|報導\nheadline news|頭條新聞\ndisaster|災難\nrescue team|救援隊\nvictim|受害者\nsurvivor|倖存者\ncasualty|傷亡\ndamage|損害\nrelief|救濟\nshelter|避難所\nevacuation|疏散\ntragedy|悲劇\ncrisis|危機\nchallenge|挑戰\nrisk|風險\nthreat|威脅\ndanger|危險\ncaution|小心\nwarning sign|警告標誌\nsafety rule|安全規則\nsecurity guard|保全\nsurveillance|監視\nalarm system|警報系統\nfingerprint|指紋\nidentity|身分\nID card|身分證\npassport photo|護照照片\nsignature|簽名\ncriminal|罪犯\nprison|監獄\narrest|逮捕\nrelease|釋放\nbail|保釋',
+'環境能源':'environmental|環境的\necology|生態學\necosystem|生態系\nhabitat|棲息地\nbiodiversity|生物多樣性\nconservation|保育\npreservation|保存\nprotection|保護\nextinction|絕種\ndeforestation|森林砍伐\nerosion|侵蝕\nlandslide|山崩\nglobal warming|全球暖化\ngreenhouse gas|溫室氣體\ncarbon emission|碳排放\nrenewable|可再生的\nsolar energy|太陽能\nwind power|風力發電\nhydropower|水力發電\nnuclear|核能的\nfossil fuel|化石燃料\ncoal|煤\npetroleum|石油\nnatural gas|天然氣\nelectric car|電動車\nhybrid|油電混合\nrecycling bin|回收桶\ncompost|堆肥\nlandfill|掩埋場\nsewage|汙水\ntoxic|有毒的\npesticide|殺蟲劑\nfertilizer|肥料\norganic farming|有機農業\nharvest|收成\ncrop|農作物\nlivestock|牲畜\nirrigation|灌溉\ndrought season|乾旱季\nfamine|飢荒\nsustainable|永續的\neco-friendly|環保的\nreusable|可重複使用的\ndisposable|一次性的\nbiodegradable|可生物分解的\nplastic bag|塑膠袋\nstraw|吸管\nwater supply|供水\ndrinking water|飲用水\nclean water|乾淨的水\nair quality|空氣品質\nsmog|煙霧\nnoise pollution|噪音汙染\nozone|臭氧\natmosphere|大氣層\ntemperature rise|氣溫上升\nsea level|海平面\nmelting|融化\niceberg|冰山\npolar bear|北極熊\nrainforest|雨林\nwetland|濕地\nmeadow|草地\nvalley|山谷\nplateau|高原\nstream|溪流\nspring water|泉水\nmineral|礦物\ncrystal|水晶\ngem|寶石\npearl|珍珠\ncoal mine|煤礦\nquarry|採石場\nmining|採礦\ndrill|鑽孔\noil spill|漏油\npower plant|發電廠\ngenerator|發電機\nvoltage|電壓\ncircuit|電路\ncurrent electricity|電流\ntransformer|變壓器\ngrid|電網\nblackout|停電\noutage|中斷\nutility bill|水電帳單\ngas bill|瓦斯帳單\nwater bill|水費單',
+'進階動詞':'abandon|拋棄\nabsorb|吸收\naccompany|陪伴\naccumulate|累積\naccuse|指控\nacknowledge|承認\nacquire|取得\nadapt|適應\nadjust|調整\nadmit|承認錯誤\nadvertise|刊登廣告\naffect|影響\nafford|負擔得起\naim|瞄準目標\nalter|更改\nanalyze|分析\nanticipate|預期\nappreciate|欣賞感謝\napproach|接近\napprove|批准\nargue|爭論\nassemble|組裝\nassess|評估\nassign|指派\nassist|協助\nassume|假定\nattach|附上\nattempt|嘗試\nattract|吸引\nattribute|歸因\nbind|綁住\nblend|混合\nboost|提升\nbreed|繁殖\ncapture|捕捉\ncarry out|執行\ncease|停止\ncharacterize|描繪特色\nclarify|釐清\nclassify|分類\ncombine|結合\ncommit|承諾投入\ncommunicate|溝通\ncomplain about|抱怨某事\ncomply|遵守\ncompose|組成寫作\nconclude|結論\nconduct|進行\nconfirm|確認\nconfront|面對\nconserve|節約\nconsist|組成\nconstruct|建構\nconsult|諮詢\nconsume|消耗\ncontact|聯絡\ncontain|包含\ncontribute|貢獻\nconvert|轉換\nconvince|說服信服\ncope|應付\ncorrespond|相符通信\ncrash|撞毀\ncriticize|批評\ncultivate|栽培\ncustomize|客製化\ndeal with|處理\ndeclare|宣告\ndecline|下降婉拒\ndedicate|奉獻\ndefeat|擊敗\ndefend|防禦\ndefine|定義\ndemonstrate|示範\ndeny|否認\nderive|源自\ndetect|偵測\ndetermine|決定\ndevote|投入\ndiffer|不同\ndisagree|不同意\ndisclose|揭露\ndismiss idea|摒棄\ndisplay|展示\ndispose|處置\ndistinguish|區分\ndistribute|分發\ndisturb|打擾\ndominate|支配\ndraft|草擬\ndrag|拖拉\neliminate|消除\nembrace|擁抱接納\nemerge|浮現\nemphasize|強調\nenable|使能夠\nenforce|執行法規\nengage|使參與\nenhance|提升強化\nensure|確保\nestablish|建立\nevolve|演變\nexamine|檢查\nexceed|超過\nexclude|排除\nexecute|執行處決\nexhibit|展出\nexist|存在\nexpand|擴張\nexpose|暴露\nextend|延伸\nextract|萃取\nfacilitate|促進\nfocus|專注\nfound|創辦\nfulfill|實現\ngenerate|產生\ngovern|統治管理\ngrant|授予\nhesitate|猶豫\nhighlight|強調重點\nillustrate|說明圖解\nimply|暗示\nimpose|強加\nimpress|使印象深刻\nindicate|指出\ninfluence|影響力\ninherit|繼承\ninitiate|發起\ninspire|激勵\nintegrate|整合\nintend|打算\ninterpret|詮釋\ninterrupt|打斷\ninvest|投資金錢\ninvolve|牽涉\nisolate|隔離\njustify|證明合理\nlaunch|發射推出\nmaintain|維持\nmodify|修改\nmonitor|監控\nmotivate|激勵動機\nnegotiate|談判\nneglect|忽略\nobtain|獲得\noccur|發生事件\noperate|操作\noppose|反對\novercome|克服\nparticipate|參與\nperceive|察覺\npersist|堅持\npursue|追求\nreflect|反映反省\nreject|拒絕接受\nrely|依靠\nrepresent|代表\nrequire|需要要求\nresolve|解決決心\nrespond|回應\nrestore|恢復\nretain|保留\nretrieve|取回\nsacrifice|犧牲\nsatisfy|滿足\nsecure|確保安全\nselect|挑選\nsimplify|簡化\nspecify|明確指出\nstrengthen|加強\nsubmit|提交\nsubstitute|取代\nsustain|維持持續\ntackle|處理難題\ntransform|轉變\nundergo|經歷\nundertake|承擔\nutilize|利用\nvary|變化\nverify|查證\nviolate|違反\nyield|產出屈服',
+'抽象名詞':'absence|缺席\naccess|取用權\naccuracy|準確度\nadvantage|優點\nadvice|忠告\nagency|機構\nalternative|替代方案\nambition|抱負\nangle|角度\nappearance|外表\naspect|層面\nattitude|態度\nbackground|背景\nbarrier|障礙\nbasis|基礎\nbelief|信念\nboundary|界線\nbreakthrough|突破\nburden|負擔\ncapacity|容量\ncategory|類別\ncause|原因\nchance|機會\ncircumstance|情況\nclaim|主張\ncomparison|比較\nconcept|概念\nconcern|關切\ncondition|狀況條件\nconsequence|後果\ncontent|內容\ncontext|背景脈絡\ncontrast|對比\nconvenience|便利\ncriticism|批評\ndecision|決定\ndefinition|定義\ndegree|程度學位\ndestiny|命運\ndetail|細節\ndifference|差異\ndifficulty|困難\ndimension|維度\ndoubt|懷疑\nduration|持續時間\neffect|效果\nelement|元素\nemphasis|重點\nerror|錯誤\nessence|本質\nevaluation|評價\nexception|例外\nexperience|經驗\nexpression|表達\nextent|程度範圍\nfailure|失敗\nfaith|信念信仰\nfeature|特色\nformula|公式\nfoundation|基礎地基\nframework|架構\nfunction|功能\ngap|差距\nguideline|準則\nhabit|習慣\nharmony|和諧\nhint|暗示\nhonor|榮譽\nhypothesis|假設\nimpact|衝擊\nimplication|涵義\nimportance|重要性\nimpression|印象\nimprovement|改進\nincident|事件\nindication|跡象\ninformation|資訊\ninitiative|主動權\ninsight|洞察力\ninstance|實例\ninstruction|指示\nissue|議題\nitem|項目\nknowledge base|知識\nlimitation|限制\nlogic|邏輯\nluck|運氣\nmethod|方法\nmission|任務使命\nmotive|動機\nnecessity|必要\nobstacle|障礙物\noccasion|場合\nopportunity|機會\noption|選項\norigin|起源\noutcome|結果\noverview|概觀\npace|步調\npassion|熱情\nperspective|觀點\nphase|階段\nphenomenon|現象\nphilosophy|哲學\npleasure|愉悅\npotential|潛力\npriority|優先事項\nprinciple|原則\nprocess|過程\npurpose|目的\nquantity|數量\nrange|範圍\nreality|現實\nrecognition|認可\nreference|參考\nreputation|名聲\nreserve|保留\nresistance|抵抗\nresponse|回應\nrestriction|限制\nrevolution change|革新\nroutine|例行公事\nscope|範疇\nsequence|順序\nseries|系列\nsignificance|重要意義\nsituation|情況\nsource|來源\nstability|穩定\nstatus|地位狀態\nstrength|力量優點\nstructure|結構\nstyle|風格\nsubstance|物質\nsuccess|成功\nsuggestion|建議\nsummary|摘要\nsymbol|象徵\ntendency|傾向\ntension|緊張\ntransition|轉變期\ntruth|真相\nunity|團結\nvariety|多樣性\nversion|版本\nvictory|勝利\nviewpoint|觀點\nvirtue|美德\nvision|願景\nweakness|弱點\nwisdom|智慧',
+'常用片語':'give up|放棄\nlook for|尋找\nlook after|照顧\nlook forward to|期待\nlook up|查閱\nturn on|打開\nturn off|關掉\nturn up|調大\nturn down|調小\nput off|延後\nput away|收好\nset up|設立\nshow up|出現\ntake care|照顧\ntake part|參加\ntake place|發生\ntake off clothes|脫下\ntry on|試穿\ntry out|試用\nfind out|查明\nfigure out|想出\nwork out|解決\ncarry on|繼續進行\nget along|相處\nget up|起床\nget back|回來\nget over|克服\nget in|進入\nget out|出去\ngo on|繼續\ngo out|外出\ngo over|複習\nhang out|閒晃\nhold on|等一下\nkeep on|持續\nmake up|編造\nmake sure|確保\npass out|昏倒\nrun out of|用完\nsee off|送行\nstand for|代表\nstand up|站起來\ncome across|偶然遇見\ncome up with|想出\ndeal with problem|處理問題\nfill in|填寫\nfill out|填表\nhand in|繳交\nhand out|發給\nbreak down|故障\nbreak up|分手\nbring up|養育提起\ncall off|取消\ncheck out hotel|退房\ncheer up|振作\nclean up|打掃乾淨\ncut down|減少\ndrop by|順道拜訪\ndrop off|送到\nend up|最後成為\nfall asleep|睡著\nfall in love|墜入愛河\nfeel like|想要\nin a hurry|匆忙\nin fact|事實上\nin order to|為了\non time|準時\nat least|至少\nat last|終於\nat once|立刻\nby the way|順帶一提\nfor example|例如\nfor instance|舉例\nof course|當然\nas well|也\nas soon as|一…就\nas long as|只要\nas if|好像\nno matter|無論\na lot of|許多\na few|一些\na little|一點點\na bit|稍微\nbe able to|能夠\nbe going to|將要\nbe used to|習慣於\nbe supposed to|應該要\nbe about to|正要\nbe afraid of|害怕\nbe good at|擅長\nbe interested in|對…有興趣\nbe proud of|以…為榮\nbe tired of|厭倦\nbe ready for|準備好\nbe late for|遲到\nbe full of|充滿\nbe famous for|以…聞名\nbe different from|不同於\nbe similar to|類似\ndepend on|依賴\nrely on|依靠\nfocus on|專注於\ninsist on|堅持\nagree with|同意某人\napologize for|為…道歉\nthank for|為…感謝\nwait for|等候\nask for|要求\ncare about|在乎\nworry about|擔心\nthink of|想到\nthink about|考慮\ntalk about|談論\nbelong to|屬於\nlisten to|聽\nrefer to|提及\nlead to|導致\naccording to|根據\nbecause of|由於\ninstead of|取代\nin spite of|儘管\nthanks to|多虧\ndue to|由於\nin addition|此外\nin general|一般而言\nin particular|特別是\nin the end|最後\nin the long run|長遠來看\non purpose|故意\non the other hand|另一方面\nonce in a while|偶爾\nsooner or later|遲早\nmore or less|大約\nso far|到目前為止\nright now|現在立刻\nall the time|一直\nevery now and then|偶爾\nonce upon a time|很久很久以前'
+};
+var S2RAW='My name is Amy.|我的名字是艾咪。\nI am ten years old.|我十歲。\nI like apples.|我喜歡蘋果。\nThis is my school.|這是我的學校。\nWhat is your name?|你叫什麼名字?\nHow are you today?|你今天好嗎?\nI am fine, thank you.|我很好,謝謝。\nCan I have some water?|我可以喝一點水嗎?\nI have a cat.|我有一隻貓。\nShe is my teacher.|她是我的老師。\nHe likes to play basketball.|他喜歡打籃球。\nWhere is the library?|圖書館在哪裡?\nIt is sunny today.|今天是晴天。\nI go to school by bus.|我搭公車上學。\nWhat time is it?|現在幾點?\nI get up at seven.|我七點起床。\nLet us play together.|我們一起玩吧。\nPlease open the door.|請開門。\nI am hungry.|我肚子餓了。\nMay I go to the bathroom?|我可以去廁所嗎?\nThis book is very interesting.|這本書很有趣。\nMy birthday is in May.|我的生日在五月。\nDo you like music?|你喜歡音樂嗎?\nI brush my teeth every morning.|我每天早上刷牙。\nSee you tomorrow.|明天見。\nThank you for your help.|謝謝你的幫忙。\nI am sorry I am late.|對不起,我遲到了。\nWhat do you want to eat?|你想吃什麼?\nThe weather is cold.|天氣很冷。\nI can swim.|我會游泳。';
+var P3RAW='Excuse me, where is the restroom?|不好意思,洗手間在哪裡?\nHow much is this?|這個多少錢?\nCould you say that again, please?|可以請你再說一次嗎?\nI would like a cup of coffee.|我想要一杯咖啡。\nCan I pay by credit card?|我可以刷卡嗎?\nDo you speak English?|你會說英文嗎?\nI am looking for the train station.|我在找火車站。\nHow long does it take to get there?|到那裡要多久?\nNice to meet you.|很高興認識你。\nWhat do you do for a living?|你從事什麼工作?\nI am allergic to peanuts.|我對花生過敏。\nCould I have the check, please?|可以幫我結帳嗎?\nIs this seat taken?|這個位子有人坐嗎?\nI would like to book a table for two.|我想訂兩個人的位子。\nWhat do you recommend?|你推薦什麼?\nI have a reservation under the name Lin.|我用林的名字訂了位。\nWhere can I buy a ticket?|我在哪裡可以買票?\nCould you take a picture of us?|可以幫我們拍張照嗎?\nI am sorry, I do not understand.|抱歉,我聽不懂。\nLet me think about it.|讓我想一想。\nThat sounds great!|聽起來很棒!\nI will be right back.|我馬上回來。\nCould you speak more slowly?|可以說慢一點嗎?\nI am not feeling well.|我覺得不太舒服。\nCan you help me, please?|可以請你幫我嗎?\nWhat is the Wi-Fi password?|Wi-Fi 密碼是什麼?\nHave a nice day!|祝你有美好的一天!\nI will take this one.|我要這個。\nDo you have this in a larger size?|這個有大一點的尺寸嗎?\nHow was your weekend?|你週末過得如何?';
+var SCENES=[
+{t:'自我介紹',e:'👋',lines:[
+ {b:'Hi! Nice to meet you. What is your name?',z:'嗨!很高興認識你。你叫什麼名字?',c:[['My name is Amy.',1],['I am five dollars.',0],['Goodbye.',0]]},
+ {b:'How old are you?',z:'你幾歲?',c:[['I am ten years old.',1],['It is Monday.',0],['I like red.',0]]},
+ {b:'Where are you from?',z:'你來自哪裡?',c:[['I am from Taiwan.',1],['I like pizza.',0],['It is raining.',0]]},
+ {b:'What do you like to do?',z:'你喜歡做什麼?',c:[['I like to draw pictures.',1],['Yes, I do.',0],['It is blue.',0]]}]},
+{t:'餐廳點餐',e:'🍔',lines:[
+ {b:'Welcome! Can I take your order?',z:'歡迎光臨!請問要點什麼?',c:[['Yes, I would like a hamburger, please.',1],['I am from Japan.',0],['Good night.',0]]},
+ {b:'Would you like something to drink?',z:'要喝點什麼嗎?',c:[['A glass of orange juice, please.',1],['It is two o\'clock.',0],['This is my bag.',0]]},
+ {b:'Anything else?',z:'還需要別的嗎?',c:[['No, that is all. Thank you.',1],['I am five years old.',0],['The bus is late.',0]]},
+ {b:'That will be one hundred and fifty dollars.',z:'一共是一百五十元。',c:[['Here you are.',1],['Nice weather.',0],['I am sleepy.',0]]}]},
+{t:'問路',e:'🗺',lines:[
+ {b:'Excuse me, can I help you?',z:'不好意思,需要幫忙嗎?',c:[['Yes, where is the station?',1],['I like blue.',0],['Happy birthday.',0]]},
+ {b:'Go straight and turn left at the corner.',z:'直走,在轉角左轉。',c:[['Straight, then left. Thank you!',1],['I do not have a pen.',0],['It is a cat.',0]]},
+ {b:'It is about five minutes on foot.',z:'走路大約五分鐘。',c:[['Great, that is close.',1],['I am a doctor.',0],['Two apples.',0]]},
+ {b:'You are welcome. Have a nice day!',z:'不客氣,祝你有美好的一天!',c:[['You too. Goodbye!',1],['I am hungry.',0],['It is red.',0]]}]},
+{t:'逛街買東西',e:'👕',lines:[
+ {b:'Hello! Are you looking for something?',z:'你好!有想找什麼嗎?',c:[['I am looking for a T-shirt.',1],['I am looking at Monday.',0],['It is raining.',0]]},
+ {b:'What size do you need?',z:'你需要什麼尺寸?',c:[['Medium, please.',1],['Five o\'clock.',0],['I am a student.',0]]},
+ {b:'This one is five hundred dollars.',z:'這件五百元。',c:[['Do you have a cheaper one?',1],['I have two sisters.',0],['I am sleepy.',0]]},
+ {b:'Sure. How about this one for three hundred?',z:'有的。這件三百元怎麼樣?',c:[['Great. I will take it.',1],['Good morning.',0],['I can swim.',0]]}]},
+{t:'機場報到',e:'✈',lines:[
+ {b:'Good morning. May I see your passport?',z:'早安。可以看一下你的護照嗎?',c:[['Here you go.',1],['I am hungry.',0],['The flower is red.',0]]},
+ {b:'Do you have any bags to check in?',z:'有行李要託運嗎?',c:[['Yes, just one suitcase.',1],['I like soccer.',0],['I am fine, thanks.',0]]},
+ {b:'Would you like a window seat or an aisle seat?',z:'你要靠窗還是走道的位子?',c:[['A window seat, please.',1],['My name is Tom.',0],['It is cold.',0]]},
+ {b:'Here is your boarding pass. Your gate is number twelve.',z:'這是登機證,登機門是十二號。',c:[['Thank you very much.',1],['I am five.',0],['I have a dog.',0]]}]},
+{t:'看醫生',e:'🏥',lines:[
+ {b:'Hello. What seems to be the problem?',z:'你好,哪裡不舒服?',c:[['I have a headache.',1],['I like cake.',0],['Two dollars.',0]]},
+ {b:'How long have you had it?',z:'這樣多久了?',c:[['Since yesterday.',1],['In the kitchen.',0],['Yes, I am a student.',0]]},
+ {b:'Do you have a fever?',z:'有發燒嗎?',c:[['A little bit.',1],['It is blue.',0],['I am at school.',0]]},
+ {b:'Take this medicine and get some rest.',z:'吃這個藥,多休息。',c:[['Thank you, doctor.',1],['I am a cat.',0],['Let us play ball.',0]]}]}
+];
+// ===== 音標(KK/美式)=====
+var IPA=[
+['母音(短)',[
+['ɪ','嘴巴放鬆、比「一」短而輕,像很短的「衣」','sit,big,ship'],
+['e','嘴巴張中等,像短的「欸」','bed,red,pen'],
+['æ','嘴巴張大、嘴角往兩邊,介於「欸」和「啊」','cat,hat,apple'],
+['ʌ','嘴巴放鬆,像短而輕的「啊」','cup,bus,love'],
+['ɑ','嘴巴張大,像「啊」','hot,box,clock'],
+['ʊ','嘴唇微圓,短而輕的「烏」','book,good,put'],
+['ə','最輕的聲音,幾乎不用力,像「呃」','about,banana,teacher']]],
+['母音(長)',[
+['iː','嘴角往兩邊拉開,拉長的「衣」','see,eat,sheep'],
+['ɔ','嘴巴圓、張大,像「喔」往下','door,four,ball'],
+['uː','嘴唇用力噘圓,拉長的「烏」','blue,food,moon'],
+['ɜr','舌頭往後捲,像「兒」','bird,girl,work']]],
+['雙母音',[
+['eɪ','從「欸」滑到「衣」','day,cake,rain'],
+['aɪ','從「啊」滑到「衣」','my,bike,time'],
+['ɔɪ','從「喔」滑到「衣」','boy,toy,coin'],
+['aʊ','從「啊」滑到「烏」','now,house,cow'],
+['oʊ','從「喔」滑到「烏」','go,home,boat'],
+['ɪr','「衣」加捲舌','ear,here,beer'],
+['er','「欸」加捲舌','air,hair,chair']]],
+['子音(用力才出聲)',[
+['p','雙唇閉緊再爆開,手放嘴前會感到一陣風','pen,apple,cup'],
+['t','舌尖頂上牙齦,放開時送氣','tea,table,cat'],
+['k','舌根頂住,再爆開','key,cake,book'],
+['f','上牙輕咬下唇,吹氣','fish,coffee,leaf'],
+['θ','舌尖放在上下牙中間,吹氣(不震動)','think,three,mouth'],
+['s','牙齒靠近,舌頭不碰牙,吹出「絲」','sun,bus,sister'],
+['ʃ','嘴唇圓起來,吹「噓」','she,ship,fish'],
+['tʃ','像「七」,舌尖先頂再放','chair,watch,lunch'],
+['h','像哈氣,從喉嚨吹出','hat,hello,home']]],
+['子音(會震動喉嚨)',[
+['b','雙唇閉緊再爆開,喉嚨會震','ball,baby,job'],
+['d','舌尖頂上牙齦,喉嚨會震','dog,red,day'],
+['g','舌根頂住再放開,喉嚨會震','go,egg,big'],
+['v','上牙輕咬下唇,喉嚨會震','very,love,van'],
+['ð','舌尖放在牙齒中間,喉嚨會震','this,that,mother'],
+['z','和 s 一樣的嘴型,但喉嚨會震','zoo,easy,nose'],
+['ʒ','和 ʃ 一樣的嘴型,但喉嚨會震','vision,usual,television'],
+['dʒ','像「居」,喉嚨會震','juice,jump,orange']]],
+['鼻音、邊音、半母音',[
+['m','雙唇閉起,聲音從鼻子出來','mom,milk,name'],
+['n','舌尖頂上牙齦,聲音從鼻子出來','no,nine,sun'],
+['ŋ','舌根頂住,聲音從鼻子出來(不發 g)','sing,long,morning'],
+['l','舌尖頂上牙齦,聲音從舌頭兩側出來','love,milk,ball'],
+['r','舌頭往後捲但不碰上顎,嘴唇微圓','red,run,car'],
+['w','嘴唇圓起,像「烏」再快速打開','water,window,week'],
+['j','像「衣」開頭,快速滑出','yes,yellow,you']]]
+];
+// ===== 文法 =====
+// lv: 1幼兒 2小學國中 3大人 ; ex: 例句 ; q: [題目, [選項], 答案索引]
+var GRAMMAR=[
+{lv:1,t:'a 和 an',e:'🍎',d:'東西「一個」要加 a 或 an。聽起來是母音(a, e, i, o, u 的聲音)開頭,用 an;其他用 a。',ex:['a cat|一隻貓','an apple|一顆蘋果','a dog|一隻狗','an egg|一顆蛋'],q:[['___ orange',['a','an'],1],['___ banana',['a','an'],0],['___ umbrella',['a','an'],1]]},
+{lv:1,t:'I am / You are',e:'🙋',d:'I(我)搭配 am,You(你)搭配 are,he/she/it(他/她/它)搭配 is。',ex:['I am Amy.|我是艾咪。','You are my friend.|你是我的朋友。','He is tall.|他很高。','She is happy.|她很開心。'],q:[['I ___ a student.',['am','is','are'],0],['You ___ nice.',['am','is','are'],2],['She ___ my mom.',['am','is','are'],1]]},
+{lv:1,t:'this 和 that',e:'👉',d:'this 是「這個」(在身邊);that 是「那個」(在遠處)。',ex:['This is a book.|這是一本書。','That is a bird.|那是一隻鳥。','This is my bag.|這是我的包包。','That is your hat.|那是你的帽子。'],q:[['(在手上) ___ is a ball.',['This','That'],0],['(在遠處) ___ is a tree.',['This','That'],1]]},
+{lv:1,t:'一個和很多個(複數)',e:'🐱',d:'多於一個的東西,通常在後面加 s。特別的:child → children,man → men,foot → feet。',ex:['one cat, two cats|一隻貓、兩隻貓','one box, two boxes|盒子要加 es','one child, two children|小孩是特別的','one foot, two feet|腳是特別的'],q:[['two ___',['dog','dogs'],1],['three ___',['box','boxes'],1],['two ___',['child','children'],1]]},
+{lv:2,t:'現在簡單式(每天的習慣)',e:'⏰',d:'說習慣、事實用原形動詞。主詞是 he / she / it(第三人稱單數)時,動詞要加 s 或 es。否定用 do not / does not,問句用 Do / Does。',ex:['I get up at seven.|我七點起床。','She goes to school by bus.|她搭公車上學。','He does not like milk.|他不喜歡牛奶。','Do you play basketball?|你打籃球嗎?'],q:[['She ___ English every day.',['study','studies','studying'],1],['They ___ to school.',['go','goes','going'],0],['He ___ not like fish.',['do','does','is'],1]]},
+{lv:2,t:'現在進行式(正在做)',e:'🏃',d:'「現在正在做」用 be 動詞 + 動詞ing:am / is / are + V-ing。',ex:['I am reading a book.|我正在看書。','She is cooking dinner.|她正在煮晚餐。','They are playing outside.|他們正在外面玩。','What are you doing?|你在做什麼?'],q:[['He is ___ now.',['run','running','runs'],1],['We ___ watching TV.',['is','am','are'],2],['I am ___ a letter.',['write','writing','writes'],1]]},
+{lv:2,t:'過去簡單式(已經發生)',e:'📅',d:'過去發生的事用過去式。規則動詞加 ed(played, walked);不規則要背(go → went, eat → ate, see → saw)。否定用 did not + 原形。',ex:['I played soccer yesterday.|我昨天踢足球。','She went to Japan last year.|她去年去了日本。','We ate pizza last night.|我們昨晚吃披薩。','He did not come to school.|他沒來學校。'],q:[['Yesterday I ___ to the park.',['go','went','going'],1],['She ___ a movie last night.',['watch','watched','watches'],1],['He did not ___ the answer.',['know','knew','known'],0]]},
+{lv:2,t:'未來式 will / be going to',e:'🚀',d:'將要做的事:will + 原形動詞,或 be going to + 原形動詞。已經決定好的計畫常用 be going to。',ex:['I will call you tomorrow.|我明天會打給你。','It will rain tonight.|今晚會下雨。','We are going to visit Grandma.|我們要去看奶奶。','I am going to study English.|我打算學英文。'],q:[['Tomorrow I ___ visit my friend.',['will','did','am'],0],['She is going to ___ a cake.',['make','made','makes'],0],['They ___ going to travel.',['is','are','am'],1]]},
+{lv:2,t:'can 和 must(助動詞)',e:'💪',d:'can 表示「會、可以」;must 表示「必須」。後面都接原形動詞,而且動詞不加 s。否定:cannot / must not。',ex:['I can swim.|我會游泳。','Can I go to the toilet?|我可以去廁所嗎?','You must wear a helmet.|你必須戴安全帽。','You must not run here.|你不可以在這裡跑。'],q:[['She can ___ the piano.',['play','plays','playing'],0],['You ___ not cross the red light.',['can','must','will'],1]]},
+{lv:2,t:'問句:Who / What / Where / When / Why / How',e:'❓',d:'疑問詞放在句子開頭:Who 誰,What 什麼,Where 哪裡,When 何時,Why 為什麼,How 如何。',ex:['Who is she?|她是誰?','What is your name?|你叫什麼名字?','Where do you live?|你住哪裡?','Why are you late?|你為什麼遲到?'],q:[['___ is the library? 在轉角。',['Who','Where','Why'],1],['___ do you go to school? 搭公車。',['What','Why','How'],2],['___ is your birthday? 五月。',['When','Where','Who'],0]]},
+{lv:2,t:'in / on / at(時間和地點)',e:'📍',d:'時間:at + 幾點(at 7:00),on + 星期或日期(on Monday),in + 月份、年、季節(in May)。地點:at 在某一點,in 在裡面,on 在上面。',ex:['at seven o\'clock|在七點','on Sunday|在星期日','in July|在七月','The cat is on the table.|貓在桌子上。'],q:[['I get up ___ 6:30.',['in','on','at'],2],['My birthday is ___ May.',['in','on','at'],0],['See you ___ Monday.',['in','on','at'],1]]},
+{lv:2,t:'比較級和最高級',e:'📏',d:'比較兩個:形容詞 + er(taller)或 more + 長形容詞(more beautiful),後面用 than。最高級:the + est(the tallest)或 the most + 形容詞。',ex:['He is taller than me.|他比我高。','This book is more interesting than that one.|這本書比那本有趣。','She is the smartest in my class.|她是我們班最聰明的。','Today is the hottest day.|今天是最熱的一天。'],q:[['An elephant is ___ than a dog.',['big','bigger','biggest'],1],['This is the ___ cake.',['good','better','best'],2],['Math is ___ difficult than English.',['more','most','much'],0]]},
+{lv:2,t:'There is / There are',e:'🏠',d:'說「有…在那裡」:單數東西用 there is,複數用 there are。',ex:['There is a cat on the sofa.|沙發上有一隻貓。','There are two eggs in the box.|盒子裡有兩顆蛋。','Is there a bank near here?|這附近有銀行嗎?','There are not any apples.|沒有蘋果。'],q:[['There ___ three books.',['is','are'],1],['There ___ a pen on the desk.',['is','are'],0]]},
+{lv:3,t:'現在完成式',e:'✅',d:'have / has + 過去分詞。說「到現在為止的經驗」或「過去開始、影響到現在」的事。常和 already, yet, ever, never, for, since 一起用。',ex:['I have lived here for ten years.|我住在這裡十年了。','She has never been to Japan.|她從來沒去過日本。','Have you eaten yet?|你吃了嗎?','They have already left.|他們已經離開了。'],q:[['I ___ finished my homework.',['have','has','had'],0],['He has ___ to Paris twice.',['be','been','being'],1],['We have known her ___ 2015.',['for','since','during'],1]]},
+{lv:3,t:'條件句(if)',e:'🔀',d:'真實可能:If + 現在式, will + 原形(If it rains, I will stay home)。不太可能或假設:If + 過去式, would + 原形(If I had money, I would buy a car)。',ex:['If it rains, we will stay home.|如果下雨,我們就待在家。','If I were you, I would apologize.|如果我是你,我會道歉。','If you study hard, you will pass.|如果你用功,就會通過。','If I won the lottery, I would travel.|如果我中獎,我會去旅行。'],q:[['If I ___ rich, I would help people.',['am','were','will be'],1],['If she comes, we ___ start.',['will','would','did'],0]]},
+{lv:3,t:'被動語態',e:'🔄',d:'強調動作的承受者:be + 過去分詞(+ by 做事的人)。The cake was made by my mom.',ex:['English is spoken all over the world.|全世界都說英文。','The window was broken yesterday.|窗戶昨天被打破了。','The report will be finished tomorrow.|報告明天會完成。','My phone was stolen.|我的手機被偷了。'],q:[['The room ___ cleaned every day.',['is','are','does'],0],['This song ___ written by Amy.',['was','were','did'],0],['The letters ___ sent yesterday.',['was','were','are'],1]]},
+{lv:3,t:'關係代名詞 who / which / that',e:'🔗',d:'用來把兩句話連成一句,補充說明名詞。人用 who,物用 which,人或物都可用 that。',ex:['The girl who is singing is my sister.|正在唱歌的女孩是我姊姊。','This is the book which I bought.|這是我買的那本書。','I know a man that speaks five languages.|我認識一個會說五種語言的人。','The shop that sells bread is closed.|賣麵包的店關了。'],q:[['The man ___ lives next door is a doctor.',['who','which','what'],0],['This is the phone ___ I lost.',['who','which','whose'],1]]},
+{lv:3,t:'情態動詞:should / could / might',e:'🤔',d:'should 建議(應該);could 禮貌請求或過去的能力;might 可能(機率低)。後面都接原形動詞。',ex:['You should see a doctor.|你應該去看醫生。','Could you help me, please?|可以請你幫我嗎?','It might rain later.|待會兒可能會下雨。','You should not stay up late.|你不該熬夜。'],q:[['___ you open the window, please?',['Should','Could','Might'],1],['You look tired. You ___ rest.',['should','might','did'],0]]},
+{lv:3,t:'間接引述(轉述別人的話)',e:'💬',d:'轉述時,時態往前一步:現在 → 過去,will → would。He said that he was tired.',ex:['She said that she was busy.|她說她很忙。','He told me that he would come.|他告訴我他會來。','I asked her where she lived.|我問她住哪裡。','They said they had finished.|他們說他們做完了。'],q:[['He said, "I am hungry." → He said he ___ hungry.',['is','was','will be'],1],['She said, "I will call." → She said she ___ call.',['will','would','did'],1]]},
+{lv:3,t:'常見搭配:時間連接詞',e:'⏳',d:'when 當…的時候,while 在…期間,before 在…之前,after 在…之後,until 直到。連接詞後面接完整的句子。',ex:['Call me when you arrive.|你到的時候打給我。','I read a book while I waited.|我邊等邊看書。','Wash your hands before you eat.|吃飯前要洗手。','Wait here until I come back.|在這裡等到我回來。'],q:[['Brush your teeth ___ you go to bed.',['before','until','while'],0],['I was cooking ___ the phone rang.',['when','until','after'],0]]}
+];
+// ===== 閱讀 =====
+// s: 句子 'en|zh'  q: [題目, [選項], 答案索引]
+var READING=[
+{lv:1,t:'My Cat',e:'🐱',s:['I have a cat.|我有一隻貓。','Her name is Mimi.|她的名字叫咪咪。','She is white.|她是白色的。','She likes fish and milk.|她喜歡魚和牛奶。','I love my cat.|我愛我的貓。'],q:[['What color is Mimi?',['white','black','brown'],0],['What does Mimi like?',['rice','fish and milk','apples'],1]]},
+{lv:1,t:'My Day',e:'☀️',s:['I get up at seven.|我七點起床。','I eat breakfast.|我吃早餐。','I go to school by bus.|我搭公車上學。','I play with my friends.|我和朋友玩。','I go to bed at nine.|我九點睡覺。'],q:[['How does the child go to school?',['by bus','by bike','on foot'],0],['When does the child go to bed?',['at seven','at nine','at ten'],1]]},
+{lv:1,t:'The Park',e:'🌳',s:['It is sunny today.|今天是晴天。','We go to the park.|我們去公園。','I see many birds.|我看到很多鳥。','My dad flies a kite.|爸爸放風箏。','We are very happy.|我們很開心。'],q:[['How is the weather?',['rainy','sunny','cold'],1],['What does dad do?',['flies a kite','swims','reads'],0]]},
+{lv:2,t:'Tom\'s Birthday',e:'🎂',s:['Today is Tom\'s birthday. He is twelve years old.|今天是湯姆的生日,他十二歲。','His mother made a big chocolate cake.|他媽媽做了一個大巧克力蛋糕。','Many friends came to his party.|很多朋友來參加他的派對。','They sang a song and played games.|他們唱歌、玩遊戲。','Tom said, "This is the best birthday ever!"|湯姆說:「這是最棒的生日!」'],q:[['How old is Tom?',['ten','eleven','twelve'],2],['What did his mother make?',['a pizza','a chocolate cake','cookies'],1]]},
+{lv:2,t:'Recycling',e:'♻️',s:['Every family makes a lot of trash.|每個家庭都製造很多垃圾。','We can help the earth by recycling.|我們可以用回收來幫助地球。','Paper, bottles and cans can be used again.|紙、瓶子和罐子可以再利用。','Please bring your own bag when you shop.|購物時請自己帶袋子。','Small actions can make a big difference.|小小的行動可以帶來大大的改變。'],q:[['What can we do to help the earth?',['recycle','waste water','cut trees'],0],['What should you bring when shopping?',['your own bag','a toy','a book'],0]]},
+{lv:2,t:'A Rainy Day',e:'🌧️',s:['It was raining hard on Saturday morning.|星期六早上雨下得很大。','Lisa could not go to the park.|麗莎不能去公園。','So she stayed home and read a book.|所以她待在家看書。','In the afternoon, she baked cookies with her brother.|下午,她和弟弟一起烤餅乾。','It turned out to be a nice day after all.|結果這還是美好的一天。'],q:[['Why could Lisa not go to the park?',['It was raining.','She was sick.','She was tired.'],0],['What did she do in the afternoon?',['baked cookies','slept','played soccer'],0]]},
+{lv:3,t:'Working From Home',e:'💻',s:['More and more people work from home these days.|現在越來越多人在家工作。','It saves time because there is no long commute.|這樣可以省時間,因為不用長途通勤。','However, it can be hard to separate work from personal life.|然而,要把工作和私人生活分開可能很難。','Experts suggest setting a fixed schedule and a quiet workspace.|專家建議訂出固定的時間表和安靜的工作空間。','Taking short breaks also helps you stay focused.|短暫休息也能幫助你保持專注。'],q:[['What is one advantage of working from home?',['no long commute','higher pay','more meetings'],0],['What do experts suggest?',['a fixed schedule','working at night','no breaks'],0]]},
+{lv:3,t:'Healthy Habits',e:'🥗',s:['Staying healthy does not have to be complicated.|保持健康不必很複雜。','Try to sleep seven to eight hours every night.|盡量每晚睡七到八小時。','Eat plenty of vegetables and drink enough water.|多吃蔬菜、喝足夠的水。','Even a thirty-minute walk each day can improve your mood.|每天走三十分鐘就能改善心情。','Small, steady habits matter more than extreme diets.|小而穩定的習慣比極端的節食更重要。'],q:[['How much sleep is recommended?',['seven to eight hours','four hours','ten hours'],0],['What matters more than extreme diets?',['steady habits','expensive food','long workouts'],0]]},
+{lv:3,t:'Traveling Alone',e:'✈️',s:['Traveling alone can be exciting and a little scary.|獨自旅行既刺激又有點可怕。','You can decide everything by yourself, from food to schedules.|從食物到行程,一切都由你自己決定。','You also meet new people more easily.|你也更容易認識新朋友。','Still, safety comes first, so share your plans with family.|不過安全第一,所以要把計畫告訴家人。','Many people say it changed the way they see the world.|很多人說這改變了他們看世界的方式。'],q:[['What comes first when traveling alone?',['safety','shopping','sleeping'],0],['What is one benefit?',['meeting new people','cheaper hotels','no planning at all'],0]]}
+];
+// ===== 英文俚語/成語 =====
+var IDIOMS=[
+'Piece of cake|小菜一碟、很簡單|The test was a piece of cake.',
+'Break a leg|祝你好運(表演前)|Break a leg at your show tonight!',
+'Hit the books|用功讀書|I have to hit the books tonight.',
+'Under the weather|身體不舒服|I am feeling under the weather today.',
+'Once in a blue moon|很難得、千載難逢|We eat out once in a blue moon.',
+'Spill the beans|洩漏秘密|Who spilled the beans about the party?',
+'Let the cat out of the bag|不小心說出秘密|He let the cat out of the bag.',
+'Cost an arm and a leg|非常昂貴|That phone cost an arm and a leg.',
+'Bite the bullet|硬著頭皮面對|I will just bite the bullet and call him.',
+'Call it a day|今天就到此為止|We are tired, so let us call it a day.',
+'Hit the sack|去睡覺|I am exhausted. I am going to hit the sack.',
+'It is raining cats and dogs|下傾盆大雨|Take an umbrella. It is raining cats and dogs.',
+'The ball is in your court|換你做決定了|I gave my offer. The ball is in your court.',
+'Kill two birds with one stone|一石二鳥|Walking to work kills two birds with one stone.',
+'A blessing in disguise|因禍得福|Losing that job was a blessing in disguise.',
+'Better late than never|遲到總比不到好|You finally came. Better late than never!',
+'Actions speak louder than words|行動勝於言語|Show me. Actions speak louder than words.',
+'Beat around the bush|拐彎抹角|Stop beating around the bush and tell me.',
+'Get out of hand|失控|The party got out of hand.',
+'Go the extra mile|多付出一點努力|She always goes the extra mile for customers.',
+'Hang in there|撐下去、加油|Hang in there. It will get better.',
+'In the same boat|處境相同|We are all in the same boat.',
+'Keep an eye on|留意、看著|Please keep an eye on my bag.',
+'Learn the ropes|學會訣竅、熟悉環境|It takes a month to learn the ropes.',
+'Make up your mind|下定決心|You need to make up your mind soon.',
+'On the same page|看法一致|Let us make sure we are on the same page.',
+'Pull someone\'s leg|開玩笑、逗人|Relax, I am just pulling your leg.',
+'Read between the lines|讀出言外之意|You have to read between the lines.',
+'See eye to eye|意見一致|We do not always see eye to eye.',
+'Sleep on it|睡一覺再決定|Let me sleep on it and tell you tomorrow.',
+'Take it easy|放輕鬆|Take it easy. Everything is fine.',
+'The last straw|最後的一根稻草|His lie was the last straw.',
+'Time flies|時間過得真快|Time flies when you are having fun.',
+'Cross your fingers|祈禱好運|Cross your fingers for me!',
+'Easier said than done|說起來容易做起來難|Quitting sugar is easier said than done.',
+'Out of the blue|突然、出乎意料|She called me out of the blue.',
+'Rule of thumb|大致的原則|As a rule of thumb, drink eight glasses of water.',
+'Speak of the devil|說曹操曹操就到|Speak of the devil! Here he comes.',
+'Stay on top of|掌握、不落後|I try to stay on top of my homework.',
+'The tip of the iceberg|冰山一角|This problem is just the tip of the iceberg.',
+'Think outside the box|跳脫框架思考|We need to think outside the box.',
+'Turn over a new leaf|重新做人、改過自新|He turned over a new leaf this year.',
+'Up in the air|懸而未決|Our plans are still up in the air.',
+'Walk on eggshells|如履薄冰、小心翼翼|I walk on eggshells around my boss.',
+'You can say that again|你說得對極了|"It is hot!" "You can say that again!"',
+'A piece of advice|一個建議|Let me give you a piece of advice.',
+'Add fuel to the fire|火上加油|Do not add fuel to the fire.',
+'Back to square one|回到原點|The plan failed, so we are back to square one.',
+'Burn the midnight oil|熬夜工作或讀書|He burned the midnight oil before the exam.',
+'Cut corners|偷工減料|Do not cut corners on safety.',
+'Get cold feet|臨陣退縮|She got cold feet before the wedding.'
+];
+// ===== 中文歇後語 → 英文說法 =====
+// 前半|後半(意思)|白話意思|英文說法
+var XIEHOUYU=[
+'小蔥拌豆腐|一清二白|清清楚楚、毫無問題|crystal clear',
+'啞巴吃黃連|有苦說不出|心裡難受卻無法表達|suffer in silence',
+'竹籃打水|一場空|白費力氣|all for nothing',
+'雞蛋裡挑骨頭|故意找麻煩|故意挑毛病|nitpicking',
+'豬八戒照鏡子|裡外不是人|怎麼做都不討好|damned if you do, damned if you don\'t',
+'擀麵杖吹火|一竅不通|完全不懂|clueless',
+'狗咬呂洞賓|不識好人心|不懂別人的好意|not knowing a good heart',
+'黃鼠狼給雞拜年|沒安好心|別有用心|up to no good',
+'王婆賣瓜|自賣自誇|自己誇讚自己的東西|praising your own goods',
+'瞎子點燈|白費蠟|白白浪費|a waste of effort',
+'八仙過海|各顯神通|每個人各有本事|everyone shows their own talent',
+'趕鴨子上架|被逼著做|被迫去做不會的事|forced to do something',
+'紙老虎|外強中乾|看起來強,其實不行|paper tiger',
+'八哥學舌|人云亦云|別人說什麼自己也說什麼|parroting others',
+'癩蛤蟆想吃天鵝肉|痴心妄想|不切實際的願望|wishful thinking',
+'肉包子打狗|有去無回|一去不回|gone for good',
+'秀才遇到兵|有理說不清|道理講不通|cannot reason with them',
+'鐵公雞|一毛不拔|非常吝嗇|very stingy',
+'對牛彈琴|白費力氣|對不懂的人說道理毫無用處|talking to a wall',
+'飛蛾撲火|自取滅亡|自己找死路|courting disaster',
+'泥菩薩過江|自身難保|自己都顧不了|cannot even save myself',
+'腳底抹油|溜之大吉|偷偷跑掉|slip away',
+'打翻醋罈子|吃醋|嫉妒|feeling jealous',
+'三個臭皮匠|勝過諸葛亮|大家集思廣益勝過一個聰明人|two heads are better than one',
+'吃了秤砣|鐵了心|下定決心不改變|made up my mind',
+'騎驢看唱本|走著瞧|以後再看結果|we will see',
+'外甥打燈籠|照舊(舅)|跟以前一樣|same as before',
+'孔夫子搬家|盡是書(輸)|常常輸|always losing',
+'兔子尾巴|長不了|不會持續太久|will not last',
+'老鼠過街|人人喊打|大家都討厭|everyone hates it',
+'眼睛長在頭頂上|目中無人|瞧不起別人|looking down on everyone',
+'打破砂鍋|問(紋)到底|追根究柢|ask until the end',
+'螞蟻啃骨頭|慢慢來|一點一點完成|take it slowly',
+'黃連樹下彈琴|苦中作樂|在困難中找樂趣|find joy in hardship'
+];
+// ===== 生活小老師:生活情境 =====
+// p: 重點句 'en|zh'
+var LIFE=[
+{e:'🛒',t:'超商買東西',g:'在便利商店結帳、問價格、要袋子',p:['How much is this?|這個多少錢?','Do you have a bag?|有袋子嗎?','Can I pay by card?|可以刷卡嗎?','Do you need a receipt?|需要發票嗎?']},
+{e:'🍽️',t:'餐廳點餐',g:'看菜單、點餐、請服務生幫忙',p:['Can I see the menu?|我可以看菜單嗎?','I would like the chicken, please.|我要點雞肉,謝謝。','Could we have the check?|可以幫我們結帳嗎?','Is it spicy?|會辣嗎?']},
+{e:'🚌',t:'搭車問路',g:'問路、問車站、問怎麼搭',p:['Excuse me, where is the station?|請問車站在哪?','How can I get to the airport?|我要怎麼去機場?','Does this bus go to downtown?|這班公車到市中心嗎?','Is it far from here?|離這裡遠嗎?']},
+{e:'🏨',t:'旅館入住',g:'辦理入住、要東西、退房',p:['I have a reservation.|我有訂房。','Could I have extra towels?|可以多給我幾條毛巾嗎?','What time is check-out?|幾點退房?','What is the Wi-Fi password?|無線網路密碼是什麼?']},
+{e:'👋',t:'自我介紹和閒聊',g:'認識新朋友、聊天',p:['Nice to meet you.|很高興認識你。','Where are you from?|你從哪裡來?','What do you do?|你做什麼工作?','I enjoy cooking and traveling.|我喜歡做菜和旅行。']},
+{e:'📞',t:'打電話',g:'打電話訂位、找人、留言',p:['May I speak to Mr. Lin?|我可以找林先生嗎?','Could you hold on, please?|請稍等一下好嗎?','Can I leave a message?|我可以留言嗎?','Sorry, I have the wrong number.|抱歉,我打錯了。']},
+{e:'🏥',t:'看醫生',g:'說明哪裡不舒服',p:['I have a headache.|我頭痛。','I have had a fever since yesterday.|我從昨天開始發燒。','How often should I take this medicine?|這藥多久吃一次?','Is it serious?|嚴重嗎?']},
+{e:'🛍️',t:'逛街買衣服',g:'試穿、問尺寸、殺價',p:['Can I try this on?|我可以試穿嗎?','Do you have a bigger size?|有大一點的嗎?','Do you have it in blue?|有藍色的嗎?','Can you give me a discount?|可以算便宜一點嗎?']},
+{e:'💼',t:'職場會議與信件',g:'工作上的說法',p:['Could you send me the file?|可以把檔案寄給我嗎?','Let us get started.|我們開始吧。','I will get back to you by Friday.|我星期五前回覆你。','Thank you for your time.|謝謝你的時間。']},
+{e:'👨‍👩‍👧',t:'和家人朋友聊天',g:'日常關心、邀約',p:['How was your day?|你今天過得如何?','Do you want to hang out this weekend?|這週末要出去玩嗎?','I am sorry I am late.|對不起我遲到了。','Thanks for inviting me.|謝謝你邀請我。']},
+{e:'🏫',t:'在學校',g:'和老師同學互動',p:['May I ask a question?|我可以問個問題嗎?','Could you repeat that, please?|可以請你再說一次嗎?','I do not understand.|我不懂。','Can I borrow your pen?|我可以借你的筆嗎?']},
+{e:'✈️',t:'機場和海關',g:'報到、過海關、問登機門',p:['Where is the check-in counter?|報到櫃檯在哪?','I am here for vacation.|我是來度假的。','I will stay for one week.|我會待一週。','Which gate is it?|是幾號登機門?']},
+{e:'🏦',t:'銀行和郵局',g:'辦事情',p:['I would like to open an account.|我想開戶。','How long will it take?|要花多久?','I want to send this to Taiwan.|我想把這個寄到台灣。','Could you fill out this form?|可以請你填這張表嗎?']},
+{e:'🎉',t:'參加派對',g:'打招呼、聊天、道謝',p:['Thank you for having me.|謝謝你邀請我。','This food is delicious!|這食物好好吃!','Can I get you something to drink?|我幫你拿點喝的好嗎?','I had a great time.|我玩得很開心。']},
+{e:'🆘',t:'遇到麻煩求助',g:'東西不見、需要幫忙',p:['I lost my wallet.|我的皮夾不見了。','Could you help me, please?|可以請你幫我嗎?','Call the police, please.|請幫我報警。','I need a doctor.|我需要醫生。']},
+{e:'🎓',t:'面試',g:'求職面試的常用說法',p:['Thank you for this opportunity.|謝謝你給我這個機會。','I have two years of experience.|我有兩年經驗。','My strength is teamwork.|我的優點是團隊合作。','When can I expect to hear from you?|我何時可以收到回覆?']}
+];
+
+// ===== 基本 =====
+// ===== 瀏覽器模式(手機網頁版):用瀏覽器內建的語音;AI 直接呼叫 Gemini =====
+var GEM_MODELS=['gemini-3.5-flash-lite','gemini-3.1-flash-lite','gemini-3.6-flash','gemini-2.5-flash'];
+function geminiAsk(system,msgsJson,key,model,cb){
+  var msgs=JSON.parse(msgsJson),contents=[];
+  msgs.forEach(function(m){contents.push({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]});});
+  var list=model?[model]:GEM_MODELS.slice(),idx=0,lastErr='';
+  (function next(){
+    if(idx>=list.length){cb(null,'AI 老師暫時連不上:'+lastErr);return;}
+    var m=list[idx++];
+    var body=JSON.stringify({systemInstruction:{parts:[{text:system}]},contents:contents,generationConfig:{maxOutputTokens:800,temperature:0.7}});
+    fetch('https://generativelanguage.googleapis.com/v1beta/models/'+m+':generateContent',{method:'POST',headers:{'content-type':'application/json','x-goog-api-key':key},body:body})
+    .then(function(r){return r.json().then(function(j){return {s:r.status,j:j};});})
+    .then(function(x){
+      if(x.s>=200&&x.s<300){
+        var t='';try{x.j.candidates[0].content.parts.forEach(function(p){if(p.text)t+=p.text;});}catch(e){}
+        t=t.trim();if(t)cb(t,null);else{lastErr='沒有回應內容';next();}
+      }else{
+        lastErr=(x.j&&x.j.error&&x.j.error.message)?x.j.error.message:('代碼 '+x.s);
+        if(x.s===400&&/API key/i.test(lastErr)){cb(null,'Gemini 金鑰不正確,請到「🔑 AI 設定」重新貼上');return;}
+        if(x.s===403){cb(null,'Gemini 金鑰沒有權限,請確認金鑰是否正確');return;}
+        next();
+      }
+    }).catch(function(e){lastErr=String(e);next();});
+  })();
+}
+function makeBrowserBridge(){
+  var rec=null,stopped=false;
+  return {
+    speak:function(t,r,id){this.speakL(t,r,id,'en-US');},
+    speakL:function(text,rate,id,lang){
+      if(!window.speechSynthesis){setTimeout(function(){window.onSpoken(id);},50);return;}
+      try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(text);u.lang=lang;u.rate=rate;var d=false;var fin=function(){if(!d){d=true;window.onSpoken(id);}};u.onend=fin;u.onerror=fin;speechSynthesis.speak(u);
+        setTimeout(fin,Math.max(4000,text.length*400));}catch(e){window.onSpoken(id);}
+    },
+    listen:function(){this.listenL('en-US');},
+    listenL:function(lang){
+      var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+      if(!SR){window.onHeardErr('這個瀏覽器不支援語音辨識,請用 Chrome');return;}
+      try{stopped=true;if(rec)rec.abort();}catch(e){}
+      stopped=false;var got=false;rec=new SR();rec.lang=lang;rec.interimResults=true;rec.maxAlternatives=1;
+      rec.onresult=function(e){var t='',fin=false;for(var i=e.resultIndex;i<e.results.length;i++){t+=e.results[i][0].transcript;if(e.results[i].isFinal)fin=true;}
+        if(fin){got=true;window.onHeard(t);}else window.onPartial(t);};
+      rec.onerror=function(e){if(got||stopped)return;got=true;window.onHeardErr(e.error==='not-allowed'?'沒有麥克風權限,無法練習口說':'沒有聽到,請再說一次');};
+      rec.onend=function(){if(!got&&!stopped){got=true;window.onHeardErr('沒有聽到,請再說一次');}};
+      try{rec.start();}catch(e){window.onHeardErr('無法開始聆聽');}
+    },
+    stopAll:function(){stopped=true;try{speechSynthesis.cancel();}catch(e){}try{if(rec)rec.abort();}catch(e){}},
+    ask:function(id,system,msgs){this.ask2(id,system,msgs,ST.gkey||'',ST.gmodel||'');},
+    ask2:function(id,system,msgs,key,model){
+      if(!key){window.onAI(id,'請先到首頁的「🔑 AI 設定」貼上 Gemini 金鑰(免費)',false);return;}
+      geminiAsk(system,msgs,key,model,function(t,err){if(err)window.onAI(id,err,false);else window.onAI(id,t,true);});
+    }
+  };
+}
+
+var EN=(typeof ZBEN!=='undefined')?ZBEN:makeBrowserBridge();
+var W1=[],W2=[],W3=[],S2=[],P3=[];
+Object.keys(W1RAW).forEach(function(c){parseList(W1RAW[c]).forEach(function(a){W1.push({en:a[0],zh:a[1],pic:a[2],cat:c});});});
+Object.keys(W2RAW).forEach(function(c){parseList(W2RAW[c]).forEach(function(a){W2.push({en:a[0],zh:a[1],cat:c});});});
+Object.keys(W3RAW).forEach(function(c){parseList(W3RAW[c]).forEach(function(a){W3.push({en:a[0],zh:a[1],cat:c});});});
+parseList(S2RAW).forEach(function(a){S2.push({en:a[0],zh:a[1],cat:'句子'});});
+parseList(P3RAW).forEach(function(a){P3.push({en:a[0],zh:a[1],cat:'生活會話'});});
+
+var ST={level:2,stars:0,slow:false,speed:0,recent:[],aiDay:'',aiCount:0};
+function load(){try{var j=JSON.parse(localStorage.getItem('zben1')||'{}');for(var k in j)ST[k]=j[k];}catch(e){}}
+function save(){try{localStorage.setItem('zben1',JSON.stringify(ST));}catch(e){}}
+load();
+if(ST.slow&&!ST.speed){ST.speed=1;}ST.slow=false;
+var RATES=[0.9,0.65,0.4],SPEEDNAMES=['🐇 正常速度','🐢 慢速','🐌 超慢速'];
+function speedLabel(){return SPEEDNAMES[ST.speed||0];}
+window.cycleSpeed=function(inPlace){ST.speed=((ST.speed||0)+1)%3;save();var b=document.getElementById('spd');if(b)b.textContent=speedLabel();var b2=document.getElementById('slowb');if(b2)b2.textContent='發音速度:'+speedLabel();toast('發音速度:'+speedLabel());};
+function noteWord(w){try{ST.recent=(ST.recent||[]).filter(function(x){return x!==w;});ST.recent.push(w);if(ST.recent.length>20)ST.recent=ST.recent.slice(-20);save();}catch(e){}}
+var AI_LIMIT=200;
+
+function $(id){return document.getElementById(id);}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function toast(m){var d=document.createElement('div');d.className='toast';d.textContent=m;document.body.appendChild(d);setTimeout(function(){if(d.parentNode)d.parentNode.removeChild(d);},2600);}
+function addStar(n){ST.stars+=n;save();$('stars').textContent='⭐ '+ST.stars;}
+
+// ===== 發音 / 聽寫 =====
+var spokenCb={},sid=0;
+function say(text,done,opt){
+  opt=opt||{};var base=RATES[ST.speed||0],rate=opt.rate?Math.min(opt.rate,base):base;
+  if(opt.lang==='zh-TW')rate=0.95;
+  var lang=opt.lang||'en-US';
+  if(EN){var id=++sid;spokenCb[id]=done||null;if(EN.speakL)EN.speakL(text,rate,id,lang);else EN.speak(text,rate,id);}
+  else if(window.speechSynthesis){var u=new SpeechSynthesisUtterance(text);u.lang=lang;u.rate=rate;u.onend=function(){if(done)done();};speechSynthesis.cancel();speechSynthesis.speak(u);}
+  else if(done)done();
+}
+window.onSpoken=function(id){var f=spokenCb[id];delete spokenCb[id];if(f)f();};
+window.onTtsFail=function(m){toast(m||'英文發音引擎還沒準備好');};
+var listenCb=null,partialCb=null;
+function listen(cb,onPart,lang){
+  listenCb=cb;partialCb=onPart||null;
+  if(EN){if(EN.listenL)EN.listenL(lang||'en-US');else EN.listen();}
+  else{var t=window.prompt('(電腦測試)請輸入你說的英文');window.onHeard(t||'');}
+}
+window.onPartial=function(t){if(partialCb)partialCb(t||'');};
+window.onLevel=function(v){var e=$('mic');if(e){var s=1+Math.max(0,Math.min(10,v))/14;e.style.transform='scale('+s.toFixed(2)+')';}};
+window.onHeard=function(t){var f=listenCb;listenCb=null;partialCb=null;if(f)f(t||'');};
+window.onHeardErr=function(m){var f=listenCb;listenCb=null;partialCb=null;if(f)f('',m||'');else toast(m||'沒有聽到,請再說一次');};
+var aiCb={},aid=0;
+function askAI(system,messages,cb){
+  var today=new Date().toISOString().slice(0,10);
+  if(ST.aiDay!==today){ST.aiDay=today;ST.aiCount=0;}
+  if(ST.aiCount>=AI_LIMIT){cb(null,'今天問 AI 老師的次數用完了(上限 '+AI_LIMIT+' 次),明天再來!');return;}
+  if(!EN){cb(null,'這個功能要在 Jiu Bao 的 App 裡才能用');return;}
+  ST.aiCount++;save();
+  var id=++aid;aiCb[id]=cb;EN.ask2?EN.ask2(id,system,JSON.stringify(messages),ST.gkey||'',ST.gmodel||''):EN.ask(id,system,JSON.stringify(messages));
+}
+window.onAI=function(id,text,ok){var f=aiCb[id];delete aiCb[id];if(f){if(ok)f(text,null);else f(null,text);}};
+
+// ===== 單字池 =====
+function pool(){
+  if(ST.level===1)return W1;
+  if(ST.level===2)return W2.concat(S2);
+  return P3.concat(W3);
+}
+function picHtml(w){
+  if(!w.pic)return '';
+  if(w.pic.charAt(0)==='#')return '<span class="dot" style="background:'+w.pic+'"></span>';
+  if(/^[0-9]+$/.test(w.pic))return '<span class="numpic">'+w.pic+'</span>';
+  return '<span class="pic">'+w.pic+'</span>';
+}
+function isLong(w){return w.en.length>14;}
+
+// ===== 畫面 =====
+var view='home',backFn=null;
+function setTitle(t){$('title').textContent=t;}
+function go(v){view=v;window.scrollTo(0,0);R[v]();}
+window.goBack=function(){
+  if(view==='home')return false;
+  try{if(EN)EN.stopAll();}catch(e){}
+  ai.call=false;ai.sess=(ai.sess||0)+1;sp.auto=false;sp.sess=(sp.sess||0)+1;
+  var p=PARENT[view]||'home';go(p);return true;
+};
+var R={};
+R.home=function(){
+  setTitle('Jiu Bao 英文樂園');$('back').style.display='none';
+  var lv=ST.level;
+  $('main').innerHTML=
+   '<div class="lv"><button class="'+(lv===1?'on':'')+'" onclick="setLevel(1)">🧒 幼兒</button><button class="'+(lv===2?'on':'')+'" onclick="setLevel(2)">🎒 小學・國中</button><button class="'+(lv===3?'on':'')+'" onclick="setLevel(3)">🧑 大人會話</button></div>'+
+   '<div class="grid">'+
+   '<button class="big c1" onclick="go(\'flash\')">🃏 單字卡<small>看、聽、學</small></button>'+
+   '<button class="big c2" onclick="go(\'quiz\')">🎮 小測驗<small>答對拿星星</small></button>'+
+   '<button class="big c3" onclick="go(\'listen\')">👂 聽力練習<small>聽了再選</small></button>'+
+   '<button class="big c4" onclick="go(\'scenes\')">💬 情境對話<small>點餐、問路…</small></button>'+
+   '<button class="big c5" onclick="go(\'speak\')">🎤 口說練習<small>跟著說,幫你打分數</small></button>'+
+   '<button class="big c6" onclick="go(\'ai\')">🤖 AI 英文老師<small>聊天、糾正句子</small></button>'+
+   '</div>'+
+   '<div class="grid" style="margin-top:14px">'+
+   '<button class="big c7" onclick="go(\'ipa\')">🔤 音標發音<small>嘴型、例字、超慢速</small></button>'+
+   '<button class="big c8" onclick="go(\'grammar\')">📐 文法小教室<small>說明、例句、小測驗</small></button>'+
+   '<button class="big c9" onclick="go(\'reading\')">📖 閱讀<small>短文、聽、答題</small></button>'+
+   '<button class="big c10" onclick="go(\'idiom\')">🎭 俚語・歇後語<small>道地的說法</small></button>'+
+   '<button class="big c11" style="grid-column:1/-1" onclick="go(\'tutor\')">🧑‍🏫 生活小老師<small>把學到的用在生活,英文問題都可以問</small></button>'+
+   '</div>'+
+   '<div class="row" style="margin-top:22px"><button class="btn gray" onclick="cycleSpeed()" id="slowb">發音速度:'+speedLabel()+'</button><button class="btn gray" onclick="go(\'settings\')">🔑 AI 設定</button></div>';
+};
+window.setLevel=function(n){ST.level=n;save();R.home();};
+
+
+// --- 單字卡 ---
+var fl={list:[],i:0,cat:'全部'};
+R.flash=function(){
+  setTitle('單字卡');$('back').style.display='';
+  var all=pool(),cats=['全部'];
+  all.forEach(function(w){if(cats.indexOf(w.cat)<0)cats.push(w.cat);});
+  if(cats.indexOf(fl.cat)<0)fl.cat='全部';
+  fl.list=all.filter(function(w){return fl.cat==='全部'||w.cat===fl.cat;});
+  if(fl.i>=fl.list.length)fl.i=0;
+  var h='<div class="chips">';
+  cats.forEach(function(c,k){h+='<button class="chip '+(c===fl.cat?'on':'')+'" onclick="flCat('+k+')">'+c+'</button>';});
+  h+='</div><div id="fc"></div>';
+  $('main').innerHTML=h;fl.cats=cats;drawFlash();
+};
+window.flCat=function(k){fl.cat=fl.cats[k];fl.i=0;R.flash();};
+function drawFlash(){
+  var w=fl.list[fl.i];if(!w){$('fc').innerHTML='沒有單字';return;}
+  $('fc').innerHTML='<div class="card">'+picHtml(w)+'<div class="en '+(isLong(w)?'sm':'')+'">'+esc(w.en)+'</div><div class="zh">'+esc(w.zh)+'</div></div>'+
+   '<div class="msg">'+(fl.i+1)+' / '+fl.list.length+'</div>'+
+   '<div class="row"><button class="btn gray" onclick="flMove(-1)">◀ 上一個</button><button class="btn o" onclick="flSay()">🔊 聽</button><button class="btn" onclick="flMove(1)">下一個 ▶</button></div>';
+  say(w.en);noteWord(w.en);
+}
+window.flMove=function(d){fl.i=(fl.i+d+fl.list.length)%fl.list.length;drawFlash();};
+window.flSay=function(){say(fl.list[fl.i].en);};
+
+// --- 共用:選擇題 ---
+function kindOf(w){return (w.cat==='句子'||w.cat==='生活會話')?'s':'w';}
+function makeOptions(correct,list,n,key){
+  var opts=[correct],seen={};seen[correct[key]]=1;
+  list=list.filter(function(x){return kindOf(x)===kindOf(correct);});
+  if(list.length<n+2)list=pool();
+  shuffle(list).forEach(function(w){if(opts.length<n&&!seen[w[key]]&&w.en!==correct.en){seen[w[key]]=1;opts.push(w);}});
+  return shuffle(opts);
+}
+var qz={};
+function startRound(mode){
+  var p=pool().slice();
+  qz={mode:mode,qs:shuffle(p).slice(0,8),i:0,ok:0,lock:false};
+  drawQ();
+}
+function drawQ(){
+  if(qz.i>=qz.qs.length){return endRound();}
+  var w=qz.qs[qz.i],h='';
+  var pics=(ST.level===1&&!!w.pic);
+  h+='<div class="prog"><i style="width:'+(qz.i/qz.qs.length*100)+'%"></i></div>';
+  var opts;
+  if(qz.mode==='quiz'){
+    // 看圖/中文 → 選英文
+    h+='<div class="card">'+(pics?picHtml(w):'')+'<div class="zh" style="margin-top:8px">'+esc(w.zh)+'</div><div class="msg">這是英文的哪一個?</div></div>';
+    opts=makeOptions(w,pool(),4,'en');
+    qz.opts=opts;qz.correct=w;
+    h+='<div class="opts2">';opts.forEach(function(o,k){h+='<button class="opt" onclick="pick('+k+')">'+esc(o.en)+'</button>';});h+='</div>';
+    $('main').innerHTML=h;
+  }else{
+    // 聽 → 選意思(幼兒選圖)
+    h+='<div class="card"><div class="msg">聽聽看,選出對的答案</div><div class="row"><button class="btn o" onclick="qSay()">🔊 再聽一次</button></div></div>';
+    opts=makeOptions(w,pics?pool().filter(function(x){return x.pic;}):pool(),4,pics?'en':'zh');
+    qz.opts=opts;qz.correct=w;
+    h+='<div class="'+(pics?'opts2':'')+'">';
+    opts.forEach(function(o,k){
+      if(pics)h+='<button class="opt" onclick="pick('+k+')">'+(o.pic&&o.pic.charAt(0)==='#'?'<span class="dot" style="width:70px;height:70px;background:'+o.pic+'"></span>':(o.pic&&/^[0-9]+$/.test(o.pic)?'<span class="numpic" style="font-size:70px">'+o.pic+'</span>':'<span class="p">'+o.pic+'</span>'))+'<span style="font-size:22px;color:#777">'+esc(o.zh)+'</span></button>';
+      else h+='<button class="opt" onclick="pick('+k+')">'+esc(o.zh)+'</button>';
+    });
+    h+='</div>';
+    $('main').innerHTML=h;
+    setTimeout(qSay,300);
+  }
+  qz.lock=false;
+}
+window.qSay=function(){say(qz.correct.en);};
+window.pick=function(k){
+  if(qz.lock)return;qz.lock=true;
+  var o=qz.opts[k],btns=document.querySelectorAll('.opt');
+  var good=(o.en===qz.correct.en);
+  btns[k].className='opt '+(good?'ok':'bad');
+  if(!good){for(var j=0;j<qz.opts.length;j++)if(qz.opts[j].en===qz.correct.en)btns[j].className='opt ok';}
+  if(good){qz.ok++;noteWord(qz.correct.en);}
+  say(qz.correct.en,function(){setTimeout(function(){qz.i++;drawQ();},500);});
+};
+function endRound(){
+  var n=qz.qs.length,s=qz.ok,st=s>=n?3:(s>=n*0.7?2:(s>=n*0.4?1:0));
+  addStar(s);
+  $('main').innerHTML='<div class="card"><div class="score">'+s+' / '+n+'</div><div class="pic" style="font-size:70px">'+['😅','⭐','⭐⭐','⭐⭐⭐'][st]+'</div><div class="zh">'+['再練習一下就會進步!','不錯喔!','很棒!','太厲害了!全部答對!'][st]+'</div><div class="msg">得到 '+s+' 顆星星</div></div>'+
+    '<div class="row"><button class="btn g" onclick="startRound(\''+qz.mode+'\')">再玩一次</button><button class="btn gray" onclick="go(\'home\')">回首頁</button></div>';
+  say(['Keep trying!','Good job!','Great!','Excellent!'][st]);
+}
+R.quiz=function(){setTitle('小測驗');$('back').style.display='';startRound('quiz');};
+R.listen=function(){setTitle('聽力練習');$('back').style.display='';startRound('listen');};
+
+// --- 情境對話 ---
+var sc={};
+R.scenes=function(){
+  setTitle('情境對話');$('back').style.display='';
+  var h='<div class="msg">選一個場景,跟 Jiu Bao 練習對話</div><div class="grid">';
+  SCENES.forEach(function(s,k){h+='<button class="big c'+(k%6+1)+'" onclick="startScene('+k+')">'+s.e+' '+s.t+'</button>';});
+  $('main').innerHTML=h+'</div>';
+};
+window.startScene=function(k){sc={k:k,i:0,ok:0,log:[],said:-1};drawScene();};
+function drawScene(){
+  var S=SCENES[sc.k];$('back').style.display='';setTitle(S.e+' '+S.t);
+  var h='';sc.log.forEach(function(m){h+='<div class="bub '+m.w+'">'+esc(m.t)+(m.z?'<small>'+esc(m.z)+'</small>':'')+'</div>';});
+  if(sc.i>=S.lines.length){
+    var st=sc.ok>=4?3:(sc.ok>=3?2:1);addStar(sc.ok);
+    $('main').innerHTML=h+'<div class="card"><div class="score">'+['','⭐','⭐⭐','⭐⭐⭐'][st]+'</div><div class="zh">對話完成!答對 '+sc.ok+' 句</div></div><div class="row"><button class="btn g" onclick="startScene('+sc.k+')">再練一次</button><button class="btn gray" onclick="go(\'scenes\')">換場景</button></div>';
+    window.scrollTo(0,99999);return;
+  }
+  var L=S.lines[sc.i];
+  if(sc.said!==sc.i){
+    sc.said=sc.i;sc.log.push({w:'b',t:L.b,z:L.z});sc.opts=shuffle(L.c);
+    return drawScene2(L,true);
+  }
+  drawScene2(L,false);
+}
+function drawScene2(L,speakIt){
+  var S=SCENES[sc.k],h='';
+  sc.log.forEach(function(m){h+='<div class="bub '+m.w+'">'+esc(m.t)+(m.z?'<small>'+esc(m.z)+'</small>':'')+'</div>';});
+  h+='<div class="msg">你要怎麼回答?</div>';
+  sc.opts.forEach(function(o,k){h+='<button class="opt" onclick="sPick('+k+')">'+esc(o[0])+'</button>';});
+  h+='<div class="row"><button class="btn o" onclick="sHear()">🔊 再聽一次</button><button class="btn r" onclick="sMic()">🎤 用說的回答</button></div>';
+  $('main').innerHTML=h;window.scrollTo(0,99999);
+  if(speakIt)say(L.b);
+}
+window.sHear=function(){say(SCENES[sc.k].lines[sc.i].b);};
+window.sPick=function(k){
+  var o=sc.opts[k],btns=document.querySelectorAll('.opt');
+  if(o[1]){
+    btns[k].className='opt ok';sc.ok++;sc.log.push({w:'u',t:o[0]});
+    say(o[0],function(){setTimeout(function(){sc.i++;drawScene();},400);});
+  }else{
+    btns[k].className='opt bad';toast('這句不太對,再想想看');
+    say(SCENES[sc.k].lines[sc.i].b);
+  }
+};
+window.sMic=function(){
+  var L=SCENES[sc.k].lines[sc.i];
+  toast('請說說看…');
+  listen(function(t,err){
+    if(!t){if(err)toast(err);return;}
+    var best=-1,bs=0;
+    sc.opts.forEach(function(o,k){var s=similar(t,o[0]);if(s>bs){bs=s;best=k;}});
+    if(best>=0&&bs>=0.5){toast('我聽到:'+t);sPick(best);}
+    else toast('我聽到:'+t+'(再說一次或點選答案)');
+  });
+};
+
+// --- 口說練習 ---
+var sp={};
+function normWords(s){return String(s).toLowerCase().replace(/[^a-z0-9' ]/g,' ').replace(/\s+/g,' ').trim().split(' ').filter(function(x){return x;});}
+function similar(a,b){
+  var A=normWords(a),B=normWords(b);if(!A.length||!B.length)return 0;
+  var m=A.length,n=B.length,d=[],i,j;
+  for(i=0;i<=m;i++){d[i]=[];for(j=0;j<=n;j++)d[i][j]=0;}
+  for(i=1;i<=m;i++)for(j=1;j<=n;j++)d[i][j]=(A[i-1]===B[j-1])?d[i-1][j-1]+1:Math.max(d[i-1][j],d[i][j-1]);
+  return d[m][n]/Math.max(m,n);
+}
+R.speak=function(){
+  setTitle('口說練習');$('back').style.display='';
+  var p=ST.level===3?P3:(ST.level===2?S2:W1);
+  sp={list:shuffle(p),i:0,auto:false,tries:0,sess:(sp.sess||0)+1};drawSpeak();
+};
+function drawSpeak(){
+  var w=sp.list[sp.i%sp.list.length];sp.cur=w;sp.tries=0;
+  $('main').innerHTML='<div class="card">'+picHtml(w)+'<div class="en '+(isLong(w)?'sm':'')+'" id="sptxt">'+spWords(w.en,null,false)+'</div><div class="zh">'+esc(w.zh)+'</div></div><div id="spres"></div>'+
+   '<div class="row"><button class="btn o" onclick="spHear()">🔊 聽範例</button><button class="btn r" onclick="spMic()"><span id="mic" class="micdot">🎤</span> 我來說</button><button class="btn gray" onclick="spNext()">下一個 ▶</button></div>'+
+   '<div class="row"><button class="btn '+(sp.auto?'g':'gray')+'" id="spauto" onclick="spAuto()">'+(sp.auto?'🔁 連續練習:開(按我停止)':'🔁 連續練習:關')+'</button></div>';
+  var s=sp.sess;
+  say(w.en,function(){if(sp.auto&&sp.sess===s&&view==='speak')spMic();});
+}
+// 把句子的每個字上色:heard=null 表示還沒說;heard=陣列表示即時/最後的結果
+function spWords(text,heard,final){
+  var A=normWords(text);if(heard===null)return esc(text);
+  var h='';A.forEach(function(w){var ok=heard.indexOf(w)>=0;h+='<span class="'+(ok?'w-ok':(final?'w-bad':'w-wait'))+'">'+esc(w)+'</span> ';});return h;
+}
+window.spHear=function(){sp.auto=false;say(sp.cur.en);};
+window.spNext=function(){sp.i++;drawSpeak();};
+window.spAuto=function(){
+  sp.auto=!sp.auto;var b=$('spauto');b.className='btn '+(sp.auto?'g':'gray');b.textContent=sp.auto?'🔁 連續練習:開(按我停止)':'🔁 連續練習:關';
+  if(sp.auto)spMic();else{try{if(EN)EN.stopAll();}catch(e){}}
+};
+window.spMic=function(){
+  var s=sp.sess,cur=sp.cur;
+  $('spres').innerHTML='<div class="msg">🎤 請說…(邊說邊會變色)</div>';
+  listen(function(t,err){
+    if(sp.sess!==s||view!=='speak')return;
+    if(!t){
+      $('spres').innerHTML='<div class="msg">'+esc(err||'沒聽到,再按一次 🎤')+'</div>';
+      if(sp.auto&&/沒有聽到/.test(err||'')){sp.tries++;if(sp.tries<3)setTimeout(function(){if(sp.sess===s&&sp.auto)spMic();},600);else{sp.auto=false;var b=$('spauto');if(b){b.className='btn gray';b.textContent='🔁 連續練習:關';}}}
+      return;
+    }
+    var A=normWords(cur.en),B=normWords(t),score=Math.round(similar(t,cur.en)*100);
+    var missed=A.filter(function(w){return B.indexOf(w)<0;});
+    $('sptxt').innerHTML=spWords(cur.en,B,true);
+    var h='<div class="score">'+score+'</div><div class="msg">我聽到:'+esc(t)+'</div>'+
+      '<div class="msg">'+(score>=90?'太棒了!發音很清楚!':(score>=60?'不錯!紅色的字再練習一次':'再試一次,可以先按 🔊 聽範例'))+'</div>';
+    $('spres').innerHTML=h;
+    if(score>=60)addStar(score>=90?2:1);
+    if(sp.auto){
+      if(score>=85){setTimeout(function(){if(sp.sess===s&&sp.auto){sp.i++;drawSpeak();}},1200);}
+      else{
+        // 馬上糾正:念出說錯的字,再請你重說一次
+        sp.tries++;
+        if(sp.tries>=3){say('Let us try the next one.',function(){if(sp.sess===s&&sp.auto){sp.i++;drawSpeak();}});return;}
+        var fix=missed.slice(0,3).join('. ');
+        say(fix?('Listen. '+fix+'. Now try again.'):'Try again.',function(){if(sp.sess===s&&sp.auto)spMic();});
+      }
+    }else if(missed.length){
+      $('spres').innerHTML+='<div class="row"><button class="btn o" onclick="spSayMissed()">🔊 聽說錯的字</button></div>';
+      sp.missed=missed;
+    }
+  },function(part){
+    if(sp.sess!==s||view!=='speak')return;
+    var B=normWords(part);$('sptxt').innerHTML=spWords(cur.en,B,false);
+    $('spres').innerHTML='<div class="msg">🎤 '+esc(part)+'</div>';
+  });
+};
+window.spSayMissed=function(){say((sp.missed||[]).join('. '));};
+
+// --- AI 老師 / 生活小老師(同一套聊天+通話引擎)---
+var ai={msgs:[],busy:false,call:false,sess:0,silent:0,cfg:null,lang:'en-US',log:[]};
+var HELLO_T={t:'Hi! I am your English teacher. What would you like to talk about today?',z:'嗨!我是你的英文老師。今天想聊什麼?'};
+R.ai=function(){PARENT.chat='home';openChat({p:'teacher',title:'AI 英文老師',mode:'chat',hello:HELLO_T});};
+function openChat(cfg){
+  setTitle(cfg.title);$('back').style.display='';
+  ai.cfg=cfg;ai.msgs=[];ai.log=[];ai.call=false;ai.sess++;ai.busy=false;ai.lang=(cfg.p==='tutor'&&cfg.mode!=='role')?'zh-TW':'en-US';
+  view='chat';
+  var h='';
+  if(cfg.p==='teacher')h+='<div class="chips"><button class="chip on" id="m1" onclick="aiMode(\'chat\')">💬 自由聊天</button><button class="chip" id="m2" onclick="aiMode(\'fix\')">✏️ 糾正我的句子</button></div>';
+  if(cfg.p==='tutor'&&cfg.mode!=='role')h+='<div class="chips"><button class="chip" onclick="tutorQuick(0)">📚 把今天學的用在生活</button><button class="chip" onclick="tutorQuick(1)">🗣️ 這句英文怎麼說?</button><button class="chip" onclick="tutorQuick(2)">📖 解釋一個文法</button></div>';
+  h+='<div class="row"><button class="btn g" id="callb" onclick="aiCall()">📞 通話模式(免按鈕,邊說邊糾正)</button></div><div id="callbox"></div><div id="ailog"></div>'+
+   '<div class="row"><button class="btn r" onclick="aiMic()">🎤 說話</button></div><textarea id="aitxt" rows="2" placeholder="或在這裡打字(中文、英文都可以)"></textarea><div class="row"><button class="btn g" onclick="aiSend()">送出</button></div><div class="msg" id="aistat">'+(cfg.p==='tutor'?'小老師會用中文解釋,再教你標準的英文':'老師會用簡單的英文回答你')+'</div>';
+  $('main').innerHTML=h;
+  if(cfg.hello){ai.log.push({w:'b',t:cfg.hello.t,z:cfg.hello.z});drawAi();if(cfg.hello.zhSpeak)say(cfg.hello.z,null,{lang:'zh-TW'});else say(cfg.hello.t);}
+  if(cfg.auto){sendToAI(cfg.auto,false,true);}
+}
+window.aiMode=function(m){ai.cfg.mode=m;$('m1').className='chip '+(m==='chat'?'on':'');$('m2').className='chip '+(m==='fix'?'on':'');
+  $('aistat').textContent=m==='fix'?'輸入或說一句英文,老師幫你改':'老師會用簡單的英文回答你';};
+window.tutorQuick=function(k){
+  var t=['請用我最近學的單字,教我怎麼在日常生活裡用。','我想學:這句話用英文怎麼說?我先說中文:','請用簡單的方式解釋一個常用的英文文法,並舉生活例子。'][k];
+  if(k===0){var r=(ST.recent||[]).slice(-8);t='我最近學了這些單字:'+(r.length?r.join(', '):'(還沒有)')+'。請教我怎麼把它們用在日常生活裡,舉例並讓我練習。';}
+  if(k===1){$('aitxt').value='這句英文怎麼說:';$('aitxt').focus();return;}
+  $('aitxt').value=t;aiSend();
+};
+function drawAi(){var h='';(ai.call?ai.log.slice(-3):ai.log).forEach(function(m){h+='<div class="bub '+m.w+'">'+esc(m.t)+(m.z?'<small>'+esc(m.z)+'</small>':'')+(m.fix?'<small class="fx">✏️ 更好的說法:'+esc(m.fix)+'</small>':'')+(m.tip?'<small>💡 '+esc(m.tip)+'</small>':'')+'</div>';});$('ailog').innerHTML=h;if(!ai.call)window.scrollTo(0,99999);}
+window.aiMic=function(){$('aistat').textContent='🎤 請說…';listen(function(t,err){if(t){$('aitxt').value=t;aiSend();}else $('aistat').textContent=err||'沒聽到,再按一次';},function(p){$('aitxt').value=p;},ai.lang);};
+function aiSystem(call){
+  var c=ai.cfg,lv=['','a young child (age 4-7), use only very simple words','an elementary/junior high student, use simple sentences','an adult beginner, use practical everyday English'][ST.level];
+  var fixRule='If the learner spoke Chinese, FIX = the best natural English way to say it. If the learner spoke English with mistakes, FIX = the corrected sentence. If it was already fine, FIX = OK.';
+  if(c.p==='tutor'){
+    var rec=(ST.recent||[]).slice(-8).join(', ');
+    var base='You are Jiu Bao\'s friendly English life tutor for a Traditional Chinese speaker ('+lv+'). Your job: show how to USE English in real daily life, and answer ANY English question (vocabulary, grammar, pronunciation, culture, writing, translation). The learner may speak Chinese or English (speech recognition: ignore punctuation). ';
+    if(rec)base+='Words the learner studied recently (use them in examples when natural): '+rec+'. ';
+    if(c.mode==='role')return base+'Role-play this scenario: '+c.scene.t+' ('+c.scene.g+'). You play the other person (clerk, waiter, receptionist, friend, etc.). Keep each turn short. Reply in EXACTLY this format:\nEN: <your next line in the role-play, max 20 words>\nZH: <Traditional Chinese translation>\nFIX: <'+fixRule+'>\nTIP: <very short Traditional Chinese hint or praise>';
+    if(c.scene)base+='The learner is practicing this real-life situation: '+c.scene.t+'. ';
+    return base+'Reply in EXACTLY this format, nothing else:\nZH: <Traditional Chinese answer or explanation, spoken style, max 60 characters>\nEN: <ONE useful English sentence the learner can practice saying, with the key point, max 18 words>\nFIX: <'+fixRule+'>\nTIP: <one short practical Traditional Chinese tip about using it in daily life>';
+  }
+  if(call)return 'You are a warm, encouraging English teacher on a live voice call with '+lv+'. The learner\'s words come from speech recognition, so ignore capitalization and punctuation. The learner may also speak Chinese when they do not know how to say something. Reply in EXACTLY this format, nothing else:\nEN: <your short spoken reply in simple English, max 20 words, end with ONE easy follow-up question>\nZH: <Traditional Chinese translation of EN>\nFIX: <'+fixRule+'>\nTIP: <one very short Traditional Chinese tip explaining the mistake, or a short praise if OK>';
+  return 'You are a warm English teacher for '+lv+'. The learner may write Chinese when they do not know how to say something in English. Reply in EXACTLY this format, nothing else:\nEN: <your reply in simple English, max 25 words>\nZH: <Traditional Chinese translation of EN>\nFIX: <'+fixRule+'>\nTIP: <one short tip in Traditional Chinese explaining the mistake, or an encouragement>\n'+(c.mode==='fix'?'Focus on correcting the learner\'s sentence. EN should be the corrected sentence.':'Keep the conversation going by asking a simple follow-up question in EN.');
+}
+window.aiSend=function(){
+  var t=$('aitxt').value.trim();if(!t||ai.busy)return;
+  sendToAI(t,false);
+};
+function sendToAI(t,call,hidden){
+  ai.busy=true;if($('aitxt'))$('aitxt').value='';
+  if(!hidden){ai.log.push({w:'u',t:t});drawAi();}
+  if(call)callStatus('🤔 老師思考中…','think');else $('aistat').textContent='老師思考中…';
+  var s=ai.sess;
+  ai.msgs.push({role:'user',content:t});if(ai.msgs.length>6)ai.msgs=ai.msgs.slice(-6);
+  askAI(aiSystem(call),ai.msgs,function(txt,err){
+    if(ai.sess!==s)return;
+    ai.busy=false;
+    if(err){if(call){callStatus(err,'idle');endCall();}else $('aistat').textContent=err;ai.msgs.pop();return;}
+    ai.msgs.push({role:'assistant',content:txt});
+    var g=function(k){return ((new RegExp('(?:^|\\n)'+k+':\\s*([^\\n]+)')).exec(txt)||[])[1]||'';};
+    var en=g('EN'),zh=g('ZH'),tip=g('TIP'),fix=g('FIX');
+    if(!en&&!zh){en=txt;}
+    if(/^ok\.?$/i.test(fix.trim()))fix='';
+    ai.log.push({w:'b',t:en||zh,z:en?zh:'',tip:tip,fix:fix});drawAi();
+    var c=ai.cfg,tutorQA=(c.p==='tutor'&&c.mode!=='role');
+    var heardZh=/[一-鿿]/.test(t);
+    // 說話順序:(糾正)更好的說法 → 標準英文 → 跟我念 → (回覆)
+    var steps=[];
+    if(fix){
+      steps.push(function(n){say(heardZh?'英文可以這樣說:':'更好的說法是:',n,{lang:'zh-TW'});});
+      steps.push(function(n){say(fix,n,{rate:0.7});});
+      if(call)steps.push(function(n){shadow(fix,s,n);});
+    }
+    if(tutorQA){
+      if(zh)steps.push(function(n){say(zh,n,{lang:'zh-TW'});});
+      if(en)steps.push(function(n){say(en,n,{rate:0.75});});
+      if(call&&en&&!fix)steps.push(function(n){shadow(en,s,n);});
+    }else if(en){
+      steps.push(function(n){say(en,n);});
+    }
+    if(!call){$('aistat').textContent='';runSteps(steps,s,function(){});return;}
+    callStatus('🔊 老師說話中…','talk');
+    runSteps(steps,s,function(){if(ai.call&&ai.sess===s)callListen();});
+  });
+}
+function runSteps(steps,s,done){
+  var i=0;(function next(){if(ai.sess!==s)return;if(i>=steps.length)return done();var f=steps[i++];f(next);})();
+}
+// 跟讀:老師念標準句,你跟著念,馬上用本機算分數(不花 token)
+function shadow(target,s,next,tried){
+  if(ai.sess!==s)return;
+  callStatus('🎤 跟我念一次…','listen');var cp=$('callpart');if(cp)cp.textContent='「'+target+'」';
+  listen(function(t,err){
+    if(!ai.call||ai.sess!==s)return;
+    if(!t){next();return;}
+    var sc=Math.round(similar(t,target)*100);
+    if(sc>=80){addStar(1);callStatus('👍 '+sc+' 分','talk');say('Great! Very good.',next);}
+    else if(!tried){callStatus('再一次 ('+sc+' 分)','talk');say('Almost. Listen again.',function(){say(target,function(){shadow(target,s,next,true);},{rate:0.6});});}
+    else{callStatus('沒關係,多練習就會進步','talk');say('Good try!',next);}
+  },function(p){var e=$('callpart');if(e)e.textContent='「'+p+'」';},'en-US');
+}
+// ---- 通話模式:老師說完自動聽你說 → 馬上糾正 → 再繼續 ----
+function callStatus(t,cls){var e=$('callst');if(e){e.textContent=t;}var m=$('mic');if(m){m.className='micbig '+(cls||'');if(cls!=='listen')m.style.transform='';}}
+window.aiLang=function(){ai.lang=(ai.lang==='en-US')?'zh-TW':'en-US';var b=$('langb');if(b)b.textContent=ai.lang==='en-US'?'🇺🇸 現在用英文說(按我改中文)':'🇹🇼 現在用中文說(按我改英文)';
+  try{if(EN)EN.stopAll();}catch(e){}if(ai.call&&!ai.busy){var s=ai.sess;setTimeout(function(){if(ai.call&&ai.sess===s)callListen();},200);}};
+window.aiCall=function(){
+  if(ai.call){endCall();return;}
+  if(!EN){toast('通話模式要在 Jiu Bao 的 App 裡才能用');return;}
+  ai.call=true;ai.silent=0;ai.sess++;var s=ai.sess;ai.msgs=[];ai.log=[];
+  $('callb').className='btn gray';$('callb').textContent='⏹ 結束通話';
+  $('callbox').innerHTML='<div class="callcard"><div id="mic" class="micbig">🎤</div><div id="callst" class="callst"></div><div id="callpart" class="callpart"></div><button class="chip" id="langb" onclick="aiLang()">'+(ai.lang==='en-US'?'🇺🇸 現在用英文說(按我改中文)':'🇹🇼 現在用中文說(按我改英文)')+'</button></div>';
+  var hi=ai.cfg.hello||HELLO_T;
+  if(ai.cfg.p==='tutor'&&ai.cfg.mode!=='role'){hi={t:'Hi! Ask me anything about English.',z:'嗨!有任何英文問題都可以問我,也可以說「這句話英文怎麼說」。'};}
+  ai.log.push({w:'b',t:hi.t,z:hi.z});drawAi();
+  callStatus('🔊 老師說話中…','talk');
+  var f=function(){if(ai.call&&ai.sess===s)callListen();};
+  if(ai.cfg.p==='tutor'&&ai.cfg.mode!=='role')say(hi.z,f,{lang:'zh-TW'});else say(hi.t,f);
+};
+function endCall(){
+  ai.call=false;ai.sess++;ai.busy=false;try{if(EN)EN.stopAll();}catch(e){}
+  var b=$('callb');if(b){b.className='btn g';b.textContent='📞 通話模式(免按鈕,邊說邊糾正)';}
+  var c=$('callbox');if(c)c.innerHTML='';
+}
+function callListen(){
+  var s=ai.sess;callStatus(ai.lang==='en-US'?'🎤 換你說(英文)…':'🎤 換你說(中文)…','listen');var cp=$('callpart');if(cp)cp.textContent='';
+  listen(function(t,err){
+    if(!ai.call||ai.sess!==s)return;
+    if(!t){
+      if(/權限|沒有語音辨識|無法/.test(err||'')){callStatus(err,'idle');endCall();return;}
+      ai.silent++;
+      if(ai.silent>=3){callStatus('好像沒有人在,通話結束了','idle');say('我會在這裡等你,準備好再按通話。',null,{lang:'zh-TW'});endCall();return;}
+      callStatus('我沒聽到,再說一次吧','listen');setTimeout(function(){if(ai.call&&ai.sess===s)callListen();},500);return;
+    }
+    ai.silent=0;sendToAI(t,true);
+  },function(p){var e=$('callpart');if(e)e.textContent='「'+p+'」';},ai.lang);
+}
+
+// ===== 新增單元 =====
+var PARENT={ipad:'ipa',gramd:'grammar',readd:'reading',lifed:'tutor',chat:'home'};
+function lvName(n){return ['','🧒 幼兒','🎒 小學・國中','🧑 大人'][n];}
+function pair(s){var a=s.split('|');return {en:a[0],zh:a[1]};}
+function sayRow(en,zh,extra){return '<div class="srow"><button class="hear" onclick="sayIdx(this)" data-t="'+esc(en)+'">🔊</button><div class="stext"><div class="se">'+esc(en)+'</div><div class="sz">'+esc(zh)+(extra?'':'')+'</div></div></div>';}
+window.sayIdx=function(b){say(b.getAttribute('data-t'));};
+// --- 音標 ---
+var ipaSel=null;
+R.ipa=function(){
+  setTitle('音標發音');$('back').style.display='';
+  var h='<div class="msg">點一個音標,看嘴型、聽例字(可以選超慢速)</div>';
+  IPA.forEach(function(g,gi){h+='<div class="gt">'+esc(g[0])+'</div><div class="ipagrid">';g[1].forEach(function(x,xi){h+='<button class="ipab" onclick="ipaOpen('+gi+','+xi+')">'+esc(x[0])+'</button>';});h+='</div>';});
+  $('main').innerHTML=h;
+};
+window.ipaOpen=function(g,x){ipaSel=[g,x];go('ipad');};
+R.ipad=function(){
+  var it=IPA[ipaSel[0]][1][ipaSel[1]];setTitle('/'+it[0]+'/');$('back').style.display='';
+  var ws=it[2].split(',');
+  var h='<div class="card"><div class="ipabig">/'+esc(it[0])+'/</div><div class="zh" style="font-size:26px">'+esc(it[1])+'</div></div>'+
+   '<div class="row"><button class="btn gray" id="spd" onclick="cycleSpeed(true)">'+speedLabel()+'</button></div>';
+  ws.forEach(function(w,k){h+='<div class="srow"><button class="hear" onclick="ipaWord('+k+')">🔊</button><div class="stext"><div class="se" id="iw'+k+'">'+esc(w)+'</div></div><button class="btn r sm" onclick="ipaMic('+k+')">🎤</button></div>';});
+  h+='<div id="ipares"></div><div class="row"><button class="btn o" onclick="ipaAll()">▶ 全部念一遍</button></div>';
+  $('main').innerHTML=h;ipaAll.words=ws;
+};
+window.ipaWord=function(k){say(ipaAll.words[k]);};
+window.ipaAll=function(){var ws=ipaAll.words,i=0,s=++sid;(function n(){if(i>=ws.length)return;say(ws[i++],function(){setTimeout(n,300);});})();};
+window.ipaMic=function(k){
+  var w=ipaAll.words[k];$('ipares').innerHTML='<div class="msg">🎤 請說 '+esc(w)+'…</div>';
+  listen(function(t,err){if(view!=='ipad')return;if(!t){$('ipares').innerHTML='<div class="msg">'+esc(err||'沒聽到')+'</div>';return;}
+    var ok=normWords(t).indexOf(w.toLowerCase())>=0||similar(t,w)>=0.8;
+    $('ipares').innerHTML='<div class="msg">我聽到:'+esc(t)+'</div><div class="score" style="font-size:44px">'+(ok?'✅ 很棒!':'❌ 再試一次')+'</div>';if(ok)addStar(1);
+    if(!ok)say(w,null,{rate:0.5});},null,'en-US');
+};
+// --- 文法 ---
+var gl={lv:0,i:0,qi:0,ok:0};
+R.grammar=function(){
+  setTitle('文法小教室');$('back').style.display='';
+  if(!gl.lv)gl.lv=ST.level;
+  var h='<div class="chips">';[1,2,3].forEach(function(l){h+='<button class="chip '+(gl.lv===l?'on':'')+'" onclick="gramLv('+l+')">'+lvName(l)+'</button>';});h+='</div><div class="grid">';
+  GRAMMAR.forEach(function(g,k){if(g.lv===gl.lv)h+='<button class="big c'+(k%6+1)+'" onclick="gramOpen('+k+')">'+g.e+' '+esc(g.t)+'</button>';});
+  $('main').innerHTML=h+'</div>';
+};
+window.gramLv=function(l){gl.lv=l;R.grammar();};
+window.gramOpen=function(k){gl.i=k;gl.qi=0;gl.ok=0;go('gramd');};
+R.gramd=function(){
+  var g=GRAMMAR[gl.i];setTitle(g.e+' '+g.t);$('back').style.display='';
+  var h='<div class="card" style="text-align:left"><div class="zh" style="font-size:26px;line-height:1.5">'+esc(g.d)+'</div></div>';
+  g.ex.forEach(function(x){var p=pair(x);h+=sayRow(p.en,p.zh);});
+  h+='<div class="row"><button class="btn g" onclick="gramQuiz()">✏️ 小測驗('+g.q.length+' 題)</button></div>';
+  $('main').innerHTML=h;
+};
+window.gramQuiz=function(){gl.qi=0;gl.ok=0;drawGq();};
+function drawGq(){
+  var g=GRAMMAR[gl.i];
+  if(gl.qi>=g.q.length){addStar(gl.ok);$('main').innerHTML='<div class="card"><div class="score">'+gl.ok+' / '+g.q.length+'</div><div class="zh">'+(gl.ok===g.q.length?'全對!太厲害了':'再看一次說明,再試試看')+'</div></div><div class="row"><button class="btn g" onclick="gramQuiz()">再測一次</button><button class="btn gray" onclick="go(\'gramd\')">回說明</button></div>';return;}
+  var q=g.q[gl.qi];
+  var h='<div class="prog"><i style="width:'+(gl.qi/g.q.length*100)+'%"></i></div><div class="card"><div class="en sm">'+esc(q[0])+'</div></div>';
+  q[1].forEach(function(o,k){h+='<button class="opt" onclick="gramPick('+k+')">'+esc(o)+'</button>';});
+  $('main').innerHTML=h;
+}
+window.gramPick=function(k){
+  var g=GRAMMAR[gl.i],q=g.q[gl.qi],btns=document.querySelectorAll('.opt');
+  if(btns[0].disabled)return;
+  btns.forEach(function(b){b.disabled=true;});
+  var good=(k===q[2]);btns[k].className='opt '+(good?'ok':'bad');btns[q[2]].className='opt ok';if(good)gl.ok++;
+  var full=q[0].replace(/_+/g,q[1][q[2]]).replace(/^\([^)]*\)\s*/,'').replace(/ → .*$/,'');
+  say(full,function(){setTimeout(function(){gl.qi++;drawGq();},500);});
+};
+// --- 閱讀 ---
+var rd={i:0,qi:0,ok:0};
+R.reading=function(){
+  setTitle('閱讀');$('back').style.display='';
+  var h='<div class="msg">選一篇短文,點句子聽發音,讀完回答問題</div><div class="grid">';
+  READING.forEach(function(r,k){h+='<button class="big c'+(k%6+1)+'" onclick="readOpen('+k+')">'+r.e+' '+esc(r.t)+'<small>'+lvName(r.lv)+'</small></button>';});
+  $('main').innerHTML=h+'</div>';
+};
+window.readOpen=function(k){rd.i=k;go('readd');};
+R.readd=function(){
+  var r=READING[rd.i];setTitle(r.e+' '+r.t);$('back').style.display='';
+  var h='<div class="row"><button class="btn o" onclick="readAll()">▶ 朗讀全文</button><button class="btn gray" id="spd" onclick="cycleSpeed(true)">'+speedLabel()+'</button></div><div class="card" style="text-align:left">';
+  r.s.forEach(function(x,k){var p=pair(x);h+='<div class="rs" id="rs'+k+'" onclick="readSay('+k+')"><div class="se">'+esc(p.en)+'</div><div class="sz zhhide" onclick="event.stopPropagation();this.classList.toggle(\'show\')">'+esc(p.zh)+'</div></div>';});
+  h+='</div><div class="msg">點中文那一行可以顯示/隱藏翻譯</div><div class="row"><button class="btn g" onclick="readQuiz()">✏️ 讀完了,回答問題</button></div>';
+  $('main').innerHTML=h;
+};
+window.readSay=function(k){say(pair(READING[rd.i].s[k]).en);};
+window.readAll=function(){var r=READING[rd.i],i=0,s=++sid;(function n(){if(i>=r.s.length||view!=='readd')return;var k=i++;var e=$('rs'+k);if(e)e.classList.add('hi');say(pair(r.s[k]).en,function(){if(e)e.classList.remove('hi');setTimeout(n,300);});})();};
+window.readQuiz=function(){rd.qi=0;rd.ok=0;drawRq();};
+function drawRq(){
+  var r=READING[rd.i];
+  if(rd.qi>=r.q.length){addStar(rd.ok);$('main').innerHTML='<div class="card"><div class="score">'+rd.ok+' / '+r.q.length+'</div><div class="zh">'+(rd.ok===r.q.length?'全對!閱讀理解很棒':'再讀一次短文試試看')+'</div></div><div class="row"><button class="btn g" onclick="readQuiz()">再答一次</button><button class="btn gray" onclick="go(\'readd\')">回文章</button></div>';return;}
+  var q=r.q[rd.qi];
+  var h='<div class="prog"><i style="width:'+(rd.qi/r.q.length*100)+'%"></i></div><div class="card"><div class="en sm">'+esc(q[0])+'</div></div>';
+  q[1].forEach(function(o,k){h+='<button class="opt" onclick="readPick('+k+')">'+esc(o)+'</button>';});
+  $('main').innerHTML=h;
+}
+window.readPick=function(k){
+  var q=READING[rd.i].q[rd.qi],btns=document.querySelectorAll('.opt');if(btns[0].disabled)return;
+  btns.forEach(function(b){b.disabled=true;});
+  var good=(k===q[2]);btns[k].className='opt '+(good?'ok':'bad');btns[q[2]].className='opt ok';if(good)rd.ok++;
+  say(q[1][q[2]],function(){setTimeout(function(){rd.qi++;drawRq();},500);});
+};
+// --- 俚語 / 歇後語 ---
+var id={tab:'en',i:0,rev:false};
+R.idiom=function(){
+  setTitle('俚語・歇後語');$('back').style.display='';
+  var h='<div class="chips"><button class="chip '+(id.tab==='en'?'on':'')+'" onclick="idTab(\'en\')">🇺🇸 英文俚語</button><button class="chip '+(id.tab==='zh'?'on':'')+'" onclick="idTab(\'zh\')">🇹🇼 中文歇後語</button></div><div id="idc"></div>';
+  $('main').innerHTML=h;drawId();
+};
+window.idTab=function(t){id.tab=t;id.i=0;id.rev=false;R.idiom();};
+function idList(){return id.tab==='en'?IDIOMS:XIEHOUYU;}
+function drawId(){
+  var L=idList(),a=L[id.i].split('|'),h='';
+  if(id.tab==='en'){
+    h='<div class="card"><div class="en">'+esc(a[0])+'</div><div class="zh">'+esc(a[1])+'</div><div class="msg" style="font-size:24px">例句:'+esc(a[2])+'</div></div>';
+  }else{
+    h='<div class="card"><div class="zh" style="font-size:36px">'+esc(a[0])+' ——</div>'+(id.rev?'<div class="zh" style="font-size:40px;color:#ef476f">'+esc(a[1])+'</div><div class="msg" style="font-size:24px">'+esc(a[2])+'</div><div class="en sm">'+esc(a[3])+'</div>':'<div class="msg">猜猜看下半句是什麼?</div><button class="btn g" onclick="idRev()">看答案</button>')+'</div>';
+  }
+  h+='<div class="msg">'+(id.i+1)+' / '+L.length+'</div><div class="row"><button class="btn gray" onclick="idMove(-1)">◀ 上一個</button><button class="btn o" onclick="idSay()">🔊 聽英文</button><button class="btn" onclick="idMove(1)">下一個 ▶</button></div><div class="row"><button class="btn gray" id="spd" onclick="cycleSpeed(true)">'+speedLabel()+'</button><button class="btn r" onclick="idMic()">🎤 跟著念</button></div><div id="idres"></div>';
+  $('idc').innerHTML=h;
+  if(id.tab==='en')say(a[0]);
+}
+function idEnglish(){var a=idList()[id.i].split('|');return id.tab==='en'?a[0]:a[3];}
+window.idRev=function(){id.rev=true;drawId();say(idEnglish());};
+window.idMove=function(d){var n=idList().length;id.i=(id.i+d+n)%n;id.rev=false;drawId();};
+window.idSay=function(){say(idEnglish());};
+window.idMic=function(){var tg=idEnglish();$('idres').innerHTML='<div class="msg">🎤 請說…</div>';
+  listen(function(t,err){if(view!=='idiom')return;if(!t){$('idres').innerHTML='<div class="msg">'+esc(err||'沒聽到')+'</div>';return;}
+    var sc=Math.round(similar(t,tg)*100);$('idres').innerHTML='<div class="score">'+sc+'</div><div class="msg">我聽到:'+esc(t)+'</div>';if(sc>=70)addStar(1);},null,'en-US');};
+// --- 生活小老師 ---
+var lf={i:0};
+R.tutor=function(){
+  setTitle('生活小老師');$('back').style.display='';
+  var h='<div class="msg">學了英文,馬上用在生活!選一個情境,或直接問小老師</div><div class="grid"><button class="big c6" style="grid-column:1/-1" onclick="tutorAsk()">❓ 隨便問小老師<small>任何英文問題、這句怎麼說、文法、發音</small></button>';
+  LIFE.forEach(function(s,k){h+='<button class="big c'+(k%5+1)+'" onclick="lifeOpen('+k+')">'+s.e+' '+esc(s.t)+'</button>';});
+  $('main').innerHTML=h+'</div>';
+};
+window.tutorAsk=function(){openChat({p:'tutor',mode:'qa',title:'生活小老師',hello:{t:'Hi! Ask me anything about English.',z:'嗨!我是你的生活英文小老師。有任何英文問題都可以問我,也可以說「這句話英文怎麼說」。',zhSpeak:true}});view='chat';PARENT.chat='tutor';};
+window.lifeOpen=function(k){lf.i=k;go('lifed');};
+R.lifed=function(){
+  var s=LIFE[lf.i];setTitle(s.e+' '+s.t);$('back').style.display='';
+  var h='<div class="card"><div class="zh">'+esc(s.g)+'</div><div class="msg">先學這幾句,點 🔊 聽,🎤 跟著念</div></div>';
+  s.p.forEach(function(x,k){var p=pair(x);h+='<div class="srow"><button class="hear" onclick="lifeSay('+k+')">🔊</button><div class="stext"><div class="se">'+esc(p.en)+'</div><div class="sz">'+esc(p.zh)+'</div></div><button class="btn r sm" onclick="lifeMic('+k+')">🎤</button></div>';});
+  h+='<div id="liferes"></div><div class="row"><button class="btn gray" id="spd" onclick="cycleSpeed(true)">'+speedLabel()+'</button></div><div class="row"><button class="btn g" onclick="lifeRole()">🎭 角色扮演(和 AI 練習這個情境)</button></div><div class="row"><button class="btn o" onclick="lifeAsk()">❓ 問小老師這個情境</button></div>';
+  $('main').innerHTML=h;
+};
+window.lifeSay=function(k){say(pair(LIFE[lf.i].p[k]).en);};
+window.lifeMic=function(k){var tg=pair(LIFE[lf.i].p[k]).en;$('liferes').innerHTML='<div class="msg">🎤 請說…</div>';
+  listen(function(t,err){if(view!=='lifed')return;if(!t){$('liferes').innerHTML='<div class="msg">'+esc(err||'沒聽到')+'</div>';return;}
+    var sc=Math.round(similar(t,tg)*100);$('liferes').innerHTML='<div class="score">'+sc+'</div><div class="msg">我聽到:'+esc(t)+'</div>'+(sc<85?'<div class="msg">再聽一次範例再試試看</div>':'<div class="msg">很棒!</div>');if(sc>=70)addStar(1);},function(p){$('liferes').innerHTML='<div class="msg">🎤 '+esc(p)+'</div>';},'en-US');};
+window.lifeRole=function(){var s=LIFE[lf.i];openChat({p:'tutor',mode:'role',scene:s,title:s.e+' '+s.t+'(角色扮演)',hello:{t:'Let us practice! I will start.',z:'我們來練習「'+s.t+'」!你可以說英文,不會說就說中文,我會教你。'},auto:'Please start the role-play with your first line.'});view='chat';PARENT.chat='lifed';};
+window.lifeAsk=function(){var s=LIFE[lf.i];openChat({p:'tutor',mode:'qa',scene:s,title:s.e+' 問小老師',hello:{t:'Ask me about "'+s.t+'".',z:'關於「'+s.t+'」有什麼想問的?例如:這句話怎麼說、什麼時候用。',zhSpeak:true},auto:null});view='chat';PARENT.chat='lifed';};
+
+// --- AI 設定(Gemini 免費金鑰)---
+R.settings=function(){
+  setTitle('🔑 AI 設定');$('back').style.display='';
+  var has=!!ST.gkey;
+  $('main').innerHTML='<div class="card" style="text-align:left"><div class="zh" style="font-size:24px;line-height:1.55">AI 老師改用 Google 的 <b>Gemini</b>(免費額度,不用付錢)。<br>1. 用電腦或手機打開 <b>aistudio.google.com/apikey</b><br>2. 登入 Google 帳號,按「Create API key」<br>3. 把產生的金鑰(AIza 開頭)貼到下面<br><small style="color:#888">金鑰只存在這台裝置裡,不會放在程式或網頁中。</small></div></div>'+
+   '<div class="msg">目前狀態:'+(has?'✅ 已設定金鑰(結尾 '+esc(ST.gkey.slice(-4))+')':'⚠️ 還沒有金鑰')+'</div>'+
+   '<textarea id="gkey" rows="2" placeholder="貼上 Gemini 金鑰(AIza…)" style="font-size:22px"></textarea>'+
+   '<div class="msg">模型名稱(不用改,留空就會自動選)</div><textarea id="gmodel" rows="1" placeholder="例如 gemini-3.5-flash-lite" style="font-size:22px">'+esc(ST.gmodel||'')+'</textarea>'+
+   '<div class="row"><button class="btn g" onclick="gSave()">💾 儲存</button><button class="btn o" onclick="gTest()">🧪 測試</button><button class="btn gray" onclick="gClear()">清除金鑰</button></div><div id="gres" class="msg"></div>';
+};
+window.gSave=function(){var k=$('gkey').value.trim();if(k){ST.gkey=k;}ST.gmodel=$('gmodel').value.trim();save();toast('已儲存');R.settings();};
+window.gClear=function(){ST.gkey='';save();toast('已清除');R.settings();};
+window.gTest=function(){
+  var k=$('gkey').value.trim();if(k){ST.gkey=k;save();}
+  $('gres').textContent='測試中…';
+  var id=++aid;aiCb[id]=function(t,err){$('gres').textContent=err?('❌ '+err):('✅ 成功!老師說:'+t.slice(0,60));};
+  EN.ask2(id,'Reply with the single word OK.',JSON.stringify([{role:'user',content:'ping'}]),ST.gkey||'',$('gmodel').value.trim()||ST.gmodel||'');
+};
+
+// ===== 開機 =====
+document.getElementById('back').onclick=function(){window.goBack();};
+$('stars').textContent='⭐ '+ST.stars;
+R.home();
+</script></body></html>
