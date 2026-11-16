@@ -80,6 +80,27 @@ table.pt{width:100%;border-collapse:collapse;font-size:20px;background:#fff;bord
 table.pt td,table.pt th{padding:8px 6px;border-bottom:1px solid #dde;text-align:left}
 input.pin{font-size:34px;width:100%;padding:10px;border-radius:14px;border:3px solid #4cc9f0;text-align:center;letter-spacing:10px;font-family:inherit;-webkit-user-select:text;user-select:text}
 
+#mas.cheer .eyes,#mas.giggle .eyes,#mas.love .eyes{display:none}
+#mas.cheer .hy,#mas.giggle .hy,#mas.love .hy{display:block}
+#mas.giggle{animation:giggle .25s ease-in-out 5}
+@keyframes giggle{0%,100%{transform:rotate(-5deg) scale(1.02)}50%{transform:rotate(5deg) scale(1.06)}}
+#mas.love{animation:cheer .7s ease-in-out 2}
+#mas.cheer .armL{transform-origin:22px 152px;animation:wvL .3s ease-in-out 6}#mas.cheer .armR{transform-origin:178px 152px;animation:wvR .3s ease-in-out 6}
+@keyframes wvL{0%,100%{transform:rotate(0)}50%{transform:rotate(30deg)}}@keyframes wvR{0%,100%{transform:rotate(0)}50%{transform:rotate(-30deg)}}
+@keyframes rise{from{transform:translateY(0) scale(.6);opacity:1}to{transform:translateY(-160px) scale(1.4);opacity:0}}
+.tapn{cursor:pointer}
+.it.tapd{filter:drop-shadow(0 0 6px #ffd166);transform:scale(1.1)}
+.sm2{font-size:20px;color:#456}
+.resume{background:#ffd166;color:#2b2d42}
+.chip{display:inline-block;background:#fff;border-radius:16px;padding:6px 14px;margin:4px;font-size:20px;box-shadow:0 3px 0 #0002;border:0;font-family:inherit}
+.chip.on{background:#4cc9f0;color:#fff}
+.poem{font-size:34px;line-height:1.7;text-align:center;font-weight:bold;letter-spacing:2px}
+.poem div{padding:2px 8px;border-radius:12px;transition:background .2s}
+.poem div.hl{background:#ffe9a8;transform:scale(1.04)}
+.ps{font-size:18px;color:#789}
+.stage{background:#223;border-radius:22px;padding:10px;margin:8px 0;box-shadow:0 6px 0 #0003;overflow:hidden;position:relative}
+.stage .prop{background:linear-gradient(#bfe9ff,#fff6d8);box-shadow:none;margin:0;min-height:190px}
+
 .opts>.opt:last-child:nth-child(odd){grid-column:1/-1}
 </style></head><body>
 <div id="top"><button id="back" style="display:none">◀</button><div class="t" id="title">Jiu Bao 成長樂園</div><div id="stars">⭐ 0</div></div>
@@ -115,7 +136,7 @@ function makeBrowserBridge(){
     speak:function(t,r,id){this.speakL(t,r,id,'en-US');},
     speakL:function(text,rate,id,lang){
       if(!window.speechSynthesis){setTimeout(function(){window.onSpoken(id);},50);return;}
-      try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(text);u.lang=lang;u.rate=rate;var d=false;var fin=function(){if(!d){d=true;window.onSpoken(id);}};u.onend=fin;u.onerror=fin;speechSynthesis.speak(u);
+      try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(text);u.lang=lang;u.rate=rate;u.pitch=window.__PITCH||1;var d=false;var fin=function(){if(!d){d=true;window.onSpoken(id);}};u.onend=fin;u.onerror=fin;speechSynthesis.speak(u);
         setTimeout(fin,Math.max(4000,text.length*400));}catch(e){window.onSpoken(id);}
     },
     listen:function(){this.listenL('en-US');},
@@ -139,6 +160,7 @@ function makeBrowserBridge(){
   };
 }
 
+var GAMES={};
 var EN=(typeof ZBEN!=='undefined')?ZBEN:makeBrowserBridge();
 var ST={stars:0,speed:1,prog:{},wrong:{},unlockAll:false,pin:'1234',days:{}};
 function load(){try{var j=JSON.parse(localStorage.getItem('zbkid1')||'{}');for(var k in j)ST[k]=j[k];}catch(e){}}
@@ -154,25 +176,35 @@ function toast(m){var d=document.createElement('div');d.className='toast';d.text
 function updStars(){$('stars').textContent='⭐ '+ST.stars;}
 var CN=['零','一','二','三','四','五','六','七','八','九','十'];
 function cn(n){if(n<=10)return CN[n];if(n<20)return '十'+CN[n-10];if(n%10===0)return CN[n/10]+'十';return CN[Math.floor(n/10)]+'十'+CN[n%10];}
-// ---- 九寶角色(Q版) ----
-var MOUTH_C='M84 143 Q100 156 116 143',MOUTH_O='M86 140 Q100 172 114 140 Z';
+// ---- 九寶角色(Q版,更可愛) ----
+var MOUTH_C='M86 143 Q100 158 114 143',MOUTH_O='M86 140 Q100 174 114 140 Z';
+var HATS=[['無帽子',0,''],
+ ['蝴蝶結',8,'<g transform="translate(138 52) rotate(18)"><path d="M0 0 L-24 -14 L-24 14 Z" fill="#ff6fa5" stroke="#c2185b" stroke-width="3"/><path d="M0 0 L24 -14 L24 14 Z" fill="#ff6fa5" stroke="#c2185b" stroke-width="3"/><circle r="7" fill="#ffd166" stroke="#c2185b" stroke-width="3"/></g>'],
+ ['皇冠',20,'<path d="M62 62 L70 28 L88 48 L100 22 L112 48 L130 28 L138 62 Z" fill="#ffd166" stroke="#d99a00" stroke-width="4" stroke-linejoin="round"/><circle cx="100" cy="30" r="5" fill="#ef476f"/>'],
+ ['魔術帽',40,'<ellipse cx="100" cy="62" rx="52" ry="11" fill="#3a3a5c"/><rect x="68" y="14" width="64" height="50" rx="6" fill="#4a4a7c"/><rect x="68" y="44" width="64" height="9" fill="#ef476f"/>'],
+ ['棒球帽',65,'<path d="M58 62 Q100 14 142 62 Z" fill="#118ab2" stroke="#0b5f7d" stroke-width="4"/><path d="M130 58 Q170 56 168 68 Q140 70 124 64 Z" fill="#0f7aa0" stroke="#0b5f7d" stroke-width="3"/>'],
+ ['小花冠',95,'<g stroke="#2b9348" stroke-width="3"><circle cx="70" cy="56" r="9" fill="#ff8fab"/><circle cx="100" cy="46" r="10" fill="#ffd166"/><circle cx="130" cy="56" r="9" fill="#ff8fab"/></g>']];
+function curHat(){var h=ST.hat||0;if(HATS[h]&&ST.stars<HATS[h][1])h=0;return h;}
 function mascot(cls){
   return '<svg id="mas" class="'+(cls||'')+'" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">'+
-  '<line x1="100" y1="42" x2="100" y2="16" stroke="#e08a2e" stroke-width="6" stroke-linecap="round"/><circle cx="100" cy="14" r="11" fill="#ffd166" stroke="#e08a2e" stroke-width="4"/>'+
-  '<ellipse cx="62" cy="206" rx="24" ry="11" fill="#f2a65a"/><ellipse cx="138" cy="206" rx="24" ry="11" fill="#f2a65a"/>'+
-  '<ellipse cx="22" cy="150" rx="16" ry="24" fill="#ffd9a0" stroke="#e08a2e" stroke-width="4" transform="rotate(20 22 150)"/><ellipse cx="178" cy="150" rx="16" ry="24" fill="#ffd9a0" stroke="#e08a2e" stroke-width="4" transform="rotate(-20 178 150)"/>'+
-  '<ellipse cx="100" cy="128" rx="74" ry="80" fill="#ffe8c2" stroke="#e08a2e" stroke-width="5"/>'+
-  '<ellipse cx="100" cy="146" rx="52" ry="46" fill="#fff6e3"/>'+
-  '<g class="eyes"><ellipse cx="70" cy="104" rx="17" ry="21" fill="#fff" stroke="#6b4423" stroke-width="3"/><ellipse cx="130" cy="104" rx="17" ry="21" fill="#fff" stroke="#6b4423" stroke-width="3"/><circle cx="73" cy="107" r="11" fill="#3a2a1a"/><circle cx="127" cy="107" r="11" fill="#3a2a1a"/><circle cx="77" cy="102" r="4.5" fill="#fff"/><circle cx="131" cy="102" r="4.5" fill="#fff"/></g>'+
-  '<ellipse cx="46" cy="136" rx="13" ry="8" fill="#ff9aa2" opacity=".75"/><ellipse cx="154" cy="136" rx="13" ry="8" fill="#ff9aa2" opacity=".75"/>'+
-  '<path id="mouth" d="'+MOUTH_C+'" fill="#c2185b" stroke="#6b2a3a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>'+
-  '<path d="M52 184 Q100 206 148 184 L150 200 Q100 222 50 200 Z" fill="#118ab2" stroke="#0b5f7d" stroke-width="3"/><path d="M118 196 L132 218 L148 212 L136 192 Z" fill="#118ab2" stroke="#0b5f7d" stroke-width="3"/>'+
-  '</svg>';
+  '<line x1="100" y1="44" x2="100" y2="18" stroke="#e08a2e" stroke-width="6" stroke-linecap="round"/><circle cx="100" cy="14" r="11" fill="#ffd166" stroke="#e08a2e" stroke-width="4"><animate attributeName="r" values="11;13;11" dur="1.6s" repeatCount="indefinite"/></circle>'+
+  '<ellipse cx="62" cy="207" rx="25" ry="11" fill="#f2a65a"/><ellipse cx="138" cy="207" rx="25" ry="11" fill="#f2a65a"/>'+
+  '<g class="armL"><ellipse cx="22" cy="152" rx="16" ry="25" fill="#ffd9a0" stroke="#e08a2e" stroke-width="4" transform="rotate(20 22 152)"/></g><g class="armR"><ellipse cx="178" cy="152" rx="16" ry="25" fill="#ffd9a0" stroke="#e08a2e" stroke-width="4" transform="rotate(-20 178 152)"/></g>'+
+  '<ellipse cx="100" cy="128" rx="76" ry="80" fill="#ffe8c2" stroke="#e08a2e" stroke-width="5"/>'+
+  '<ellipse cx="100" cy="150" rx="50" ry="42" fill="#fff6e3"/>'+
+  '<g class="eyes"><ellipse cx="68" cy="104" rx="20" ry="24" fill="#fff" stroke="#6b4423" stroke-width="3"/><ellipse cx="132" cy="104" rx="20" ry="24" fill="#fff" stroke="#6b4423" stroke-width="3"/><circle cx="71" cy="108" r="14" fill="#3a2a1a"/><circle cx="129" cy="108" r="14" fill="#3a2a1a"/><circle cx="77" cy="101" r="6" fill="#fff"/><circle cx="135" cy="101" r="6" fill="#fff"/><circle cx="66" cy="115" r="3" fill="#fff"/><circle cx="124" cy="115" r="3" fill="#fff"/></g>'+
+  '<g class="hy" style="display:none" fill="none" stroke="#3a2a1a" stroke-width="7" stroke-linecap="round"><path d="M50 108 Q68 84 86 108"/><path d="M114 108 Q132 84 150 108"/></g>'+
+  '<ellipse cx="44" cy="138" rx="15" ry="9" fill="#ff8fab" opacity=".8"/><ellipse cx="156" cy="138" rx="15" ry="9" fill="#ff8fab" opacity=".8"/>'+
+  '<path id="mouth" d="'+MOUTH_C+'" fill="none" stroke="#6b2a3a" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>'+
+  '<path d="M52 184 Q100 208 148 184 L150 200 Q100 224 50 200 Z" fill="#118ab2" stroke="#0b5f7d" stroke-width="3"/><path d="M118 197 L132 219 L148 213 L136 193 Z" fill="#118ab2" stroke="#0b5f7d" stroke-width="3"/>'+
+  '<g id="hat">'+HATS[curHat()][2]+'</g></svg>';
 }
 var talkT=null,mopen=false;
-function talkOn(){if(talkT)return;talkT=setInterval(function(){var m=$('mouth');if(!m)return;mopen=!mopen;m.setAttribute('d',mopen?MOUTH_O:MOUTH_C);m.setAttribute('fill',mopen?'#c2185b':'none');},170);}
+function talkOn(){if(talkT)return;talkT=setInterval(function(){var m=$('mouth');if(!m)return;mopen=!mopen;m.setAttribute('d',mopen?MOUTH_O:MOUTH_C);m.setAttribute('fill',mopen?'#c2185b':'none');},160);}
 function talkOff(){if(talkT){clearInterval(talkT);talkT=null;}var m=$('mouth');if(m){m.setAttribute('d',MOUTH_C);m.setAttribute('fill','none');}}
-function mood(c){var m=$('mas');if(!m)return;var base=m.getAttribute('class').indexOf('sm')>=0?'sm':'';m.setAttribute('class',base);void m.getBBox;setTimeout(function(){var m2=$('mas');if(m2)m2.setAttribute('class',(base+' '+c).trim());},20);setTimeout(function(){var m3=$('mas');if(m3)m3.setAttribute('class',base);},2300);}
+function mood(c){var m=$('mas');if(!m)return;var base=m.getAttribute('class').indexOf('sm')>=0?'sm':'';m.setAttribute('class',base);setTimeout(function(){var m2=$('mas');if(m2)m2.setAttribute('class',(base+' '+c).trim());},20);setTimeout(function(){var m3=$('mas');if(m3&&m3.getAttribute('class').indexOf(c)>=0)m3.setAttribute('class',base);},c==='giggle'?1400:2300);}
+function floatEmoji(e,n){for(var i=0;i<(n||6);i++)(function(i){setTimeout(function(){var d=document.createElement('div');d.className='conf';d.textContent=e;d.style.left=rand(20,75)+'%';d.style.top='38%';d.style.animation='rise 1.8s ease-out forwards';document.body.appendChild(d);setTimeout(function(){if(d.parentNode)d.parentNode.removeChild(d);},2000);},i*120);})(i);}
+window.__PITCH=1.35;
 // ---- 語音 ----
 var spk={},sid=0,tok=0;
 function say(text,cb){var id=++sid,my=tok;spk[id]=function(){talkOff();if(cb&&my===tok)cb();};talkOn();try{EN.speakL(text,RATES[ST.speed],id,'zh-TW');}catch(e){spk[id]();}}
@@ -209,11 +241,14 @@ var STAGES=[
  {id:3,n:'小四 ~ 小五',age:'10-11 歲',e:'🌳'},
  {id:4,n:'小六 ~ 國一',age:'12-13 歲',e:'🎓'}];
 var TOPICS=[
- {id:'math',n:'數學與邏輯',e:'🔢',c:'c1',d:'數數・加減・形狀・規律'},
- {id:'zh',n:'注音與國語',e:'📖',c:'c2',d:'ㄅㄆㄇ・反義詞・量詞'},
+ {id:'math',n:'數學與時間',e:'🔢',c:'c1',d:'數到100・加減・形狀・時鐘'},
+ {id:'zh',n:'注音與國語',e:'📖',c:'c2',d:'37個注音・聲調・拼音'},
  {id:'life',n:'生活與品格',e:'🌈',c:'c3',d:'安全・衛生・情緒・禮貌'},
- {id:'brain',n:'專注與思考',e:'🧠',c:'c4',d:'記憶・找不同・迷宮・推理'}];
-var LES={},ORDER={math:[],zh:[],life:[],brain:[]};
+ {id:'focus',n:'專注力訓練',e:'🎯',c:'c4',d:'記憶・找不同・反應遊戲'},
+ {id:'logic',n:'邏輯與底層思考',e:'🧠',c:'c5',d:'因果・步驟・為什麼・推理'},
+ {id:'lit',n:'國學與詩歌',e:'📜',c:'c6',d:'兒歌・唐詩・三字經・弟子規'},
+ {id:'story',n:'故事屋',e:'🎬',c:'c1',d:'每日一則動畫故事'}];
+var LES={},ORDER={math:[],zh:[],life:[],focus:[],logic:[],lit:[],story:[]};
 function LS(topic,id,t,e,sub,teach,qs,game){LES[id]={id:id,topic:topic,t:t,e:e,sub:sub,teach:teach,qs:qs,game:game};ORDER[topic].push(id);}
 function many(fn,n){var r=[],seen={};for(var i=0;i<n*4&&r.length<n;i++){var q=fn();var k=q.q+'|'+q.v+'|'+q.o.join();if(seen[k])continue;seen[k]=1;r.push(q);}return r;}
 function pq(pool,n){return shuffle(pool).slice(0,n).map(function(p){return mk(p[0],p[1],p[2],shuffle(p[3]).slice(0,2),p[4]);});}
@@ -287,20 +322,41 @@ LS('math','m9','分類','🗂️','哪些是同一類?',[
  {s:'找一找,哪一個跟別人不一樣呢?我們來玩玩看!'}],function(){return many(qOdd,5);});
 
 // ===== 注音與國語 =====
-var ZY={'ㄅ':['爸爸','👨'],'ㄆ':['蘋果','🍎'],'ㄇ':['貓咪','🐱'],'ㄈ':['飛機','✈️'],'ㄉ':['大象','🐘'],'ㄊ':['兔子','🐰'],'ㄋ':['牛奶','🥛'],'ㄌ':['老虎','🐯'],'ㄍ':['小狗','🐶'],'ㄎ':['咖啡','☕'],'ㄏ':['花朵','🌸'],'ㄐ':['小雞','🐔'],'ㄑ':['汽車','🚗'],'ㄒ':['西瓜','🍉'],'ㄓ':['豬','🐷'],'ㄔ':['吃飯','🍚'],'ㄕ':['獅子','🦁'],'ㄖ':['日出','🌅'],'ㄗ':['紫色','🟣'],'ㄘ':['草莓','🍓'],'ㄙ':['雨傘','☂️'],'ㄧ':['衣服','👕'],'ㄨ':['烏龜','🐢'],'ㄩ':['魚','🐟'],'ㄚ':['阿嬤','👵'],'ㄜ':['白鵝','🦢'],'ㄞ':['愛心','❤️']};
-function zyScenes(group,intro){var sc=[{s:intro}];group.forEach(function(z){var w=ZY[z];sc.push({s:'這是'+z+'。'+w[0]+'的第一個音,就是'+z+'。',big:'<div class="bigch">'+z+'</div><div style="font-size:70px">'+w[1]+'</div><div style="font-size:28px;font-weight:bold;width:100%;text-align:center">'+w[0]+'</div>'});});sc.push({s:'你記住了嗎?我們來玩玩看!'});return sc;}
-function zyQs(group,extra){var pool=group.concat(extra||[]);return function(){var r=[];for(var i=0;i<5;i++){var z=pick(group);var w=ZY[z];var ot=shuffle(pool.filter(function(x){return x!==z;})).slice(0,2);if(i%2===0)r.push(mk(w[0]+',的第一個音是哪一個呢?','<div style="font-size:80px">'+w[1]+'</div><div style="font-size:30px;font-weight:bold;width:100%;text-align:center">'+w[0]+'</div>',z,ot,w[0]+'的第一個音是'+z));else{var wr=ot.map(function(x){return ZY[x][0]+ZY[x][1];});r.push(mk('哪一個詞,是'+z+'開頭的呢?','<div class="bigch">'+z+'</div>',w[0]+w[1],wr,w[0]+'的第一個音是'+z,w[0]));}}return r;};}
-LS('zh','z1','ㄅㄆㄇㄈ','🅱️','注音符號第一組',zyScenes(['ㄅ','ㄆ','ㄇ','ㄈ'],'今天來認識注音符號。第一組是,ㄅ、ㄆ、ㄇ、ㄈ。'),zyQs(['ㄅ','ㄆ','ㄇ','ㄈ']));
-LS('zh','z2','ㄉㄊㄋㄌ','🐘','注音符號第二組',zyScenes(['ㄉ','ㄊ','ㄋ','ㄌ'],'第二組是,ㄉ、ㄊ、ㄋ、ㄌ。'),zyQs(['ㄉ','ㄊ','ㄋ','ㄌ'],['ㄅ','ㄆ','ㄇ','ㄈ']));
-LS('zh','z3','ㄍㄎㄏ','🐶','注音符號第三組',zyScenes(['ㄍ','ㄎ','ㄏ'],'第三組是,ㄍ、ㄎ、ㄏ。'),zyQs(['ㄍ','ㄎ','ㄏ'],['ㄅ','ㄉ','ㄇ','ㄌ']));
-LS('zh','z4','ㄐㄑㄒ','🍉','注音符號第四組',zyScenes(['ㄐ','ㄑ','ㄒ'],'第四組是,ㄐ、ㄑ、ㄒ。'),zyQs(['ㄐ','ㄑ','ㄒ'],['ㄍ','ㄎ','ㄏ','ㄆ']));
-LS('zh','z5','ㄓㄔㄕㄖ','🦁','注音符號第五組',zyScenes(['ㄓ','ㄔ','ㄕ','ㄖ'],'第五組是,ㄓ、ㄔ、ㄕ、ㄖ。'),zyQs(['ㄓ','ㄔ','ㄕ','ㄖ'],['ㄐ','ㄑ','ㄒ','ㄇ']));
-LS('zh','z6','ㄗㄘㄙ','🍓','注音符號第六組',zyScenes(['ㄗ','ㄘ','ㄙ'],'第六組是,ㄗ、ㄘ、ㄙ。'),zyQs(['ㄗ','ㄘ','ㄙ'],['ㄓ','ㄔ','ㄕ','ㄌ']));
-LS('zh','z7','ㄧㄨㄩ ㄚㄜㄞ','👕','韻母,最後一組',zyScenes(['ㄧ','ㄨ','ㄩ','ㄚ','ㄜ','ㄞ'],'最後是韻母。ㄧ、ㄨ、ㄩ、ㄚ、ㄜ、ㄞ。'),zyQs(['ㄧ','ㄨ','ㄩ','ㄚ','ㄜ','ㄞ'],[]));
+var ZY={'ㄅ':['爸爸','👨'],'ㄆ':['蘋果','🍎'],'ㄇ':['貓咪','🐱'],'ㄈ':['飛機','✈️'],'ㄉ':['大象','🐘'],'ㄊ':['兔子','🐰'],'ㄋ':['牛奶','🥛'],'ㄌ':['老虎','🐯'],'ㄍ':['小狗','🐶'],'ㄎ':['咖啡','☕'],'ㄏ':['花朵','🌸'],'ㄐ':['小雞','🐔'],'ㄑ':['汽車','🚗'],'ㄒ':['西瓜','🍉'],'ㄓ':['豬','🐷'],'ㄔ':['吃飯','🍚'],'ㄕ':['獅子','🦁'],'ㄖ':['日出','🌅'],'ㄗ':['紫色','🟣'],'ㄘ':['草莓','🍓'],'ㄙ':['雨傘','☂️'],
+'ㄧ':['衣服','👕'],'ㄨ':['烏龜','🐢'],'ㄩ':['魚','🐟'],'ㄚ':['阿嬤','👵'],'ㄛ':['喔喔叫','🐓'],'ㄜ':['鵝','🦢'],'ㄝ':['葉子','🍃','最後的音'],'ㄞ':['愛心','❤️'],'ㄟ':['黑色','⬛','最後的音'],'ㄠ':['小貓','🐱','最後的音'],'ㄡ':['牛','🐮','最後的音'],'ㄢ':['高山','🏔️','最後的音'],'ㄣ':['人','🧑','最後的音'],'ㄤ':['熱湯','🍲','最後的音'],'ㄥ':['電燈','💡','最後的音'],'ㄦ':['耳朵','👂']};
+function zyP(z){return ZY[z][2]||'第一個音';}
+function zyScenes(group,intro){var sc=[{s:intro}];group.forEach(function(z){var w=ZY[z];sc.push({s:'這是'+z+'。'+w[0]+'的'+zyP(z)+',就是'+z+'。跟我念一遍,'+z+'。',big:'<div class="bigch">'+z+'</div><div style="font-size:70px">'+w[1]+'</div><div style="font-size:28px;font-weight:bold;width:100%;text-align:center">'+w[0]+'</div>'});});sc.push({s:'你記住了嗎?我們來玩玩看!'});return sc;}
+function zyQs(group,extra){var pool=group.concat(extra||[]);return function(){var r=[];for(var i=0;i<5;i++){var z=pick(group);var w=ZY[z];var ot=shuffle(pool.filter(function(x){return x!==z;})).slice(0,2);if(i%2===0)r.push(mk(w[0]+',的'+zyP(z)+'是哪一個呢?','<div style="font-size:80px">'+w[1]+'</div><div style="font-size:30px;font-weight:bold;width:100%;text-align:center">'+w[0]+'</div>',z,ot,w[0]+'的'+zyP(z)+'是'+z));else{var wr=ot.map(function(x){return ZY[x][0]+ZY[x][1];});r.push(mk('哪一個詞,的'+zyP(z)+'是'+z+'呢?','<div class="bigch">'+z+'</div>',w[0]+w[1],wr,w[0]+'的'+zyP(z)+'是'+z,w[0]));}}return r;};}
+LS('zh','z1','ㄅㄆㄇㄈ','🅱️','聲母第一組',zyScenes(['ㄅ','ㄆ','ㄇ','ㄈ'],'今天來認識注音符號。第一組是,ㄅ、ㄆ、ㄇ、ㄈ。'),zyQs(['ㄅ','ㄆ','ㄇ','ㄈ']));
+LS('zh','z2','ㄉㄊㄋㄌ','🐘','聲母第二組',zyScenes(['ㄉ','ㄊ','ㄋ','ㄌ'],'第二組是,ㄉ、ㄊ、ㄋ、ㄌ。'),zyQs(['ㄉ','ㄊ','ㄋ','ㄌ'],['ㄅ','ㄆ','ㄇ','ㄈ']));
+LS('zh','z3','ㄍㄎㄏ','🐶','聲母第三組',zyScenes(['ㄍ','ㄎ','ㄏ'],'第三組是,ㄍ、ㄎ、ㄏ。'),zyQs(['ㄍ','ㄎ','ㄏ'],['ㄅ','ㄉ','ㄇ','ㄌ']));
+LS('zh','z4','ㄐㄑㄒ','🍉','聲母第四組',zyScenes(['ㄐ','ㄑ','ㄒ'],'第四組是,ㄐ、ㄑ、ㄒ。'),zyQs(['ㄐ','ㄑ','ㄒ'],['ㄍ','ㄎ','ㄏ','ㄆ']));
+LS('zh','z5','ㄓㄔㄕㄖ','🦁','聲母第五組',zyScenes(['ㄓ','ㄔ','ㄕ','ㄖ'],'第五組是,ㄓ、ㄔ、ㄕ、ㄖ。'),zyQs(['ㄓ','ㄔ','ㄕ','ㄖ'],['ㄐ','ㄑ','ㄒ','ㄇ']));
+LS('zh','z6','ㄗㄘㄙ','🍓','聲母最後一組',zyScenes(['ㄗ','ㄘ','ㄙ'],'聲母最後一組,是,ㄗ、ㄘ、ㄙ。'),zyQs(['ㄗ','ㄘ','ㄙ'],['ㄓ','ㄔ','ㄕ','ㄌ']));
+LS('zh','z7','ㄧㄨㄩ','👕','介音三兄弟',zyScenes(['ㄧ','ㄨ','ㄩ'],'接下來是韻母。先認識三兄弟,ㄧ、ㄨ、ㄩ。'),zyQs(['ㄧ','ㄨ','ㄩ'],['ㄚ','ㄜ']));
+LS('zh','z8','ㄚㄛㄜㄝ','🐓','韻母第一組',zyScenes(['ㄚ','ㄛ','ㄜ','ㄝ'],'韻母第一組,ㄚ、ㄛ、ㄜ、ㄝ。'),zyQs(['ㄚ','ㄛ','ㄜ','ㄝ'],['ㄧ','ㄨ','ㄩ']));
+LS('zh','z9','ㄞㄟㄠㄡ','❤️','韻母第二組',zyScenes(['ㄞ','ㄟ','ㄠ','ㄡ'],'韻母第二組,ㄞ、ㄟ、ㄠ、ㄡ。'),zyQs(['ㄞ','ㄟ','ㄠ','ㄡ'],['ㄚ','ㄛ','ㄜ']));
+LS('zh','z10','ㄢㄣㄤㄥㄦ','🏔️','韻母最後一組',zyScenes(['ㄢ','ㄣ','ㄤ','ㄥ','ㄦ'],'最後一組韻母,ㄢ、ㄣ、ㄤ、ㄥ、ㄦ。這樣三十七個注音符號就全部認識了!'),zyQs(['ㄢ','ㄣ','ㄤ','ㄥ','ㄦ'],['ㄞ','ㄟ','ㄠ','ㄡ']));
+var TONES=[['媽','👩','第一聲',['第二聲','第三聲']],['麻','🌿','第二聲',['第一聲','第四聲']],['馬','🐴','第三聲',['第一聲','第四聲']],['罵','😡','第四聲',['第二聲','第三聲']]];
+LS('zh','z11','四個聲調','🎵','一聲二聲三聲四聲',[
+ {s:'同一個音,聲調不一樣,意思就不一樣喔!',big:'🎵'},
+ {s:'第一聲,平平的,像唱歌。媽,媽媽的媽。',big:'👩',html:'<div class="bigch">ㄇㄚ</div>'},
+ {s:'第二聲,往上揚,像問問題。麻,芝麻的麻。',big:'🌿',html:'<div class="bigch">ㄇㄚˊ</div>'},
+ {s:'第三聲,先降再升,像彎彎的路。馬,小馬的馬。',big:'🐴',html:'<div class="bigch">ㄇㄚˇ</div>'},
+ {s:'第四聲,用力往下掉,像生氣。罵,罵人的罵。',big:'😡',html:'<div class="bigch">ㄇㄚˋ</div>'}],
+ function(){var r=[];shuffle(TONES).slice(0,4).forEach(function(t){r.push(mk(t[0]+',是第幾聲呢?','<div style="font-size:80px">'+t[1]+'</div><div class="bigch">'+t[0]+'</div>',t[2],t[3],t[0]+'是'+t[2]));});r.push(mk('第四聲,聽起來像什麼?','😡','往下用力掉',['平平的','往上揚'],'第四聲像生氣一樣往下掉。'));return r;});
+var PYW=[['爸','👨','ㄅㄚ'],['媽','👩','ㄇㄚ'],['狗','🐶','ㄍㄡ'],['貓','🐱','ㄇㄠ'],['牛','🐮','ㄋㄧㄡ'],['魚','🐟','ㄩ'],['手','✋','ㄕㄡ'],['花','🌸','ㄏㄨㄚ'],['月','🌙','ㄩㄝ'],['山','🏔️','ㄕㄢ'],['水','💧','ㄕㄨㄟ'],['火','🔥','ㄏㄨㄛ'],['車','🚗','ㄔㄜ'],['書','📘','ㄕㄨ'],['雞','🐔','ㄐㄧ'],['鴨','🦆','ㄧㄚ'],['鳥','🐦','ㄋㄧㄠ'],['米','🍚','ㄇㄧ']];
+function qPY(){var p=pick(PYW);var w=shuffle(PYW.filter(function(x){return x[2]!==p[2];})).slice(0,2).map(function(x){return x[2];});return mk(p[0]+',的注音怎麼拼呢?','<div style="font-size:80px">'+p[1]+'</div><div class="bigch">'+p[0]+'</div>',p[2],w,p[0]+'的注音是'+p[2],p[2]);}
+LS('zh','z12','注音拼拼看','🔤','聲母加韻母',[
+ {s:'聲母和韻母,可以拼在一起,變成一個字的聲音。',big:'🔤'},
+ {s:'ㄅ,加上ㄚ,拼起來,是ㄅㄚ。爸爸的爸!',html:'<div class="bigch">ㄅ+ㄚ=ㄅㄚ</div><div style="font-size:70px;width:100%;text-align:center">👨</div>'},
+ {s:'ㄇ,加上ㄠ,拼起來,是ㄇㄠ。小貓的貓!',html:'<div class="bigch">ㄇ+ㄠ=ㄇㄠ</div><div style="font-size:70px;width:100%;text-align:center">🐱</div>'},
+ {s:'ㄏ,加上ㄨ,再加上ㄚ,拼起來是ㄏㄨㄚ。花朵的花!',html:'<div class="bigch" style="font-size:80px">ㄏㄨㄚ</div><div style="font-size:70px;width:100%;text-align:center">🌸</div>'},
+ {s:'聲母在前面,韻母在後面,一個一個慢慢拼,你也學得會!'}],function(){return many(qPY,5);});
 var OPP=[['大','小'],['高','矮'],['長','短'],['胖','瘦'],['快','慢'],['多','少'],['冷','熱'],['上','下'],['front','']].slice(0,8);
 OPP=[['大','小','🐘 / 🐭'],['高','矮','🦒 / 🐹'],['長','短','🐍 / 🐛'],['快','慢','🐇 / 🐢'],['多','少','🍪🍪🍪 / 🍪'],['冷','熱','🧊 / 🔥'],['上','下','⬆️ / ⬇️'],['開','關','🔓 / 🔒']];
 function qOpp(){var p=pick(OPP),f=Math.random()<.5;var a=f?p[0]:p[1],b=f?p[1]:p[0];var wr=shuffle(OPP.filter(function(x){return x!==p;})).slice(0,2).map(function(x){return pick([x[0],x[1]]);});return mk(a+'的相反是什麼呢?','<div style="font-size:56px">'+p[2]+'</div>',b,wr,a+'的相反是'+b);}
-LS('zh','z8','反義詞','↔️','意思相反的字',[
+LS('zh','w1','反義詞','↔️','意思相反的字',[
  {s:'有些字的意思,是相反的,我們叫它反義詞。大的相反是小。',html:'<div style="font-size:60px">🐘 ↔ 🐭</div>'},
  {s:'高的相反是矮。快的相反是慢。',html:'<div style="font-size:60px">🦒 ↔ 🐹</div><div style="font-size:60px">🐇 ↔ 🐢</div>'},
  {s:'冷的相反是熱。多的相反是少。長的相反是短。',html:'<div style="font-size:60px">🧊 ↔ 🔥</div>'},
@@ -308,7 +364,7 @@ LS('zh','z8','反義詞','↔️','意思相反的字',[
 var MW=[['貓','隻','🐱'],['狗','隻','🐶'],['書','本','📘'],['車','輛','🚗'],['花','朵','🌸'],['魚','條','🐟'],['鉛筆','枝','✏️'],['蘋果','顆','🍎'],['衣服','件','👕'],['椅子','張','🪑']];
 var MWC=['隻','本','輛','朵','條','枝','顆','件','張'];
 function qMW(){var p=pick(MW);var wr=shuffle(MWC.filter(function(x){return x!==p[1];})).slice(0,2);return mk('一___'+p[0]+',要用哪一個量詞呢?','<div style="font-size:80px">'+p[2]+'</div>',p[1],wr,'我們說,一'+p[1]+p[0],'一'+p[1]+p[0]);}
-LS('zh','z9','量詞','🧮','一隻、一本、一輛',[
+LS('zh','w2','量詞','🧮','一隻、一本、一輛',[
  {s:'數東西的時候,要加一個量詞。一隻貓,一隻狗,動物常用「隻」。',html:'<div style="font-size:60px">🐱🐶</div>'},
  {s:'一本書,一輛車,一朵花。',html:'<div style="font-size:60px">📘🚗🌸</div>'},
  {s:'一條魚,一枝鉛筆,一顆蘋果,一件衣服,一張椅子。',html:'<div style="font-size:56px">🐟✏️🍎👕🪑</div>'},
@@ -406,16 +462,16 @@ LS('life','l8','誰可以幫助我','🧑‍⚕️','各行各業的好幫手',[
  ['誰教我們讀書寫字?','📚','老師',['警察','廚師'],'老師教我們學習。']],5);});
 
 // ===== 專注與思考 =====
-LS('brain','b1','記憶翻翻牌','🃏','找出一樣的兩張',[
+LS('focus','b1','記憶翻翻牌','🃏','找出一樣的兩張',[
  {s:'這是記憶遊戲。每次翻開兩張牌,如果圖案一樣,就配對成功!'},
  {s:'要記住剛剛看到的圖案在哪裡喔。眼睛睜大大,開始吧!'}],null,'memory');
-LS('brain','b2','找不同','🔍','哪一個不一樣?',[
+LS('focus','b2','找不同','🔍','哪一個不一樣?',[
  {s:'很多圖案裡面,有一個偷偷不一樣。你要用眼睛找出它!'},
  {s:'找到以後,用手指點一下。仔細看,不要急喔。'}],null,'odd');
-LS('brain','b3','走迷宮','🌀','幫小熊找到蜂蜜',[
+LS('focus','b3','走迷宮','🌀','幫小熊找到蜂蜜',[
  {s:'小熊肚子餓了,想吃蜂蜜。請你用箭頭按鈕,帶牠走過去。'},
  {s:'灰色的牆壁不能穿過去喔。想一想,哪一條路可以走?'}],null,'maze');
-LS('brain','b4','數字排排站','🔢','由小到大點點看',[
+LS('focus','b4','數字排排站','🔢','由小到大點點看',[
  {s:'畫面上的數字都亂跑了。請你從一開始,依照順序,一個一個點。'},
  {s:'準備好了嗎?眼睛要看仔細!'}],null,'order');
 var REASON=[
@@ -429,7 +485,7 @@ var REASON=[
  ['有鳥的翅膀,會在天上飛,是什麼?','🐦','小鳥',['小魚','烏龜'],'有翅膀會飛的是小鳥。'],
  ['冰淇淋放在太陽下面,會怎麼樣?','🍦','會融化',['變更大','變成蘋果'],'太陽很熱,冰淇淋會融化。'],
  ['下雨天,地板濕濕的,走路要?','🌧️','慢慢走',['用力跑','跳舞'],'濕濕的地板,容易滑倒。']];
-LS('brain','b5','推理小問答','💡','想一想,答案就出來',[
+LS('logic','b5','推理小問答','💡','想一想,答案就出來',[
  {s:'我們來動動腦。仔細聽問題,慢慢想,答案一定找得到!'},
  {s:'有時候要比一比,有時候要排順序。準備好了嗎?'}],function(){return pq(REASON,5);});
 var RIDDLE=[
@@ -441,9 +497,929 @@ var RIDDLE=[
  ['有兩個輪子,用腳踩,就會往前走,是什麼?','🚲','腳踏車',['汽車','飛機'],'答案是腳踏車。'],
  ['有四條腿,沒有腳,我們坐在上面,是什麼?','🪑','椅子',['桌子','床'],'答案是椅子。'],
  ['頭上兩根長鬚,穿著花衣服在花園飛來飛去,是什麼?','🦋','蝴蝶',['小鳥','蜜蜂'],'答案是蝴蝶。']];
-LS('brain','b6','猜猜我是誰','🎭','聽謎語想答案',[
+LS('logic','b6','猜猜我是誰','🎭','聽謎語想答案',[
  {s:'我會說一個謎語,請你猜猜看是什麼。聽仔細喔!'},
  {s:'小提示:想一想,這個東西長什麼樣子,可以做什麼?'}],function(){return pq(RIDDLE,5);});
+
+// ===== 數字到100 / 時間 =====
+function blocks(t,o){var h='<div style="display:flex;flex-wrap:wrap;gap:5px;align-items:flex-end;justify-content:center;max-width:340px">';for(var i=0;i<t;i++)h+='<div style="width:15px;height:84px;background:repeating-linear-gradient(#118ab2 0 7.4px,#fff 7.4px 8.4px);border:2px solid #0b5f7d;border-radius:4px"></div>';
+ if(o>0){h+='<div style="display:flex;flex-wrap:wrap;gap:3px;width:62px;align-items:flex-end">';for(var j=0;j<o;j++)h+='<div style="width:16px;height:16px;background:#f78c1f;border:2px solid #b35f00;border-radius:3px"></div>';h+='</div>';}
+ return h+'</div>';}
+function numChips(a,b,st){var h='';for(var i=a,k=0;i<=b;i+=(st||1),k++)h+='<span class="it pop" style="font-size:28px;background:#cdeffd;border-radius:12px;padding:4px 10px;margin:3px;animation-delay:'+(k*.08)+'s">'+i+'</span>';return h;}
+function qBlocks(max){var n=rand(11,max),t=Math.floor(n/10),o=n%10;return mk('藍色長條是十,橘色小方塊是一。一共是多少呢?',blocks(t,o),String(n),near(n,10,max,2).concat([String(o===0?n+10:t*10+(10-o))]).filter(function(x,i,a){return a.indexOf(x)===i&&x!==String(n)&&+x<=100;}).slice(0,2),cn(t)+'個十是'+t*10+',再加'+cn(o)+'個一,是'+n);}
+function qNext(max){var n=rand(1,max-1),f=Math.random()<.5;var r=f?n+1:n-1;if(r<0)r=n+1;var lbl=r===n+1;var w=[r+1,r-1,r+2].filter(function(x){return x!==r&&x>=0&&x<=100;});return mk(n+(lbl?' 後面,是哪一個數字呢?':' 前面,是哪一個數字呢?').replace('後面','的後面').replace('前面','的前面'),'<div class="bigch">'+n+'</div>',String(r),shuffle(w).slice(0,2).map(String),n+(lbl?'的後面是':'的前面是')+r);}
+function qBetween(max){var n=rand(2,max-1);return mk('哪一個數字,在 '+(n-1)+' 和 '+(n+1)+' 的中間呢?','<div class="bigch">'+(n-1)+' , ? , '+(n+1)+'</div>',String(n),[String(n+2>max?n-2:n+2),String(n-2<0?n+3:n-2)].filter(function(x,i,a){return a.indexOf(x)===i&&x!==String(n);}),'中間是'+n);}
+function qSkip(){var st=pick([2,5,10]),mx=st===10?10:st===5?9:12,i=rand(0,Math.max(0,mx-5)),a=[];for(var k=0;k<5;k++)a.push((i+k+1)*st);var hide=rand(2,4),r=a[hide];var w=[r+st,r-st,r+1].filter(function(x){return x>0&&x!==r;});return mk(st+'個、'+st+'個一起數。❓是多少呢?','<div class="bigch" style="font-size:44px">'+a.map(function(x,j){return j===hide?'❓':x;}).join('、')+'</div>',String(r),shuffle(w).slice(0,2).map(String),'每次多'+st+',所以是'+r);}
+function qPV(){var n=rand(11,99),t=Math.floor(n/10),o=n%10,f=rand(0,2);if(o===0)o=rand(1,9);n=t*10+o;if(f===0)return mk(n+' 的十位是多少?','<div class="bigch">'+n+'</div>',String(t),[String(o),String(t===9?8:t+1)].filter(function(x,i,a){return a.indexOf(x)===i&&x!==String(t);}),n+'的十位是'+t);
+ if(f===1)return mk(n+' 的個位是多少?','<div class="bigch">'+n+'</div>',String(o),[String(t),String(o===9?8:o+1)].filter(function(x,i,a){return a.indexOf(x)===i&&x!==String(o);}),n+'的個位是'+o);
+ return mk(cn(t)+'個十和'+cn(o)+'個一,合起來是多少?',blocks(t,o),String(n),[String(o*10+t),String(n+10>99?n-10:n+10)].filter(function(x,i,a){return a.indexOf(x)===i&&x!==String(n);}),cn(t)+'個十是'+t*10+',加'+cn(o)+'個一是'+n);}
+function qEven(){var n=rand(1,30),ev=n%2===0;return mk(n+' 是單數還是雙數?','<div class="bigch">'+n+'</div><div style="width:100%;text-align:center;font-size:28px">個位是 0、2、4、6、8 就是雙數</div>',ev?'雙數':'單數',[ev?'單數':'雙數'],n+(ev?'是雙數,可以兩個兩個分完':'是單數,會多出一個'));}
+function qAdd20(){var a=rand(2,12),b=rand(2,20-a);if(a+b<=10){a=rand(6,9);b=rand(11-a,9);}var s=a+b;return mk(cn(a)+'加'+cn(b)+',等於多少?','<div class="bigch">'+a+' + '+b+' = ?</div>',String(s),near(s,10,20,2),'先把'+a+'湊成十,再加剩下的,答案是'+s);}
+function qSub20(){var a=rand(11,20),b=rand(2,9);var s=a-b;return mk(cn(a)+'減'+cn(b)+',等於多少?','<div class="bigch">'+a+' - '+b+' = ?</div>',String(s),near(s,1,20,2),a+'減'+b+'等於'+s);}
+function qTens(){var a=rand(1,9)*10,b=rand(1,9)*10,add=Math.random()<.55;if(!add&&b>=a){var t=a;a=b;b=t;if(a===b)a+=10;}if(add&&a+b>100)b=100-a;if(add&&b===0)b=10;var s=add?a+b:a-b;return mk(a+(add?' 加 ':' 減 ')+b+',等於多少?','<div class="bigch">'+a+(add?' + ':' - ')+b+' = ?</div>',String(s),shuffle([s+10,s-10,s+20]).filter(function(x){return x>=0&&x<=100&&x!==s;}).slice(0,2).map(String),a/10+'個十'+(add?'加':'減')+b/10+'個十,等於'+s/10+'個十,就是'+s);}
+function clock(h,m){var a=(h%12+m/60)*30,b=m*6,n='';for(var i=1;i<=12;i++){var t=i*30*Math.PI/180;n+='<text x="'+(100+76*Math.sin(t)).toFixed(1)+'" y="'+(108-76*Math.cos(t)).toFixed(1)+'" font-size="20" font-weight="bold" text-anchor="middle" fill="#2b2d42">'+i+'</text>';}
+ return '<svg viewBox="0 0 200 200" style="width:190px;height:190px"><circle cx="100" cy="100" r="94" fill="#fff" stroke="#ef476f" stroke-width="8"/>'+n+'<line x1="100" y1="100" x2="100" y2="48" stroke="#2b2d42" stroke-width="9" stroke-linecap="round" transform="rotate('+a+' 100 100)"/><line x1="100" y1="100" x2="100" y2="28" stroke="#118ab2" stroke-width="5" stroke-linecap="round" transform="rotate('+b+' 100 100)"/><circle cx="100" cy="100" r="7" fill="#ef476f"/></svg>';}
+function tstr(h,m){return m===0?h+'點':h+'點半';}
+function qClock(half){var h=rand(1,12),m=half&&Math.random()<.6?30:0;var r=tstr(h,m);var w=[tstr(h===12?1:h+1,m),tstr(h===1?12:h-1,m),tstr(h,m===0?30:0)];return mk('現在是幾點呢?',clock(h,m),r,shuffle(w).slice(0,2),'短針指'+h+',長針指'+(m?'六':'十二')+',是'+r);}
+var DAYQ=[['太陽剛剛升起來,是什麼時候?','🌅','早上',['晚上','半夜'],'太陽升起來是早上。'],['太陽在最高的地方,是什麼時候?','☀️','中午',['早上','晚上'],'太陽在頭頂是中午。'],['吃完午餐,太陽慢慢往西邊,是什麼時候?','🌤️','下午',['早上','半夜'],'午餐之後是下午。'],['天黑了,出現月亮和星星,是什麼時候?','🌙','晚上',['早上','中午'],'有月亮的時候是晚上。'],['我們在哪個時候吃早餐?','🥞','早上',['晚上','半夜'],'起床後吃早餐。'],['我們在哪個時候洗完澡去睡覺?','🛁','晚上',['早上','中午'],'晚上洗澡睡覺。'],['我們在哪個時候上學?','🏫','早上',['半夜','晚上'],'早上去上學。'],['月亮出來的時候,我們應該?','🌙','睡覺',['吃早餐','去上學'],'晚上要睡覺。'],['太陽出來了,我們應該?','🌞','起床',['繼續睡','洗澡睡覺'],'早上起床迎接新的一天。'],['下午放學回家,可以?','🏠','寫功課、玩耍',['吃早餐','睡覺'],'下午可以寫功課和玩。'],['一天中最黑的時間是?','🌃','半夜',['中午','下午'],'半夜最黑,大家都在睡覺。'],['昨天、今天、明天,哪一天還沒有到?','📅','明天',['昨天','今天'],'明天還沒有到。']];
+LS('math','n1','二十一到五十','🔢','用十和一來數',[
+ {s:'二十一、二十二、二十三、二十四、二十五、二十六、二十七、二十八、二十九、三十。',html:numChips(21,30),fast:1},
+ {s:'三十一到四十,三十一、三十二,一直數到四十。',html:numChips(31,40)},
+ {s:'四十一到五十。四十一、四十二,數到五十。',html:numChips(41,50)},
+ {s:'每一個十,我們用藍色長條來表示。三個十,就是三十。',html:blocks(3,0)+'<div class="eq">30</div>'},
+ {s:'我們再加上五個小方塊。三個十,加五個一,是三十五!',html:blocks(3,5)+'<div class="eq">35</div>'}],function(){return shuffle(many(function(){return qBlocks(50);},3).concat(many(function(){return qNext(50);},2)));});
+LS('math','n2','五十一到一百','💯','數到一百',[
+ {s:'五十一、五十二,一直數到六十。',html:numChips(51,60),fast:1},
+ {s:'六十一到八十。我們用十個十個的速度數,更快!',html:numChips(61,80)},
+ {s:'八十一到九十九。九十八、九十九,再多一個,就是一百!',html:numChips(91,100)},
+ {s:'一百,就是十個十。哇,好多好多!',html:blocks(10,0)+'<div class="eq">100</div>'}],function(){return shuffle(many(function(){return qBlocks(99);},3).concat(many(function(){return qNext(100);},2)));});
+LS('math','n3','跳著數','🦘','二個二個、五個五個、十個十個',[
+ {s:'我們可以兩個兩個數。二、四、六、八、十。',html:numChips(2,10,2)},
+ {s:'也可以五個五個數。五、十、十五、二十、二十五。',html:numChips(5,25,5)},
+ {s:'十個十個數更快。十、二十、三十、四十,一直到一百。',html:numChips(10,100,10)},
+ {s:'五個五個數,看一看手指就知道。一隻手有五根手指!',big:'🖐️'}],function(){return many(qSkip,5);});
+LS('math','n4','百數表遊戲','🎯','在百數表裡找數字',[{s:'這是一百格的百數表,從一排到一百。'},{s:'我會說一個數字,請你把它找出來,點一下!'}],null,'hundred');
+LS('math','n5','前面和後面','↔️','前一個、後一個、中間',[
+ {s:'數字有順序。五的後面是六,五的前面是四。',html:'<div class="bigch">4 , 5 , 6</div>'},
+ {s:'二十九的後面是三十。九十九的後面是一百。',html:'<div class="bigch">29 , 30</div>'},
+ {s:'在兩個數字中間的,就是夾在中間的那一個數。比如,七十二,在七十一和七十三的中間。',html:'<div class="bigch">71 , 72 , 73</div>'}],function(){return shuffle(many(function(){return qNext(100);},3).concat(many(function(){return qBetween(100);},2)));});
+LS('math','n6','一百以內比大小','⚖️','比一比哪個大',[
+ {s:'比大小,先看十位。十位比較大的,數字就比較大。',html:'<div class="bigch">53 &gt; 38</div>'},
+ {s:'如果十位一樣,再比個位。四十七,比四十二大,因為七比二大。',html:'<div class="bigch">47 &gt; 42</div>'},
+ {s:'小的那個,越靠近前面。一百是最大的數字,零是最小的。'}],function(){return many(function(){return qBigN();},5);});
+function qBigN(){var a=rand(10,99),b=rand(10,99);while(a===b)b=rand(10,99);var big=Math.random()<.6;var r=big?Math.max(a,b):Math.min(a,b),w=big?Math.min(a,b):Math.max(a,b);return mk(a+' 和 '+b+',哪一個比較'+(big?'大':'小')+'呢?','<div class="bigch">'+a+' , '+b+'</div>',String(r),[String(w)],'先比十位,再比個位,答案是'+r);}
+LS('math','n7','十位和個位','🏠','35 是 3 個十和 5 個一',[
+ {s:'兩位數,有十位和個位。三十五,十位是三,個位是五。',html:blocks(3,5)+'<div class="eq">3 個十 + 5 個一 = 35</div>'},
+ {s:'二十,十位是二,個位是零。個位沒有東西,就寫零。',html:blocks(2,0)+'<div class="eq">20</div>'},
+ {s:'七十八,十位是七,個位是八。',html:blocks(7,8)+'<div class="eq">78</div>'}],function(){return many(qPV,5);});
+LS('math','n8','單數和雙數','👯','兩個兩個分得完嗎?',[
+ {s:'雙數,就是兩個兩個一組,剛剛好分完。比如,四個。',html:'<div class="grp"><span class="it">🧒🧒</span><span class="it">🧒🧒</span></div>'},
+ {s:'單數,兩個兩個分完,會多出一個孤單的。比如,五個。',html:'<div class="grp"><span class="it">🧒🧒</span><span class="it">🧒🧒</span><span class="it">🧒</span></div>'},
+ {s:'一、三、五、七、九,是單數。二、四、六、八、十,是雙數。看個位就知道了!'}],function(){return many(qEven,5);});
+LS('math','n9','二十以內加法','➕','湊十的好方法',[
+ {s:'九加四,怎麼算?我們先把九湊成十。九再加一,就是十。',eq:'9 + 1 = 10'},
+ {s:'四裡面,分出一個給九。剩下三。十再加三,就是十三!',eq:'9 + 4 = 13'},
+ {s:'這個方法叫做湊十法,很好用喔!'}],function(){return many(qAdd20,5);});
+LS('math','n10','二十以內減法','➖','從十裡面拿走',[
+ {s:'十三減四。我們先減三,變成十。再減一,剩九。',eq:'13 - 4 = 9'},
+ {s:'也可以想,四加幾,等於十三?四加九,等於十三。所以答案是九。'}],function(){return many(qSub20,5);});
+LS('math','n11','整十加減','🔟','幾個十加幾個十',[
+ {s:'二十加三十。二個十,加三個十,是五個十,就是五十!',html:blocks(2,0)+'<span class="vs">+</span>'+blocks(3,0)+'<div class="eq">20 + 30 = 50</div>'},
+ {s:'七十減四十。七個十拿走四個十,剩下三個十,就是三十。',eq:'70 - 40 = 30'}],function(){return many(qTens,5);});
+LS('math','t1','一天的時間','🌤️','早上、中午、下午、晚上',[
+ {s:'太陽升起來,天亮了,是早上。我們起床、刷牙、吃早餐、上學。',big:'🌅🪥🥞'},
+ {s:'太陽在最高的地方,是中午。我們吃午餐,休息一下。',big:'☀️🍱'},
+ {s:'中午過後,是下午。我們玩耍、學習,放學回家。',big:'🌤️🏠'},
+ {s:'天黑了,月亮和星星出來,是晚上。我們吃晚餐、洗澡、聽故事,然後睡覺。',big:'🌙⭐😴'},
+ {s:'半夜,是更晚更晚的時間,大家都在睡覺。你要早點睡,才會長高喔!',big:'🌃💤'}],function(){return pq(DAYQ,5);});
+LS('math','t2','認識時鐘:整點','🕐','短針和長針',[
+ {s:'這是時鐘。短短的針,是時針,告訴我們現在是幾點。',html:clock(3,0)},
+ {s:'長長的針,是分針。分針指到十二,就是整點。',html:clock(3,0)},
+ {s:'時針指三,分針指十二,現在是三點整!',html:clock(3,0)+'<div class="eq">3:00 三點</div>'},
+ {s:'我們再看一個。時針指七,分針指十二,是七點!',html:clock(7,0)+'<div class="eq">7:00 七點</div>'}],function(){return many(function(){return qClock(false);},5);});
+LS('math','t3','半點','🕧','長針指到六',[
+ {s:'分針指到六,是半點。就是過了半個小時。',html:clock(3,30)},
+ {s:'時針在三和四的中間,分針指六,是三點半。',html:clock(3,30)+'<div class="eq">3:30 三點半</div>'},
+ {s:'整點,分針指十二。半點,分針指六。記住了嗎?',html:clock(9,0)+clock(9,30)}],function(){return many(function(){return qClock(true);},5);});
+// 百數表遊戲
+GAMES.hundred=function(L,fin){
+  var wrong=0,r=0,tg;$('bub').textContent='把數字找出來!';
+  var h='<div class="og" style="grid-template-columns:repeat(10,1fr);gap:3px;max-width:400px">';for(var i=1;i<=100;i++)h+='<button data-v="'+i+'" style="font-size:15px;height:34px;border-radius:6px;padding:0;font-weight:bold;'+(i%10===0?'background:#ffe9a8':'')+'">'+i+'</button>';
+  $('gm').innerHTML='<div class="prop" style="min-height:70px"><div class="bigch" id="tg" style="font-size:60px"></div></div>'+h+'</div>';
+  function nextR(){if(r>=6){say('你很會看百數表!',function(){fin(Math.floor(wrong/2));});return;}tg=rand(1,100);$('tg').textContent='找 '+tg;say('請找出,'+cn(tg>10?tg:tg)+'。'+tg);}
+  var bs=$('gm').querySelectorAll('.og button');for(var k=0;k<bs.length;k++)(function(b){b.onclick=function(){var v=+b.getAttribute('data-v');if(v===tg){sfxOk();mood('cheer');b.style.background='#b7efc5';r++;hush();say('找到了!',function(){later(function(){b.style.background=(v%10===0?'#ffe9a8':'');nextR();},300);});}else{wrong++;sfxNo();mood('oops');b.style.background='#ffd6d6';later(function(){b.style.background=(v%10===0?'#ffe9a8':'');},400);}};})(bs[k]);
+  say('這是一百格的百數表。我說一個數字,請你點出來!');later(nextR,3600);
+};
+ORDER.math=['m1','m2','n1','n2','n3','n4','n5','n6','n7','n8','m3','m4','m5','n9','n10','n11','m6','m7','t1','t2','t3','m8','m9'];
+
+// ===== 專注力新遊戲 + 邏輯與底層思考 =====
+LS('focus','b7','數字記憶','🔢','記住看到的數字',[{s:'我會一個一個,秀出數字。請你記住順序,然後按出來!'},{s:'眼睛盯緊,腦袋拍照!'}],null,'digit');
+LS('focus','b8','顏色記憶','🎹','看顏色、聽聲音、記順序',[{s:'四個顏色會一個一個亮起來。請你記住,再照順序按一次。'},{s:'聽到聲音,看到燈亮,就要記起來喔!'}],null,'simon');
+LS('focus','b9','看顏色,不看字','🌈','訓練大腦不被騙',[{s:'字會說謊喔!請你看字是什麼顏色的,不要看字寫什麼。'},{s:'專心專心,不要被字騙到!'}],null,'stroop');
+LS('focus','b10','只點小貓','🐱','該點才點,不該點要忍住',[{s:'看到小貓,要趕快點一下。看到小狗,要忍住,不能點喔!'},{s:'這是練習專心和克制的遊戲。準備好了嗎?'}],null,'gonogo');
+ORDER.focus=['b1','b2','b7','b8','b4','b9','b3','b10'];
+GAMES.digit=function(L,fin){
+  var lens=[3,4,5],ri=0,wrong=0;$('bub').textContent='記住數字的順序!';
+  function round(){
+    if(ri>=lens.length){say('你的記憶力好強!',function(){fin(wrong);});return;}
+    var n=lens[ri],seq=[];for(var i=0;i<n;i++)seq.push(rand(0,9));
+    $('gm').innerHTML='<div class="prop" style="min-height:130px"><div class="bigch" id="dg" style="font-size:100px">👀</div></div><div id="inp" class="msg" style="text-align:center;font-size:36px;min-height:50px"></div><div class="og" id="kp" style="grid-template-columns:repeat(5,1fr);opacity:.3"></div>';
+    var k='';for(var d=0;d<10;d++)k+='<button data-d="'+d+'" style="font-size:32px;font-weight:bold;height:66px">'+d+'</button>';$('kp').innerHTML=k;
+    for(var j=0;j<n;j++)(function(j){later(function(){$('dg').textContent=seq[j];beep([[500+seq[j]*60,.15]]);later(function(){if($('dg'))$('dg').textContent='';},650);},1200+j*1000);})(j);
+    later(function(){$('dg').textContent='❓';$('kp').style.opacity=1;say('換你囉!');entry(seq);},1200+n*1000+300);
+  }
+  function entry(seq){var got=[];var bs=$('kp').querySelectorAll('button');
+    for(var k=0;k<bs.length;k++)(function(b){b.onclick=function(){var d=+b.getAttribute('data-d');got.push(d);$('inp').textContent=got.join(' ');sfxTick();
+      if(got.length===seq.length){var ok=got.join()===seq.join();if(ok){sfxOk();mood('cheer');ri++;hush();say('答對了!',function(){later(round,200);});}else{wrong++;sfxNo();mood('oops');ri++;hush();say('差一點點!答案是,'+seq.join('、')+'。',function(){later(round,200);});}}};})(bs[k]);}
+  say('我會秀出數字,請你記住順序!');later(round,2800);
+};
+GAMES.simon=function(L,fin){
+  var C=[['#ef476f',392],['#06a77d',440],['#118ab2',523],['#f2c200',587]],ri=0,wrong=0,lens=[2,3,4,5];$('bub').textContent='看顏色,記順序!';
+  $('gm').innerHTML='<div class="og" style="grid-template-columns:repeat(2,1fr);max-width:300px">'+C.map(function(c,i){return '<button data-i="'+i+'" style="height:110px;background:'+c[0]+';opacity:.5"></button>';}).join('')+'</div><div class="msg" id="sm" style="text-align:center"></div>';
+  var bs=$('gm').querySelectorAll('button');
+  function flash(i){bs[i].style.opacity=1;bs[i].style.transform='scale(1.08)';beep([[C[i][1],.3]]);later(function(){bs[i].style.opacity=.5;bs[i].style.transform='';},350);}
+  function round(){if(ri>=lens.length){say('顏色記憶,你全部通過!',function(){fin(wrong);});return;}var seq=[];for(var i=0;i<lens[ri];i++)seq.push(rand(0,3));play(seq,0);}
+  function play(seq,tries){var got=0,live=false;$('sm').textContent='看好喔…';seq.forEach(function(c,j){later(function(){flash(c);},900+j*750);});
+    later(function(){live=true;$('sm').textContent='換你囉!';},900+seq.length*750+200);
+    for(var k=0;k<bs.length;k++)(function(b,i){b.onclick=function(){if(!live)return;flash(i);if(i===seq[got]){got++;if(got===seq.length){live=false;ri++;sfxOk();mood('cheer');later(function(){say('答對了!',function(){later(round,200);});},500);}}else{live=false;wrong++;sfxNo();mood('oops');if(tries>=1){ri++;later(function(){say('沒關係,我們下一關!',function(){later(round,200);});},400);}else later(function(){say('再看一次喔!',function(){later(function(){play(seq,tries+1);},300);});},400);}};})(bs[k],k);}
+  say('四個顏色會亮起來,請你記住順序!');later(round,3200);
+};
+GAMES.stroop=function(L,fin){
+  var CL=[['紅','#ef476f'],['綠','#06a77d'],['藍','#118ab2'],['黃','#f2c200']],t=0,wrong=0;$('bub').textContent='這個字是什麼「顏色」?';
+  function nextT(){
+    if(t>=8){say('你的眼睛和大腦都好厲害!',function(){fin(Math.floor(wrong/2));});return;}
+    var w=pick(CL),c=pick(CL.filter(function(x){return x!==w;}));
+    $('gm').innerHTML='<div class="prop"><div style="font-size:110px;font-weight:bold;color:'+c[1]+'">'+w[0]+'</div></div><div class="og" style="grid-template-columns:repeat(2,1fr);max-width:300px">'+CL.map(function(x){return '<button data-c="'+x[0]+'" style="height:84px;background:'+x[1]+'"></button>';}).join('')+'</div>';
+    var bs=$('gm').querySelectorAll('button');for(var k=0;k<bs.length;k++)(function(b){b.onclick=function(){if(b.getAttribute('data-c')===c[0]){sfxOk();t++;nextT();}else{wrong++;sfxNo();mood('oops');toast('看顏色,不是看字喔');}};})(bs[k]);
+  }
+  say('字會騙人!請你按,字的顏色,不要管字寫什麼。');later(nextT,3200);
+};
+GAMES.gonogo=function(L,fin){
+  var n=0,miss=0,bad=0,total=16,cat=false,tapped=false;$('bub').textContent='看到 🐱 點一下,看到 🐶 不要點!';
+  $('gm').innerHTML='<div class="prop" style="min-height:200px"><button id="gb" style="font-size:110px;border:0;background:none;font-family:inherit">⏳</button></div><div class="msg" id="gs2" style="text-align:center"></div>';
+  $('gb').onclick=function(){if(tapped||!$('gb').getAttribute('data-on'))return;tapped=true;if(cat){sfxOk();$('gs2').textContent='好棒!';}else{bad++;sfxNo();mood('oops');$('gs2').textContent='那是小狗,要忍住喔';}};
+  function step(){
+    if(n>=total){$('gb').textContent='🎉';$('gb').removeAttribute('data-on');say('完成!你很會控制自己!',function(){fin(Math.floor((bad+miss)/2));});return;}
+    if(n>0&&cat&&!tapped)miss++;
+    cat=Math.random()<.6;tapped=false;n++;$('gs2').textContent='';$('gb').textContent=cat?'🐱':'🐶';$('gb').setAttribute('data-on','1');
+    later(function(){$('gb').textContent='·';$('gb').removeAttribute('data-on');later(step,350);},1000);
+    if(n===total)later(function(){},0);
+  }
+  say('看到小貓,點一下。看到小狗,要忍住不能點喔!');later(step,3600);
+};
+function mkq(q,v,r,w,e){return [q,v,r,w,e];}
+LS('logic','b7x','上下左右前後','🧭','方位與位置',[
+ {s:'上面和下面。小鳥在樹的上面,小狗在樹的下面。',html:'<div style="text-align:center;font-size:60px">🐦<br>🌳<br>🐶</div>'},
+ {s:'左邊和右邊。我們吃飯,通常右手拿筷子。',html:'<div style="font-size:60px">🍚 ⬅️ 🙂 ➡️ 🥢</div>'},
+ {s:'前面和後面。排隊的時候,有人在你前面,也有人在你後面。',html:'<div style="font-size:50px">🚶🚶🚶🚶</div>'},
+ {s:'中間,就是夾在兩個東西的當中。'}],function(){return pq([
+ ['小鳥在大樹的哪裡?','<div style="text-align:center;font-size:60px">🐦<br>🌳</div>','上面',['下面','左邊'],'小鳥在樹的上面。'],
+ ['小狗在大樹的哪裡?','<div style="text-align:center;font-size:60px">🌳<br>🐶</div>','下面',['上面','右邊'],'小狗在樹的下面。'],
+ ['蘋果在香蕉的哪一邊?','<div style="font-size:60px">🍎 🍌</div>','左邊',['右邊','上面'],'蘋果在左邊,香蕉在右邊。'],
+ ['香蕉在蘋果的哪一邊?','<div style="font-size:60px">🍎 🍌</div>','右邊',['左邊','下面'],'香蕉在右邊。'],
+ ['三個水果,在中間的是哪一個?','<div style="font-size:60px">🍎 🍌 🍇</div>','香蕉',['蘋果','葡萄'],'香蕉在蘋果和葡萄的中間。'],
+ ['排隊的時候,最前面的是第幾個?','<div style="font-size:50px">1️⃣ 2️⃣ 3️⃣ 4️⃣</div>','第一個',['第三個','最後一個'],'最前面,是第一個。'],
+ ['太陽在天空的哪裡?','<div style="text-align:center;font-size:60px">☀️<br>🏠</div>','上面',['下面','裡面'],'太陽在房子的上面。'],
+ ['魚缸裡,魚在水的哪裡?','🐟','裡面',['外面','上面'],'魚在水的裡面。']],5);});
+var ORD=[
+ ['種花,最先要做什麼?','🌱','挖土放種子',['摘花','澆水了就開花'],'先放種子,再澆水,才會長出花。'],
+ ['刷牙,最後要做什麼?','🪥','把嘴巴漱乾淨',['把牙膏擠出來','拿起牙刷'],'最後要漱口,把泡泡漱乾淨。'],
+ ['洗手,哪一步在最前面?','🧼','把手弄濕',['擦乾','沖掉泡泡'],'先把手弄濕,才能搓肥皂。'],
+ ['過馬路,到了路口應該先?','🚦','停下來看左右',['馬上衝過去','閉著眼睛走'],'先停、再看、再走。'],
+ ['煎蛋,哪一個先做?','🍳','熱鍋',['吃蛋','洗盤子'],'先熱鍋、再打蛋、再煎、最後才吃。'],
+ ['穿鞋子以前,要先穿什麼?','👟','襪子',['外套','帽子'],'先穿襪子,再穿鞋子。'],
+ ['蝴蝶是怎麼長大的?最先是?','🦋','毛毛蟲',['蝴蝶','蛹'],'毛毛蟲,變成蛹,再變成蝴蝶。'],
+ ['小雞從哪裡來?','🐣','蛋',['石頭','樹'],'先有蛋,再孵出小雞。'],
+ ['睡覺以前,要先做什麼?','😴','刷牙、換睡衣',['去上學','吃早餐'],'睡前先刷牙,換好睡衣。'],
+ ['畫圖的時候,應該先?','🎨','拿出紙和筆',['把畫收起來','說我畫好了'],'先準備好東西,才能開始畫。']];
+LS('logic','b8x','先和後(順序)','⏩','什麼事情要先做?',[
+ {s:'做事情有順序,先做什麼,再做什麼,最後做什麼,想清楚就不會亂。',big:'1️⃣2️⃣3️⃣'},
+ {s:'比如刷牙。先拿牙刷,再擠牙膏,再刷牙,最後漱口。',big:'🪥'},
+ {s:'順序錯了,事情就會變得很奇怪喔!比如,先吃飯再煮飯。'}],function(){return pq(ORD,5);});
+var CAUSE=[
+ ['因為下大雨,所以我們出門要帶什麼?','🌧️','雨傘',['太陽眼鏡','泳衣'],'下雨,所以要帶傘。'],
+ ['因為很冷,所以我們要?','🥶','穿外套',['吃冰淇淋','穿短袖'],'很冷,所以穿暖一點。'],
+ ['因為肚子餓,所以我們要?','😋','吃東西',['去睡覺','洗頭'],'肚子餓,所以要吃東西。'],
+ ['因為花沒有喝水,所以花會怎麼樣?','🥀','枯掉',['長得更漂亮','自己跑掉'],'花要喝水才會活。'],
+ ['玻璃杯掉到地上,會怎麼樣?','🥛','破掉',['變成球','飛起來'],'玻璃很脆,掉下去會破。'],
+ ['冰塊放在太陽下面,為什麼會不見?','🧊','因為融化成水',['被風吹走','自己跑掉'],'太陽很熱,冰塊融化變成水。'],
+ ['為什麼熬夜,隔天會想睡覺?','🥱','因為沒有睡飽',['因為太餓','因為天氣好'],'睡不飽,身體很累。'],
+ ['小明沒有刷牙,可能會怎麼樣?','🦷','牙齒蛀掉',['長高','變聰明'],'不刷牙,細菌會把牙齒蛀掉。']];
+LS('logic','b9x','因為…所以…','🔗','原因和結果',[
+ {s:'每一件事情,都有原因,也有結果。',big:'🔗'},
+ {s:'因為下雨,所以地板濕濕的。下雨,是原因。地板濕,是結果。',big:'🌧️➡️💧'},
+ {s:'想一想,為什麼會這樣?這樣會變成什麼?找出原因,你就更聰明!'}],function(){return pq(CAUSE,5);});
+var IFQ=[
+ ['如果下雨了,我們就要?','☔','帶雨傘',['去游泳','穿涼鞋'],'如果下雨,就帶傘。'],
+ ['如果紅燈亮了,就要?','🔴','停下來',['衝過去','加速'],'如果紅燈,就停。'],
+ ['如果肚子餓,就可以?','🍎','吃東西',['繼續玩不理它','喝很多汽水'],'肚子餓就吃健康的東西。'],
+ ['如果弄髒手,就要?','🙌','洗手',['擦在衣服上','用嘴舔'],'手髒了要洗手。'],
+ ['如果迷路了,就要?','😢','找警察或店員',['自己亂走','跟陌生人走'],'迷路了,找可靠的大人。'],
+ ['如果天黑了,我們要?','🌙','開燈、準備睡覺',['出去玩很久','吃早餐'],'天黑了,要開燈休息。'],
+ ['如果朋友跌倒了,我們可以?','🤕','扶他起來',['笑他','走開'],'幫助朋友是好孩子。'],
+ ['如果考試做完了,要?','📝','再檢查一次',['馬上睡覺','撕掉'],'檢查可以找出錯誤。']];
+LS('logic','b10x','如果…就…','🔀','條件想一想',[
+ {s:'如果,就是假設。如果發生了這件事,我就要這樣做。',big:'🔀'},
+ {s:'如果下雨,就帶雨傘。如果沒下雨,就不用帶。',big:'☔'},
+ {s:'會用如果想事情,你就是會思考的小大人!'}],function(){return pq(IFQ,5);});
+var NOQ=[
+ ['哪一個「不是」水果?','','🥕',['🍎','🍌'],'紅蘿蔔是蔬菜。'],
+ ['哪一個「不是」動物?','','🌳',['🐶','🐱'],'樹是植物。'],
+ ['哪一個「不會」飛?','','🐢',['🐦','🦋'],'烏龜不會飛。'],
+ ['哪一個「不是」交通工具?','','🍎',['🚗','🚲'],'蘋果是水果。'],
+ ['魚「不會」做什麼?','🐟','在陸地上走路',['游泳','吃東西'],'魚離開水不能生活。'],
+ ['「所有的鳥都會飛」,這句話對嗎?','🐧','不對,企鵝是鳥但不會飛',['對','只有大鳥才對'],'企鵝和鴕鳥都是鳥,可是不會飛。'],
+ ['石頭有沒有生命?','🪨','沒有',['有','會長大'],'石頭不會吃也不會長大。'],
+ ['太陽是從哪裡出來?','🌅','東邊',['西邊','南邊'],'太陽從東邊升起。']];
+LS('logic','b11x','不是和沒有','🚫','否定與真假',[
+ {s:'「不是」,是想一想,哪一個不一樣。',big:'🚫'},
+ {s:'蘋果不是蔬菜。烏龜不會飛。這些是正確的說法。',big:'🍎🐢'},
+ {s:'有的話看起來對,但是仔細想想,會發現有一點不對。要小心判斷喔!'}],function(){return pq(NOQ,5);});
+function qAttr(){var sh=['circle','triangle','square','star'],co=[['#ef476f','紅色'],['#118ab2','藍色'],['#06a77d','綠色'],['#f2c200','黃色']];var s=pick(sh),c=pick(co);var wr=[],used={};used[s+c[0]]=1;while(wr.length<2){var s2=pick(sh),c2=pick(co);var k=s2+c2[0];if(used[k])continue;used[k]=1;wr.push(SHP[s2](c2[0]));}var q=mk('哪一個是「'+c[1]+'的'+SHN[s]+'」呢?','',SHP[s](c[0]),wr,'要同時符合顏色和形狀');q.sp=c[1]+'的'+SHN[s];return q;}
+LS('logic','b12x','顏色加形狀','🎨','同時符合兩個條件',[
+ {s:'一個東西,可以有很多特徵。比如,顏色,和形狀。',html:SHP.circle('#ef476f')+SHP.triangle('#118ab2')},
+ {s:'紅色的圓形,要同時是紅色,也要是圓形,兩個條件都對才行。',html:'<div style="width:100px">'+SHP.circle('#ef476f')+'</div>'},
+ {s:'找東西的時候,把條件一個一個檢查,就不會找錯!'}],function(){return many(qAttr,5);});
+function qRule(){var t=pick(['*2','+3','+5','-1','*3']),f=function(x){return t==='*2'?x*2:t==='+3'?x+3:t==='+5'?x+5:t==='-1'?x-1:x*3;},a=[rand(2,5),rand(6,8)],q=rand(3,9);var r=f(q);var w=[r+1,r-1,r+2].filter(function(x){return x>=0&&x!==r;});return mk('魔法機器有一個規則。想一想,放進 '+q+',會出來什麼?','<div style="font-size:42px;font-weight:bold;text-align:center">'+a[0]+' ➜ 🎰 ➜ '+f(a[0])+'<br>'+a[1]+' ➜ 🎰 ➜ '+f(a[1])+'<br>'+q+' ➜ 🎰 ➜ ❓</div>',String(r),shuffle(w).slice(0,2).map(String),'規則是'+({'*2':'乘以二,也就是變成兩倍','+3':'都加三','+5':'都加五','-1':'都減一','*3':'變成三倍'})[t]+',所以是'+r);}
+LS('logic','b13x','魔法機器','🎰','找出隱藏的規則',[
+ {s:'這裡有一台魔法機器。放進去一個數字,會變成另一個數字。',big:'🎰'},
+ {s:'放進二,出來四。放進三,出來六。你發現規則了嗎?是變成兩倍!',html:'<div style="font-size:48px;font-weight:bold">2 ➜ 4<br>3 ➜ 6</div>'},
+ {s:'找規則,是電腦和數學最重要的本領。你也可以變成小小工程師!'}],function(){return many(qRule,5);});
+var STEP=[
+ ['煮泡麵,哪一步最後做?','🍜','吃麵',['燒開水','放麵進去'],'順序是燒水、放麵、煮好、最後才吃。'],
+ ['綁鞋帶的步驟,最先要做什麼?','👟','把兩條帶子拿起來',['綁好了','拍拍鞋子'],'先拿起兩條鞋帶。'],
+ ['玩具玩完了,要怎麼辦?','🧸','收進玩具箱',['丟在地上','藏起來不管'],'玩完要收好,下次才找得到。'],
+ ['做三明治,哪一個先放?','🥪','一片土司',['蓋上蓋子','拿起來吃'],'先放底下的麵包,再放餡料,最後蓋上。'],
+ ['想要問老師問題,應該先?','🙋','舉手',['大叫','走開'],'先舉手,等老師請你說。'],
+ ['出門前,最後要確認什麼?','🎒','有沒有帶好東西',['去睡覺','脫掉鞋子'],'出門前要檢查,有沒有忘記帶東西。'],
+ ['找不到東西時,最聰明的辦法是?','🔍','想一想最後在哪裡看到',['大哭','不要了'],'一步一步回想,比較容易找到。'],
+ ['拼拼圖,通常先拼什麼?','🧩','四個角和邊邊',['最中間','隨便拼'],'先找角落和邊邊,框起來比較好拼。']];
+LS('logic','b14x','一步一步來','🪜','把事情拆成步驟',[
+ {s:'遇到大事情,不要慌張。把它拆成小步驟,一步一步來。',big:'🪜'},
+ {s:'要刷牙,先拿牙刷,擠牙膏,刷上面,刷下面,最後漱口。每一步都很簡單!',big:'🪥'},
+ {s:'電腦和機器人,也是照著一步一步的指令在工作的喔。',big:'🤖'}],function(){return pq(STEP,5);});
+var WHY=[
+ ['為什麼冬天要穿比較多的衣服?','🧥','因為天氣冷,要保暖',['因為衣服很好看','因為太陽很大'],'冬天冷,衣服可以幫我們保暖。'],
+ ['為什麼我們要吃飯?','🍚','因為身體需要力量',['因為好玩','因為電視在播'],'食物給我們力量和長大的營養。'],
+ ['為什麼要看紅綠燈?','🚦','因為這樣比較安全',['因為燈很漂亮','因為比較快'],'遵守規則,可以保護自己。'],
+ ['為什麼要把垃圾丟進垃圾桶?','🗑️','因為這樣環境才乾淨',['因為垃圾桶很餓','因為老師說不行'],'大家都愛乾淨,環境才舒服。'],
+ ['為什麼飛機會飛?','✈️','因為有翅膀和引擎推動',['因為有魔法','因為很輕像羽毛'],'翅膀和引擎讓飛機能在空中前進。'],
+ ['為什麼白天比晚上亮?','☀️','因為有太陽照著',['因為有電燈','因為月亮睡覺了'],'太陽是地球的大燈。'],
+ ['為什麼要早點睡覺?','😴','因為睡飽才有精神、會長高',['因為天黑了不能玩','因為床很軟'],'睡眠讓身體長大,大腦休息。'],
+ ['為什麼植物需要水和陽光?','🌱','因為它們靠水和陽光長大',['因為好看','因為會口渴說話'],'植物用陽光和水做養分。']];
+LS('logic','b15x','為什麼?','❓','多問為什麼,變聰明',[
+ {s:'小朋友,你有沒有常常問,為什麼?為什麼,是很棒的問題!',big:'❓'},
+ {s:'想知道真正的原因,可以一直多問幾個為什麼。比如,為什麼地板濕濕的?因為下雨。為什麼下雨?因為雲裡的水變重了。',big:'🌧️'},
+ {s:'找到最底層的原因,就能真的學會事情。這就是底層思考!',big:'🔎'}],function(){return pq(WHY,5);});
+var GOAL=[
+ ['想拿到很高的東西,最適合用什麼辦法?','🍎','踩穩的小椅子,請大人幫忙',['用力跳到受傷','爬到桌子上'],'先想目標,再選安全的辦法。'],
+ ['想要跟新朋友玩,可以怎麼做?','🧒','說你好,問他要不要一起玩',['搶他的玩具','躲起來'],'有禮貌地邀請,最容易交到朋友。'],
+ ['想把書讀得更好,可以?','📚','每天讀一點點',['全部堆著不看','只看一次就丟'],'每天進步一點點,最有效。'],
+ ['想要長高長壯,最重要的是?','💪','吃好、睡好、多運動',['只吃糖果','整天看電視'],'好習慣讓身體長大。'],
+ ['想跟朋友講和,可以怎麼做?','🤝','說對不起,握握手',['不理他','說他壞話'],'誠心道歉,朋友就會原諒你。'],
+ ['想要買新玩具,錢不夠,怎麼辦?','🐷','存錢,慢慢等',['偷拿別人的','大哭大鬧'],'一點一點存錢,願望就能實現。']];
+LS('logic','b16x','目標與方法','🎯','先想要什麼,再想怎麼做',[
+ {s:'做事情以前,要先想,我想要什麼?這叫做目標。',big:'🎯'},
+ {s:'有了目標,再想,有什麼方法?還要選一個安全又有禮貌的方法。',big:'🛣️'},
+ {s:'目標清楚,方法對了,就能成功喔!'}],function(){return pq(GOAL,5);});
+var FACT=[
+ ['哪一句是「事實」?','','太陽從東邊升起',['太陽最喜歡我','晴天最漂亮'],'事實是真的,可以檢查。'],
+ ['哪一句是「想法」(自己覺得)?','','冰淇淋最好吃',['一年有四季','水往低處流'],'「最好吃」是每個人覺得不一樣。'],
+ ['哪一句可以用尺量出來?','📏','這張桌子長一百公分',['這張桌子很漂亮','這張桌子好討厭'],'有數字、可以量,是事實。'],
+ ['小明說,「我看到天上有恐龍飛過」。你要怎麼辦?','🦖','想一想,有沒有證據',['馬上相信','馬上生氣'],'沒有證據的話,要多問、多看。'],
+ ['想知道今天會不會下雨,最好的方法是?','🌦️','看天氣預報',['猜一猜','問玩具'],'找可靠的資料來源。'],
+ ['有人說「吃糖不會蛀牙」,該怎麼辦?','🍬','問醫生、看書查證',['他說了就是真的','我覺得不對就不理'],'要查證,才不會被騙。']];
+LS('logic','b17x','事實與想法','⚖️','哪些是真的、哪些是感覺',[
+ {s:'事實,是真的,可以檢查。比如,今天是星期幾。',big:'✅'},
+ {s:'想法,是每個人覺得不一樣。比如,什麼最好吃。',big:'💭'},
+ {s:'聽到一句話,先想想,它是事實還是想法?有沒有證據?這就是批判性思考。',big:'🔍'}],function(){return pq(FACT,5);});
+var WEIRD=[
+ ['這張圖哪裡怪怪的?','☀️🌙 ⭐ 同時在天空','太陽和月亮通常不會一起這麼亮',['都很正常','星星太小了'],'白天有太陽,晚上才有月亮和星星。'],
+ ['「我們用耳朵來看東西」,哪裡怪怪的?','👂','應該用眼睛看',['沒有怪怪的','耳朵太大'],'看東西用眼睛,聽聲音用耳朵。'],
+ ['「冰淇淋放在火爐上,過了很久還是硬硬的」,哪裡怪?','🍦🔥','冰淇淋會融化',['火爐不夠大','沒有怪'],'很熱的地方,冰淇淋會化掉。'],
+ ['「小魚在天空飛來飛去」,哪裡怪怪的?','🐟','魚住在水裡',['沒有怪','小魚太小'],'魚住在水裡,不會在天空飛。'],
+ ['「晚上十二點,太陽高高掛」,哪裡怪?','🌞','半夜沒有太陽',['沒有怪','太陽太高'],'半夜是黑的。'],
+ ['「他很餓,所以一直喝水就飽了」,哪裡怪?','🥤','水沒有營養',['沒有怪','水太冰'],'水不能代替飯。']];
+LS('logic','b18x','哪裡怪怪的','🧐','找出不合理的地方',[
+ {s:'有的句子或圖片,看起來怪怪的。你要有一雙會發現的眼睛。',big:'🧐'},
+ {s:'比如,魚在天空飛,太陽在半夜出現。這些都和我們知道的事情不一樣。',big:'🐟☁️'},
+ {s:'發現不合理的地方,就是在動腦筋思考喔!'}],function(){return pq(WEIRD,5);});
+function qOrder3(){var N=shuffle(['小明','小華','小美','小強','小玉']).slice(0,3),tall=Math.random()<.5,k=tall?['高','最高','最矮']:['重','最重','最輕'];var r=Math.random()<.5;var ans=r?N[0]:N[2];return mk(N[0]+'比'+N[1]+k[0]+','+N[1]+'比'+N[2]+k[0]+'。誰'+(r?k[1]:k[2])+'呢?','<div style="font-size:34px;text-align:center">'+N[0]+' ＞ '+N[1]+' ＞ '+N[2]+'<br><small style="font-size:22px">(＞ 的意思是,比較'+k[0]+')</small></div>',ans,shuffle(N.filter(function(x){return x!==ans;})).slice(0,2),N[0]+'最'+k[0]+','+N[2]+'最'+(tall?'矮':'輕'));}
+LS('logic','b19x','比一比排排看','📊','誰最高、誰最重',[
+ {s:'小明比小華高,小華比小美高。那麼,誰最高?小明最高!',html:'<div style="font-size:40px;text-align:center">小明 ＞ 小華 ＞ 小美</div>'},
+ {s:'比較的時候,一個一個連起來想,就能排出順序。',big:'📏'},
+ {s:'這是推理的好方法,叫做,連連看。'}],function(){return many(qOrder3,5);});
+var ANA=[
+ ['鳥住在天空,魚住在哪裡?','🐦➡️🐟','水裡',['樹上','沙漠'],'鳥對應天空,魚對應水裡。'],
+ ['眼睛看東西,耳朵可以做什麼?','👁️👂','聽聲音',['聞味道','吃東西'],'耳朵是用來聽的。'],
+ ['白天有太陽,晚上有什麼?','☀️🌙','月亮',['雨傘','冰塊'],'白天太陽,晚上月亮。'],
+ ['手套戴在手上,襪子穿在哪裡?','🧤🧦','腳上',['頭上','肚子上'],'手套對手,襪子對腳。'],
+ ['小狗的寶寶叫小狗,雞的寶寶叫什麼?','🐔','小雞',['小鴨','小鳥'],'雞生的寶寶,是小雞。'],
+ ['筆可以寫字,剪刀可以做什麼?','✏️✂️','剪東西',['畫畫','吃飯'],'剪刀是用來剪的。'],
+ ['夏天很熱,冬天很?','🌞❄️','冷',['濕','亮'],'夏天熱,冬天冷,正好相反。']];
+LS('logic','b20x','找關係(類比)','🪢','它們哪裡一樣?',[
+ {s:'有些東西,有特別的關係。比如,鳥和天空,魚和水裡。',big:'🐦🐟'},
+ {s:'找出這個關係,再用同樣的關係,去找答案。',big:'🪢'},
+ {s:'這樣的思考,叫做類比,很多科學家都用這個方法發現新東西喔。'}],function(){return pq(ANA,5);});
+var PART=[
+ ['腳踏車有什麼零件?','🚲','輪子、龍頭、座椅',['翅膀、尾巴','葉子、花朵'],'腳踏車有輪子、龍頭和座椅。'],
+ ['一棵樹有哪些部分?','🌳','根、樹幹、樹葉',['輪子、方向盤','門、窗'],'樹有根、樹幹和葉子。'],
+ ['房子有哪些部分?','🏠','屋頂、牆、門窗',['根、花瓣','翅膀、嘴巴'],'房子有屋頂、牆壁、門和窗戶。'],
+ ['一天可以拆成哪些時間?','📅','早上、中午、下午、晚上',['紅、黃、藍','一、二、三'],'一天分成早中午晚。'],
+ ['一個人的身體,有哪些部分?','🧍','頭、手、腳',['輪子、引擎','根、莖'],'人有頭、身體、手和腳。'],
+ ['要整理房間,可以怎麼拆開做?','🧹','先收玩具,再整理書,再掃地',['全部一起亂做','不做'],'拆成小步驟,就簡單了。']];
+LS('logic','b21x','拆開來看','🧩','整體和部分',[
+ {s:'很大的東西,可以拆成很多小部分。比如腳踏車,有輪子,有龍頭,有座椅。',big:'🚲'},
+ {s:'很難的事情,也可以拆成小小的步驟,一個一個完成。',big:'🧱'},
+ {s:'會拆開來看,就不會害怕難題,這是很厲害的底層思考喔!'}],function(){return pq(PART,5);});
+ORDER.logic=['b5','b7x','b8x','b9x','b10x','b11x','b12x','b19x','b6','b13x','b14x','b15x','b16x','b17x','b18x','b20x','b21x'];
+
+var NURS=[
+"小太陽|太陽公公起得早/笑瞇瞇呀照大地/我也起床伸懶腰/今天又是好日子",
+"刷牙歌|牙刷牙刷上下刷/牙膏泡泡白花花/裡面外面都要刷/牙齒亮亮笑哈哈",
+"洗手歌|水龍頭呀嘩啦啦/肥皂搓出泡泡花/手心手背手指縫/細菌細菌快逃吧",
+"小星星找朋友|天上星星眨眼睛/一閃一閃亮晶晶/月亮姐姐彎彎笑/陪我睡覺到天明",
+"小雨滴|滴答滴答下小雨/花兒喝水笑嘻嘻/小草洗臉綠油油/我穿雨鞋踩水去",
+"我的小手|我有一雙小小手/會拍會拍拍拍手/會摸會畫會拿球/幫助媽媽真能幹",
+"數數歌|一二三四五六七/我來數數你來聽/八九十個小朋友/手牽手呀圍成圈",
+"小青蛙|池塘裡面小青蛙/呱呱呱呱唱情歌/荷葉當作大舞台/蹦蹦跳跳真快樂",
+"小花貓|小花貓呀喵喵喵/爬上屋頂看月亮/魚兒魚兒哪裡去/快來我的碗裡躲",
+"小黃狗|小黃狗呀汪汪汪/搖搖尾巴看大門/壞人壞人不要來/我是家裡好保鑣",
+"小白兔|小白兔呀白又白/兩隻耳朵豎起來/愛吃蘿蔔和青菜/蹦蹦跳跳真可愛",
+"小烏龜|小烏龜呀慢慢爬/背著房子到處去/不急不慢往前走/一步一步到終點",
+"小蜜蜂|小蜜蜂呀嗡嗡嗡/飛到花叢採花蜜/一朵一朵忙不停/甜甜蜂蜜送給你",
+"小蝴蝶|小蝴蝶呀穿花衣/花叢裡面跳舞蹈/輕輕飛來輕輕去/春天因你更美麗",
+"小螞蟻|小螞蟻呀排成行/搬著食物回家鄉/大家合作力量大/再重也能搬得動",
+"毛毛蟲|毛毛蟲呀吃樹葉/吃飽肚子變成蛹/睡一覺呀變蝴蝶/飛向藍天真漂亮",
+"小鳥|小鳥小鳥樹上唱/早起喳喳叫我起/我說小鳥早早早/一起迎接新朝陽",
+"大象鼻子長|大象大象鼻子長/噴水洗澡真舒爽/一根鼻子當手用/拿起東西沒問題",
+"長頸鹿|長頸鹿呀脖子長/高高樹葉吃得到/看得遠呀站得高/我也要長高高",
+"小猴子|小猴子呀愛爬樹/香蕉一串掛樹上/抓住藤蔓盪過去/哈哈哈哈真好玩",
+"獅子大王|獅子大王吼吼吼/森林動物來開會/大家互相要友愛/不要吵架不打架",
+"小魚兒|小魚小魚水裡游/吐著泡泡咕嚕嚕/擺擺尾巴轉轉圈/水草是我的家",
+"小鴨子|小鴨小鴨嘎嘎嘎/搖搖擺擺下池塘/媽媽帶我去游泳/划呀划呀好開心",
+"公雞喔喔叫|公雞公雞喔喔喔/太陽出來我叫醒/小朋友們快起床/刷牙洗臉去上學",
+"小綿羊|小綿羊呀咩咩咩/身上穿著白毛衣/吃著青草慢慢走/冬天暖和你和我",
+"小豬|小豬小豬胖嘟嘟/吃飽就愛睡大覺/睡醒肚子又餓了/哼哼哼哼要吃飯",
+"小蝸牛|小蝸牛呀背殼殼/一步一步慢慢爬/下雨出來洗澡澡/涼涼快快真舒服",
+"小企鵝|小企鵝呀走搖擺/南極冰上最開心/穿著黑白小禮服/排隊滑雪啦啦啦",
+"大熊貓|大熊貓呀黑白白/抱著竹子慢慢吃/圓圓眼睛圓圓臉/大家看了都愛他",
+"爸爸|爸爸高高像大山/保護我們每一天/辛苦工作不喊累/我愛爸爸謝謝你",
+"媽媽|媽媽溫柔像月亮/照亮我的小心房/煮飯洗衣好辛苦/我愛媽媽抱抱你",
+"我愛我的家|我有一個溫暖家/爸爸媽媽愛著我/爺爺奶奶笑哈哈/大家快樂一起玩",
+"爺爺奶奶|爺爺白髮笑瞇瞇/奶奶慈祥講故事/我幫奶奶捶捶背/爺爺誇我好孩子",
+"好朋友|你是我的好朋友/玩具一起分著玩/你哭我來安慰你/你笑我也哈哈笑",
+"問好歌|早上起來說早安/見到老師問聲好/出門回家說我來/有禮貌的好寶寶",
+"謝謝歌|別人幫我說謝謝/做錯事情說對不起/借東西時說請借/禮貌的話多說說",
+"排排隊|排排隊呀排排隊/不推不擠不吵鬧/一個一個慢慢來/大家都是好寶寶",
+"整理歌|玩具玩完要回家/書本放回書架上/衣服摺好放整齊/我是整潔小幫手",
+"早睡早起|太陽下山月亮升/小朋友呀去睡覺/閉上眼睛數星星/明天起來精神好",
+"吃飯歌|吃飯吃飯不挑食/青菜蘿蔔身體棒/飯粒掉了撿起來/碗盤乾淨笑哈哈",
+"喝水歌|咕嚕咕嚕喝口水/身體需要水來幫/口渴就要喝開水/汽水少喝才健康",
+"紅綠燈|紅燈停呀綠燈行/黃燈亮了要等等/過馬路時看左右/平安回家最重要",
+"斑馬線|斑馬線呀黑白白/走在上面要小心/手牽手呀看左右/汽車看到先暫停",
+"坐車歌|上車先說謝謝你/坐好繫上安全帶/不吵不鬧靜靜坐/平平安安到目的",
+"小汽車|小汽車呀嘟嘟嘟/載著我們去郊遊/紅燈停下綠燈走/安全駕駛最重要",
+"火車|火車火車轟隆隆/一節一節連起來/鐵軌長長通遠方/載我去看大海洋",
+"小飛機|小飛機呀飛上天/雲朵雲朵在身邊/飛過高山飛過海/載我去找外婆家",
+"小船|小船小船水上搖/風兒推我往前走/海鷗跟著飛呀飛/海浪輕輕唱著歌",
+"春天來了|春天來了花兒開/小草發芽綠油油/燕子飛回老地方/小朋友們去郊遊",
+"夏天到|夏天到呀太陽大/西瓜冰涼真好吃/游泳戲水好涼快/不要忘了擦防曬",
+"秋天|秋天到呀葉子黃/風兒吹來落滿地/蘋果柿子紅通通/豐收季節笑開懷",
+"冬天|冬天到呀北風吹/穿上外套戴手套/熱湯熱飯暖呼呼/雪人堆在大門口",
+"下雪了|雪花雪花飄呀飄/像是棉花白茫茫/堆個雪人戴帽子/我們一起笑哈哈",
+"彩虹|雨過天晴出彩虹/紅橙黃綠藍靛紫/七種顏色排排站/像座橋呀掛天上",
+"小月亮|月亮月亮彎彎的/像小船呀像香蕉/有時圓圓像餅乾/掛在天上亮晶晶",
+"風|風兒風兒呼呼吹/吹動樹葉沙沙響/吹起風箏飛高高/吹來涼爽好舒服",
+"小雲朵|雲朵雲朵白又白/一會兒像大白兔/一會兒像棉花糖/飄呀飄呀飄遠方",
+"大海|大海大海藍又藍/海浪嘩啦嘩啦響/小小貝殼沙灘上/螃蟹橫著走過去",
+"大樹|大樹大樹高又高/伸出手臂撐著傘/小鳥住在樹枝上/給我陰涼好乘涼",
+"小種子|小種子呀睡在土/春天雨水來叫醒/伸伸懶腰冒出芽/長成大樹向天空",
+"小花|小花小花開滿園/紅黃粉白真漂亮/蜜蜂蝴蝶都來看/我也聞聞香噴噴",
+"蘋果|蘋果蘋果圓又圓/紅紅臉蛋甜又脆/咬一口呀脆又甜/天天一個身體好",
+"香蕉|香蕉香蕉彎彎的/穿著黃色小外衣/剝開衣服軟又甜/好吃好吃真開心",
+"西瓜|大西瓜呀圓滾滾/綠色外衣紅肚子/切開一片咬一口/甜甜汁水滿嘴巴",
+"小餅乾|小餅乾呀脆脆脆/一口一個吃不夠/分給朋友一起吃/快樂加倍笑哈哈",
+"冰淇淋|冰淇淋呀涼涼的/甜甜蜜蜜融化了/慢慢舔呀不要急/小心滴到衣服上",
+"生日歌|今天是你的生日/蠟燭點亮許個願/大家一起拍拍手/祝你快樂又長大",
+"紅包|新年到呀放鞭炮/穿新衣呀戴新帽/見面問好說恭喜/紅包收下笑呵呵",
+"中秋月|中秋月亮圓又圓/像個大大的玉盤/一家團圓吃月餅/柚子香香笑聲甜",
+"端午節|端午節呀包粽子/龍舟比賽鼓聲響/艾草掛在大門上/平平安安過端午",
+"聖誕樹|聖誕樹呀亮晶晶/星星彩球掛滿枝/老公公呀駕雪橇/禮物送給乖寶寶",
+"小積木|小積木呀疊疊高/紅黃藍綠排排站/蓋座城堡真漂亮/小心別讓它倒下",
+"畫畫歌|拿起蠟筆畫太陽/紅紅圓圓暖烘烘/再畫一朵小紅花/我的圖畫真漂亮",
+"小皮球|小皮球呀圓又圓/拍一拍呀跳一跳/拋給朋友接住它/一起玩球笑哈哈",
+"跳繩|跳繩跳繩一二三/搖呀搖呀跳高高/一口氣跳一百下/我的身體棒棒棒",
+"盪鞦韆|盪鞦韆呀盪鞦韆/盪得高高到雲邊/風兒耳邊呼呼過/我是小小大飛鳥",
+"溜滑梯|溜滑梯呀溜滑梯/爬上去呀滑下來/排好隊伍不推擠/輪流玩耍最歡喜",
+"捉迷藏|我來數到十就找/你快躲好不要動/找到你了哈哈哈/換我躲起來讓你找",
+"小小畫家|我是小小畫家/紙筆就是我魔法/紅藍黃色隨便畫/畫出世界最美麗",
+"小鼓|咚咚咚咚打小鼓/我是節奏小英雄/大家一起拍拍手/快樂音樂傳開來",
+"小喇叭|嘟嘟嘟嘟吹喇叭/聲音嘹亮傳很遠/大家排隊走一走/像是軍隊真神氣",
+"小鈴鐺|叮叮噹噹小鈴鐺/清脆聲音真好聽/搖一搖呀響一響/快樂歌聲到處飄",
+"讀書歌|翻開書本看一看/故事裡面有好多/小動物呀大森林/天天讀書長智慧",
+"寫字歌|握好鉛筆坐端正/一筆一畫慢慢寫/字寫工整真漂亮/老師稱讚我真棒",
+"上學歌|背起書包上學去/路上遇見好朋友/老師早安同學好/今天一起學新知",
+"鉛筆|鉛筆鉛筆瘦又長/寫字畫畫本領強/寫錯橡皮來幫忙/一起完成好作業",
+"橡皮擦|橡皮擦呀白又白/專門擦掉寫錯字/不怕錯誤再來過/勇敢嘗試最重要",
+"書包|小書包呀背背背/課本鉛筆都放好/整整齊齊不遺忘/我是負責小學生",
+"勇敢小孩|摔倒了呀不要哭/拍拍灰塵站起來/擦乾眼淚再前進/我是勇敢的孩子",
+"誠實歌|做錯事情不隱瞞/勇敢說出我錯了/誠實的孩子最可愛/大家都喜歡和他玩",
+"分享歌|我有糖果分你吃/我有玩具大家玩/分享快樂加倍多/心裡暖暖像太陽",
+"愛護小動物|小動物呀是朋友/不丟石頭不欺負/給牠食物和水喝/一起生活真快樂",
+"愛地球|垃圾分類放對地/節約用水關好燈/少用塑膠多環保/愛護地球一起做",
+"小樹苗|小樹苗呀我來種/澆水施肥看著它/天天長高又長壯/長成大樹綠成蔭",
+"小時鐘|滴答滴答小時鐘/短針慢慢往前走/長針快快跑一圈/一小時呀過去了",
+"一星期|星期一呀去上學/星期二呀學寫字/星期三呀畫圖畫/星期四呀玩遊戲/星期五呀好朋友/星期六日去郊遊",
+"十二生肖|鼠牛虎兔排排站/龍蛇馬羊接著來/猴雞狗豬十二個/生肖朋友手拉手",
+"四季歌|春天花開蝴蝶舞/夏天戲水吃西瓜/秋天葉黃蘋果紅/冬天穿衣暖烘烘",
+"顏色歌|紅色像蘋果/黃色像香蕉/綠色像青草/藍色像天空",
+"形狀歌|圓形像太陽/方形像窗戶/三角形像屋頂/星星亮晶晶",
+"感冒了|感冒感冒真難過/鼻水流呀頭又痛/多喝開水多休息/吃藥打針就會好",
+"打針|小小針頭一下下/不怕不怕我勇敢/醫生叔叔誇我棒/身體健康沒細菌",
+"小小醫生|聽診器呀放胸前/聽聽心跳咚咚咚/看看喉嚨說啊啊/小小醫生本領大",
+"消防員|消防車呀嗚嗚嗚/消防員叔叔趕到了/水柱噴向大火焰/保護大家好英勇",
+"警察叔叔|警察叔叔站崗位/指揮交通真辛苦/幫助迷路小朋友/我們尊敬又感謝",
+"晚安歌|天黑黑呀星星亮/小朋友呀閉眼睛/爸爸媽媽親一下/晚安晚安好夢甜"
+];
+
+var TANG=[
+"靜夜思|李白|床前明月光/疑是地上霜/舉頭望明月/低頭思故鄉",
+"春曉|孟浩然|春眠不覺曉/處處聞啼鳥/夜來風雨聲/花落知多少",
+"詠鵝|駱賓王|鵝鵝鵝/曲項向天歌/白毛浮綠水/紅掌撥清波",
+"登鸛雀樓|王之渙|白日依山盡/黃河入海流/欲窮千里目/更上一層樓",
+"憫農(一)|李紳|春種一粒粟/秋收萬顆子/四海無閒田/農夫猶餓死",
+"憫農(二)|李紳|鋤禾日當午/汗滴禾下土/誰知盤中飧/粒粒皆辛苦",
+"遊子吟|孟郊|慈母手中線/遊子身上衣/臨行密密縫/意恐遲遲歸/誰言寸草心/報得三春暉",
+"相思|王維|紅豆生南國/春來發幾枝/願君多採擷/此物最相思",
+"鹿柴|王維|空山不見人/但聞人語響/返景入深林/復照青苔上",
+"竹里館|王維|獨坐幽篁裡/彈琴復長嘯/深林人不知/明月來相照",
+"送元二使安西|王維|渭城朝雨浥輕塵/客舍青青柳色新/勸君更盡一杯酒/西出陽關無故人",
+"九月九日憶山東兄弟|王維|獨在異鄉為異客/每逢佳節倍思親/遙知兄弟登高處/遍插茱萸少一人",
+"山居秋暝|王維|空山新雨後/天氣晚來秋/明月松間照/清泉石上流/竹喧歸浣女/蓮動下漁舟/隨意春芳歇/王孫自可留",
+"鳥鳴澗|王維|人閒桂花落/夜靜春山空/月出驚山鳥/時鳴春澗中",
+"山中送別|王維|山中相送罷/日暮掩柴扉/春草明年綠/王孫歸不歸",
+"雜詩|王維|君自故鄉來/應知故鄉事/來日綺窗前/寒梅著花未",
+"田園樂|王維|桃紅復含宿雨/柳綠更帶朝煙/花落家僮未掃/鶯啼山客猶眠",
+"送別|王維|下馬飲君酒/問君何所之/君言不得意/歸臥南山陲/但去莫復問/白雲無盡時",
+"使至塞上|王維|單車欲問邊/屬國過居延/征蓬出漢塞/歸雁入胡天/大漠孤煙直/長河落日圓/蕭關逢候騎/都護在燕然",
+"山中|王維|荊溪白石出/天寒紅葉稀/山路元無雨/空翠濕人衣",
+"少年行|王維|新豐美酒斗十千/咸陽遊俠多少年/相逢意氣為君飲/繫馬高樓垂柳邊",
+"辛夷塢|王維|木末芙蓉花/山中發紅萼/澗戶寂無人/紛紛開且落",
+"息夫人|王維|莫以今時寵/寧忘舊日恩/看花滿眼淚/不共楚王言",
+"酬張少府|王維|晚年惟好靜/萬事不關心/自顧無長策/空知返舊林/松風吹解帶/山月照彈琴/君問窮通理/漁歌入浦深",
+"過香積寺|王維|不知香積寺/數里入雲峰/古木無人徑/深山何處鐘/泉聲咽危石/日色冷青松/薄暮空潭曲/安禪制毒龍",
+"終南山|王維|太乙近天都/連山到海隅/白雲迴望合/青靄入看無/分野中峰變/陰晴眾壑殊/欲投人處宿/隔水問樵夫",
+"積雨輞川莊作|王維|積雨空林煙火遲/蒸藜炊黍餉東菑/漠漠水田飛白鷺/陰陰夏木囀黃鸝/山中習靜觀朝槿/松下清齋折露葵/野老與人爭席罷/海鷗何事更相疑",
+"漢江臨眺|王維|楚塞三湘接/荊門九派通/江流天地外/山色有無中/郡邑浮前浦/波瀾動遠空/襄陽好風日/留醉與山翁",
+"觀獵|王維|風勁角弓鳴/將軍獵渭城/草枯鷹眼疾/雪盡馬蹄輕/忽過新豐市/還歸細柳營/回看射鵰處/千里暮雲平",
+"渭川田家|王維|斜陽照墟落/窮巷牛羊歸/野老念牧童/倚杖候荊扉/雉雊麥苗秀/蠶眠桑葉稀/田夫荷鋤至/相見語依依/即此羨閒逸/悵然吟式微",
+"送孟浩然之廣陵|李白|故人西辭黃鶴樓/煙花三月下揚州/孤帆遠影碧空盡/唯見長江天際流",
+"望廬山瀑布|李白|日照香爐生紫煙/遙看瀑布掛前川/飛流直下三千尺/疑是銀河落九天",
+"早發白帝城|李白|朝辭白帝彩雲間/千里江陵一日還/兩岸猿聲啼不住/輕舟已過萬重山",
+"贈汪倫|李白|李白乘舟將欲行/忽聞岸上踏歌聲/桃花潭水深千尺/不及汪倫送我情",
+"夜宿山寺|李白|危樓高百尺/手可摘星辰/不敢高聲語/恐驚天上人",
+"獨坐敬亭山|李白|眾鳥高飛盡/孤雲獨去閒/相看兩不厭/只有敬亭山",
+"望天門山|李白|天門中斷楚江開/碧水東流至此回/兩岸青山相對出/孤帆一片日邊來",
+"秋浦歌|李白|白髮三千丈/緣愁似個長/不知明鏡裡/何處得秋霜",
+"勞勞亭|李白|天下傷心處/勞勞送客亭/春風知別苦/不遣柳條青",
+"清平調(一)|李白|雲想衣裳花想容/春風拂檻露華濃/若非群玉山頭見/會向瑤臺月下逢",
+"古朗月行(節錄)|李白|小時不識月/呼作白玉盤/又疑瑤臺鏡/飛在青雲端",
+"玉階怨|李白|玉階生白露/夜久侵羅襪/卻下水晶簾/玲瓏望秋月",
+"子夜吳歌(秋歌)|李白|長安一片月/萬戶擣衣聲/秋風吹不盡/總是玉關情",
+"峨眉山月歌|李白|峨眉山月半輪秋/影入平羌江水流/夜發清溪向三峽/思君不見下渝州",
+"客中行|李白|蘭陵美酒鬱金香/玉碗盛來琥珀光/但使主人能醉客/不知何處是他鄉",
+"越中覽古|李白|越王勾踐破吳歸/義士還家盡錦衣/宮女如花滿春殿/只今惟有鷓鴣飛",
+"渡荊門送別|李白|渡遠荊門外/來從楚國遊/山隨平野盡/江入大荒流/月下飛天鏡/雲生結海樓/仍憐故鄉水/萬里送行舟",
+"春夜洛城聞笛|李白|誰家玉笛暗飛聲/散入春風滿洛城/此夜曲中聞折柳/何人不起故園情",
+"與史郎中欽聽黃鶴樓上吹笛|李白|一為遷客去長沙/西望長安不見家/黃鶴樓中吹玉笛/江城五月落梅花",
+"登金陵鳳凰臺|李白|鳳凰臺上鳳凰遊/鳳去臺空江自流/吳宮花草埋幽徑/晉代衣冠成古丘/三山半落青天外/二水中分白鷺洲/總為浮雲能蔽日/長安不見使人愁",
+"山中問答|李白|問余何意棲碧山/笑而不答心自閒/桃花流水窅然去/別有天地非人間",
+"夏日山中|李白|懶搖白羽扇/裸袒青林中/脫巾掛石壁/露頂灑松風",
+"怨情|李白|美人卷珠簾/深坐蹙蛾眉/但見淚痕濕/不知心恨誰",
+"哭晁卿衡|李白|日本晁卿辭帝都/征帆一片繞蓬壺/明月不歸沉碧海/白雲愁色滿蒼梧",
+"贈孟浩然|李白|吾愛孟夫子/風流天下聞/紅顏棄軒冕/白首臥松雲/醉月頻中聖/迷花不事君/高山安可仰/徒此揖清芬",
+"春思|李白|燕草如碧絲/秦桑低綠枝/當君懷歸日/是妾斷腸時/春風不相識/何事入羅幃",
+"行路難(其一)|李白|金樽清酒斗十千/玉盤珍羞直萬錢/停杯投箸不能食/拔劍四顧心茫然/欲渡黃河冰塞川/將登太行雪滿山/閒來垂釣碧溪上/忽復乘舟夢日邊/行路難行路難/多歧路今安在/長風破浪會有時/直掛雲帆濟滄海",
+"絕句|杜甫|兩個黃鸝鳴翠柳/一行白鷺上青天/窗含西嶺千秋雪/門泊東吳萬里船",
+"春夜喜雨|杜甫|好雨知時節/當春乃發生/隨風潛入夜/潤物細無聲/野徑雲俱黑/江船火獨明/曉看紅濕處/花重錦官城",
+"絕句(遲日江山麗)|杜甫|遲日江山麗/春風花草香/泥融飛燕子/沙暖睡鴛鴦",
+"江南逢李龜年|杜甫|岐王宅裡尋常見/崔九堂前幾度聞/正是江南好風景/落花時節又逢君",
+"春望|杜甫|國破山河在/城春草木深/感時花濺淚/恨別鳥驚心/烽火連三月/家書抵萬金/白頭搔更短/渾欲不勝簪",
+"登高|杜甫|風急天高猿嘯哀/渚清沙白鳥飛迴/無邊落木蕭蕭下/不盡長江滾滾來/萬里悲秋常作客/百年多病獨登臺/艱難苦恨繁霜鬢/潦倒新停濁酒杯",
+"登岳陽樓|杜甫|昔聞洞庭水/今上岳陽樓/吳楚東南坼/乾坤日夜浮/親朋無一字/老病有孤舟/戎馬關山北/憑軒涕泗流",
+"江畔獨步尋花|杜甫|黃師塔前江水東/春光懶困倚微風/桃花一簇開無主/可愛深紅愛淺紅",
+"八陣圖|杜甫|功蓋三分國/名成八陣圖/江流石不轉/遺恨失吞吳",
+"贈花卿|杜甫|錦城絲管日紛紛/半入江風半入雲/此曲只應天上有/人間能得幾回聞",
+"絕句二首(其二)|杜甫|江碧鳥逾白/山青花欲燃/今春看又過/何日是歸年",
+"月夜|杜甫|今夜鄜州月/閨中只獨看/遙憐小兒女/未解憶長安/香霧雲鬟濕/清輝玉臂寒/何時倚虛幌/雙照淚痕乾",
+"望嶽|杜甫|岱宗夫如何/齊魯青未了/造化鍾神秀/陰陽割昏曉/盪胸生曾雲/決眥入歸鳥/會當凌絕頂/一覽眾山小",
+"旅夜書懷|杜甫|細草微風岸/危檣獨夜舟/星垂平野闊/月湧大江流/名豈文章著/官應老病休/飄飄何所似/天地一沙鷗",
+"蜀相|杜甫|丞相祠堂何處尋/錦官城外柏森森/映階碧草自春色/隔葉黃鸝空好音/三顧頻煩天下計/兩朝開濟老臣心/出師未捷身先死/長使英雄淚滿襟",
+"客至|杜甫|舍南舍北皆春水/但見群鷗日日來/花徑不曾緣客掃/蓬門今始為君開/盤飧市遠無兼味/樽酒家貧只舊醅/肯與鄰翁相對飲/隔籬呼取盡餘杯",
+"聞官軍收河南河北|杜甫|劍外忽傳收薊北/初聞涕淚滿衣裳/卻看妻子愁何在/漫卷詩書喜欲狂/白日放歌須縱酒/青春作伴好還鄉/即從巴峽穿巫峽/便下襄陽向洛陽",
+"秋興(其一)|杜甫|玉露凋傷楓樹林/巫山巫峽氣蕭森/江間波浪兼天湧/塞上風雲接地陰/叢菊兩開他日淚/孤舟一繫故園心/寒衣處處催刀尺/白帝城高急暮砧",
+"江村|杜甫|清江一曲抱村流/長夏江村事事幽/自去自來梁上燕/相親相近水中鷗/老妻畫紙為棋局/稚子敲針作釣鉤/多病所須唯藥物/微軀此外更何求",
+"詠懷古蹟(其三)|杜甫|群山萬壑赴荊門/生長明妃尚有村/一去紫臺連朔漠/獨留青冢向黃昏/畫圖省識春風面/環珮空歸月夜魂/千載琵琶作胡語/分明怨恨曲中論",
+"月夜憶舍弟|杜甫|戍鼓斷人行/邊秋一雁聲/露從今夜白/月是故鄉明/有弟皆分散/無家問死生/寄書長不達/況乃未休兵",
+"絕句漫興|杜甫|手種桃李非無主/野老牆低還似家/恰似春風相欺得/夜來吹折數枝花",
+"楓橋夜泊|張繼|月落烏啼霜滿天/江楓漁火對愁眠/姑蘇城外寒山寺/夜半鐘聲到客船",
+"寒食|韓翃|春城無處不飛花/寒食東風御柳斜/日暮漢宮傳蠟燭/輕煙散入五侯家",
+"江雪|柳宗元|千山鳥飛絕/萬徑人蹤滅/孤舟蓑笠翁/獨釣寒江雪",
+"登柳州城樓寄漳汀封連四州|柳宗元|城上高樓接大荒/海天愁思正茫茫/驚風亂颭芙蓉水/密雨斜侵薜荔牆/嶺樹重遮千里目/江流曲似九迴腸/共來百越文身地/猶自音書滯一鄉",
+"溪居|柳宗元|久為簪組累/幸此南夷謫/閒依農圃鄰/偶似山林客/曉耕翻露草/夜榜響溪石/來往不逢人/長歌楚天碧",
+"別舍弟宗一|柳宗元|零落殘魂倍黯然/雙垂別淚越江邊/一身去國六千里/萬死投荒十二年/桂嶺瘴來雲似墨/洞庭春盡水如天/欲知此後相思夢/長在荊門郢樹煙",
+"賦得古原草送別|白居易|離離原上草/一歲一枯榮/野火燒不盡/春風吹又生/遠芳侵古道/晴翠接荒城/又送王孫去/萋萋滿別情",
+"大林寺桃花|白居易|人間四月芳菲盡/山寺桃花始盛開/長恨春歸無覓處/不知轉入此中來",
+"錢塘湖春行|白居易|孤山寺北賈亭西/水面初平雲腳低/幾處早鶯爭暖樹/誰家新燕啄春泥/亂花漸欲迷人眼/淺草才能沒馬蹄/最愛湖東行不足/綠楊陰裡白沙堤",
+"問劉十九|白居易|綠螘新醅酒/紅泥小火爐/晚來天欲雪/能飲一杯無",
+"池上|白居易|小娃撐小艇/偷採白蓮回/不解藏蹤跡/浮萍一道開",
+"夜雪|白居易|已訝衾枕冷/復見窗戶明/夜深知雪重/時聞折竹聲",
+"暮江吟|白居易|一道殘陽鋪水中/半江瑟瑟半江紅/可憐九月初三夜/露似真珠月似弓",
+"後宮詞|白居易|淚濕羅巾夢不成/夜深前殿按歌聲/紅顏未老恩先斷/斜倚熏籠坐到明",
+"同李十一醉憶元九|白居易|花時同醉破春愁/醉折花枝當酒籌/忽憶故人天際去/計程今日到梁州",
+"花非花|白居易|花非花/霧非霧/夜半來/天明去/來如春夢幾多時/去似朝雲無覓處",
+"江南春|杜牧|千里鶯啼綠映紅/水村山郭酒旗風/南朝四百八十寺/多少樓臺煙雨中",
+"清明|杜牧|清明時節雨紛紛/路上行人欲斷魂/借問酒家何處有/牧童遙指杏花村",
+"山行|杜牧|遠上寒山石徑斜/白雲生處有人家/停車坐愛楓林晚/霜葉紅於二月花",
+"秋夕|杜牧|銀燭秋光冷畫屏/輕羅小扇撲流螢/天階夜色涼如水/臥看牽牛織女星",
+"泊秦淮|杜牧|煙籠寒水月籠沙/夜泊秦淮近酒家/商女不知亡國恨/隔江猶唱後庭花",
+"赤壁|杜牧|折戟沉沙鐵未銷/自將磨洗認前朝/東風不與周郎便/銅雀春深鎖二喬",
+"贈別|杜牧|多情卻似總無情/唯覺樽前笑不成/蠟燭有心還惜別/替人垂淚到天明",
+"寄揚州韓綽判官|杜牧|青山隱隱水迢迢/秋盡江南草未凋/二十四橋明月夜/玉人何處教吹簫",
+"題烏江亭|杜牧|勝敗兵家事不期/包羞忍恥是男兒/江東子弟多才俊/捲土重來未可知",
+"遣懷|杜牧|落魄江湖載酒行/楚腰纖細掌中輕/十年一覺揚州夢/贏得青樓薄倖名",
+"長安秋望|杜牧|樓倚霜樹外/鏡天無一毫/南山與秋色/氣勢兩相高",
+"九日齊山登高|杜牧|江涵秋影雁初飛/與客攜壺上翠微/塵世難逢開口笑/菊花須插滿頭歸/但將酩酊酬佳節/不用登臨恨落暉/古往今來只如此/牛山何必獨霑衣",
+"過華清宮|杜牧|長安回望繡成堆/山頂千門次第開/一騎紅塵妃子笑/無人知是荔枝來",
+"烏衣巷|劉禹錫|朱雀橋邊野草花/烏衣巷口夕陽斜/舊時王謝堂前燕/飛入尋常百姓家",
+"竹枝詞|劉禹錫|楊柳青青江水平/聞郎江上踏歌聲/東邊日出西邊雨/道是無晴卻有晴",
+"望洞庭|劉禹錫|湖光秋月兩相和/潭面無風鏡未磨/遙望洞庭山水翠/白銀盤裡一青螺",
+"浪淘沙|劉禹錫|九曲黃河萬里沙/浪淘風簸自天涯/如今直上銀河去/同到牽牛織女家",
+"秋詞|劉禹錫|自古逢秋悲寂寥/我言秋日勝春朝/晴空一鶴排雲上/便引詩情到碧霄",
+"酬樂天揚州初逢席上見贈|劉禹錫|巴山楚水淒涼地/二十三年棄置身/懷舊空吟聞笛賦/到鄉翻似爛柯人/沉舟側畔千帆過/病樹前頭萬木春/今日聽君歌一曲/暫憑杯酒長精神",
+"石頭城|劉禹錫|山圍故國周遭在/潮打空城寂寞回/淮水東邊舊時月/夜深還過女牆來",
+"春詞|劉禹錫|新妝宜面下朱樓/深鎖春光一院愁/行到中庭數花朵/蜻蜓飛上玉搔頭",
+"楊柳枝詞|劉禹錫|塞北梅花羌笛吹/淮南桂樹小山詞/請君莫奏前朝曲/聽唱新翻楊柳枝",
+"回鄉偶書(一)|賀知章|少小離家老大回/鄉音無改鬢毛衰/兒童相見不相識/笑問客從何處來",
+"回鄉偶書(二)|賀知章|離別家鄉歲月多/近來人事半消磨/惟有門前鏡湖水/春風不改舊時波",
+"詠柳|賀知章|碧玉妝成一樹高/萬條垂下綠絲絛/不知細葉誰裁出/二月春風似剪刀",
+"涼州詞|王翰|葡萄美酒夜光杯/欲飲琵琶馬上催/醉臥沙場君莫笑/古來征戰幾人回",
+"涼州詞|王之渙|黃河遠上白雲間/一片孤城萬仞山/羌笛何須怨楊柳/春風不度玉門關",
+"出塞|王昌齡|秦時明月漢時關/萬里長征人未還/但使龍城飛將在/不教胡馬度陰山",
+"芙蓉樓送辛漸|王昌齡|寒雨連江夜入吳/平明送客楚山孤/洛陽親友如相問/一片冰心在玉壺",
+"閨怨|王昌齡|閨中少婦不知愁/春日凝妝上翠樓/忽見陌頭楊柳色/悔教夫婿覓封侯",
+"從軍行|王昌齡|青海長雲暗雪山/孤城遙望玉門關/黃沙百戰穿金甲/不破樓蘭終不還",
+"宿建德江|孟浩然|移舟泊煙渚/日暮客愁新/野曠天低樹/江清月近人",
+"過故人莊|孟浩然|故人具雞黍/邀我至田家/綠樹村邊合/青山郭外斜/開軒面場圃/把酒話桑麻/待到重陽日/還來就菊花",
+"與諸子登峴山|孟浩然|人事有代謝/往來成古今/江山留勝跡/我輩復登臨/水落魚梁淺/天寒夢澤深/羊公碑尚在/讀罷淚沾襟",
+"留別王維|孟浩然|寂寂竟何待/朝朝空自歸/欲尋芳草去/惜與故人違/當路誰相假/知音世所稀/只應守寂寞/還掩故園扉",
+"夏日南亭懷辛大|孟浩然|山光忽西落/池月漸東上/散髮乘夕涼/開軒臥閒敞/荷風送香氣/竹露滴清響/欲取鳴琴彈/恨無知音賞/感此懷故人/中宵勞夢想",
+"宿桐廬江寄廣陵舊遊|孟浩然|山暝聽猿愁/滄江急夜流/風鳴兩岸葉/月照一孤舟/建德非吾土/維揚憶舊遊/還將兩行淚/遙寄海西頭",
+"早寒江上有懷|孟浩然|木落雁南渡/北風江上寒/我家襄水曲/遙隔楚雲端/鄉淚客中盡/孤帆天際看/迷津欲有問/平海夕漫漫",
+"尋隱者不遇|賈島|松下問童子/言師採藥去/只在此山中/雲深不知處",
+"劍客|賈島|十年磨一劍/霜刃未曾試/今日把示君/誰有不平事",
+"題李凝幽居|賈島|閒居少鄰並/草徑入荒園/鳥宿池邊樹/僧敲月下門/過橋分野色/移石動雲根/暫去還來此/幽期不負言",
+"渡漢江|宋之問|嶺外音書斷/經冬復歷春/近鄉情更怯/不敢問來人",
+"登幽州臺歌|陳子昂|前不見古人/後不見來者/念天地之悠悠/獨愴然而涕下",
+"題都城南莊|崔護|去年今日此門中/人面桃花相映紅/人面不知何處去/桃花依舊笑春風",
+"滁州西澗|韋應物|獨憐幽草澗邊生/上有黃鸝深樹鳴/春潮帶雨晚來急/野渡無人舟自橫",
+"秋夜寄丘員外|韋應物|懷君屬秋夜/散步詠涼天/山空松子落/幽人應未眠",
+"寄全椒山中道士|韋應物|今朝郡齋冷/忽念山中客/澗底束荊薪/歸來煮白石/欲持一瓢酒/遠慰風雨夕/落葉滿空山/何處尋行跡"
+];
+
+TANG=TANG.concat([
+"夜雨寄北|李商隱|君問歸期未有期/巴山夜雨漲秋池/何當共剪西窗燭/卻話巴山夜雨時",
+"登樂遊原|李商隱|向晚意不適/驅車登古原/夕陽無限好/只是近黃昏",
+"無題(相見時難)|李商隱|相見時難別亦難/東風無力百花殘/春蠶到死絲方盡/蠟炬成灰淚始乾/曉鏡但愁雲鬢改/夜吟應覺月光寒/蓬山此去無多路/青鳥殷勤為探看",
+"嫦娥|李商隱|雲母屏風燭影深/長河漸落曉星沉/嫦娥應悔偷靈藥/碧海青天夜夜心",
+"錦瑟|李商隱|錦瑟無端五十弦/一弦一柱思華年/莊生曉夢迷蝴蝶/望帝春心託杜鵑/滄海月明珠有淚/藍田日暖玉生煙/此情可待成追憶/只是當時已惘然",
+"晚晴|李商隱|深居俯夾城/春去夏猶清/天意憐幽草/人間重晚晴/並添高閣迥/微注小窗明/越鳥巢乾後/歸飛體更輕",
+"賈生|李商隱|宣室求賢訪逐臣/賈生才調更無倫/可憐夜半虛前席/不問蒼生問鬼神",
+"為有|李商隱|為有雲屏無限嬌/鳳城寒盡怕春宵/無端嫁得金龜婿/辜負香衾事早朝",
+"端居|李商隱|遠書歸夢兩悠悠/只有空床敵素秋/階下青苔與紅樹/雨中寥落月中愁",
+"蟬|虞世南|垂緌飲清露/流響出疏桐/居高聲自遠/非是藉秋風",
+"風|李嶠|解落三秋葉/能開二月花/過江千尺浪/入竹萬竿斜",
+"春怨|金昌緒|打起黃鶯兒/莫教枝上啼/啼時驚妾夢/不得到遼西",
+"早春呈水部張十八員外|韓愈|天街小雨潤如酥/草色遙看近卻無/最是一年春好處/絕勝煙柳滿皇都",
+"晚春|韓愈|草木知春不久歸/百般紅紫鬥芳菲/楊花榆莢無才思/惟解漫天作雪飛",
+"春雪|韓愈|新年都未有芳華/二月初驚見草芽/白雪卻嫌春色晚/故穿庭樹作飛花",
+"左遷至藍關示侄孫湘|韓愈|一封朝奏九重天/夕貶潮州路八千/欲為聖明除弊事/肯將衰朽惜殘年/雲橫秦嶺家何在/雪擁藍關馬不前/知汝遠來應有意/好收吾骨瘴江邊",
+"馬詩|李賀|大漠沙如雪/燕山月似鉤/何當金絡腦/快走踏清秋",
+"南園(其五)|李賀|男兒何不帶吳鉤/收取關山五十州/請君暫上凌煙閣/若個書生萬戶侯",
+"秋思|張籍|洛陽城裡見秋風/欲作家書意萬重/復恐匆匆說不盡/行人臨發又開封",
+"節婦吟|張籍|君知妾有夫/贈妾雙明珠/感君纏綿意/繫在紅羅襦/妾家高樓連苑起/良人執戟明光裡/知君用心如日月/事夫誓擬同生死/還君明珠雙淚垂/恨不相逢未嫁時",
+"行宮|元稹|寥落古行宮/宮花寂寞紅/白頭宮女在/閒坐說玄宗",
+"離思|元稹|曾經滄海難為水/除卻巫山不是雲/取次花叢懶回顧/半緣修道半緣君",
+"菊花|元稹|秋叢繞舍似陶家/遍繞籬邊日漸斜/不是花中偏愛菊/此花開盡更無花",
+"夜上受降城聞笛|李益|回樂峰前沙似雪/受降城外月如霜/不知何處吹蘆管/一夜征人盡望鄉",
+"江南曲|李益|嫁得瞿塘賈/朝朝誤妾期/早知潮有信/嫁與弄潮兒",
+"塞下曲|盧綸|月黑雁飛高/單于夜遁逃/欲將輕騎逐/大雪滿弓刀",
+"塞下曲(林暗草驚風)|盧綸|林暗草驚風/將軍夜引弓/平明尋白羽/沒在石棱中",
+"逢入京使|岑參|故園東望路漫漫/雙袖龍鍾淚不乾/馬上相逢無紙筆/憑君傳語報平安",
+"山房春事|岑參|梁園日暮亂飛鴉/極目蕭條三兩家/庭樹不知人去盡/春來還發舊時花",
+"黃鶴樓|崔顥|昔人已乘黃鶴去/此地空餘黃鶴樓/黃鶴一去不復返/白雲千載空悠悠/晴川歷歷漢陽樹/芳草萋萋鸚鵡洲/日暮鄉關何處是/煙波江上使人愁",
+"送杜少府之任蜀州|王勃|城闕輔三秦/風煙望五津/與君離別意/同是宦遊人/海內存知己/天涯若比鄰/無為在歧路/兒女共沾巾",
+"山中|王勃|長江悲已滯/萬里念將歸/況屬高風晚/山山黃葉飛",
+"滕王閣詩|王勃|滕王高閣臨江渚/佩玉鳴鸞罷歌舞/畫棟朝飛南浦雲/珠簾暮捲西山雨/閒雲潭影日悠悠/物換星移幾度秋/閣中帝子今何在/檻外長江空自流",
+"望月懷遠|張九齡|海上生明月/天涯共此時/情人怨遙夜/竟夕起相思/滅燭憐光滿/披衣覺露滋/不堪盈手贈/還寢夢佳期",
+"感遇|張九齡|蘭葉春葳蕤/桂華秋皎潔/欣欣此生意/自爾為佳節/誰知林棲者/聞風坐相悅/草木有本心/何求美人折",
+"自君之出矣|張九齡|自君之出矣/不復理殘機/思君如滿月/夜夜減清輝",
+"逢雪宿芙蓉山主人|劉長卿|日暮蒼山遠/天寒白屋貧/柴門聞犬吠/風雪夜歸人",
+"送靈澈上人|劉長卿|蒼蒼竹林寺/杳杳鐘聲晚/荷笠帶斜陽/青山獨歸遠",
+"彈琴|劉長卿|泠泠七弦上/靜聽松風寒/古調雖自愛/今人多不彈",
+"聽箏|李端|鳴箏金粟柱/素手玉房前/欲得周郎顧/時時誤拂弦",
+"何滿子|張祜|故國三千里/深宮二十年/一聲何滿子/雙淚落君前",
+"近試上張水部|朱慶餘|洞房昨夜停紅燭/待曉堂前拜舅姑/妝罷低聲問夫婿/畫眉深淺入時無",
+"十五夜望月|王建|中庭地白樹棲鴉/冷露無聲濕桂花/今夜月明人盡望/不知秋思落誰家",
+"新嫁娘詞|王建|三日入廚下/洗手作羹湯/未諳姑食性/先遣小姑嘗",
+"登科後|孟郊|昔日齷齪不足誇/今朝放蕩思無涯/春風得意馬蹄疾/一日看盡長安花",
+"蜂|羅隱|不論平地與山尖/無限風光盡被占/採得百花成蜜後/為誰辛苦為誰甜",
+"金縷衣|杜秋娘|勸君莫惜金縷衣/勸君惜取少年時/花開堪折直須折/莫待無花空折枝",
+"社日|王駕|鵝湖山下稻粱肥/豚柵雞棲對掩扉/桑柘影斜秋社散/家家扶得醉人歸",
+"雨晴|王駕|雨前初見花間蕊/雨後全無葉底花/蜂蝶紛紛過牆去/卻疑春色在鄰家",
+"商山早行|溫庭筠|晨起動征鐸/客行悲故鄉/雞聲茅店月/人跡板橋霜/槲葉落山路/枳花明驛牆/因思杜陵夢/鳧雁滿回塘",
+"瑤瑟怨|溫庭筠|冰簟銀床夢不成/碧天如水夜雲輕/雁聲遠過瀟湘去/十二樓中月自明",
+"台城|韋莊|江雨霏霏江草齊/六朝如夢鳥空啼/無情最是台城柳/依舊煙籠十里堤",
+"江村即事|司空曙|釣罷歸來不繫船/江村月落正堪眠/縱然一夜風吹去/只在蘆花淺水邊",
+"桃花溪|張旭|隱隱飛橋隔野煙/石磯西畔問漁船/桃花盡日隨流水/洞在清溪何處邊",
+"終南望餘雪|祖詠|終南陰嶺秀/積雪浮雲端/林表明霽色/城中增暮寒",
+"次北固山下|王灣|客路青山外/行舟綠水前/潮平兩岸闊/風正一帆懸/海日生殘夜/江春入舊年/鄉書何處達/歸雁洛陽邊",
+"題破山寺後禪院|常建|清晨入古寺/初日照高林/曲徑通幽處/禪房花木深/山光悅鳥性/潭影空人心/萬籟此都寂/但餘鐘磬音",
+"別董大|高適|千里黃雲白日曛/北風吹雁雪紛紛/莫愁前路無知己/天下誰人不識君",
+"除夜作|高適|旅館寒燈獨不眠/客心何事轉悽然/故鄉今夜思千里/霜鬢明朝又一年",
+"塞上聽吹笛|高適|雪淨胡天牧馬還/月明羌笛戍樓間/借問梅花何處落/風吹一夜滿關山",
+"月夜|劉方平|更深月色半人家/北斗闌干南斗斜/今夜偏知春氣暖/蟲聲新透綠窗紗",
+"春怨|劉方平|紗窗日落漸黃昏/金屋無人見淚痕/寂寞空庭春欲晚/梨花滿地不開門",
+"宮詞|顧況|玉樓天半起笙歌/風送宮嬪笑語和/月殿影開聞夜漏/水精簾捲近秋河",
+"江樓感舊|趙嘏|獨上江樓思渺然/月光如水水如天/同來玩月人何在/風景依稀似去年",
+"春閨思|張仲素|裊裊城邊柳/青青陌上桑/提籠忘採葉/昨夜夢漁陽",
+"春興|武元衡|楊柳陰陰細雨晴/殘花落盡見流鶯/春風一夜吹鄉夢/又逐春風到洛城",
+"征人怨|柳中庸|歲歲金河復玉關/朝朝馬策與刀環/三春白雪歸青塚/萬里黃河繞黑山",
+"己亥歲|曹松|澤國江山入戰圖/生民何計樂樵蘇/憑君莫話封侯事/一將功成萬骨枯",
+"隴西行|陳陶|誓掃匈奴不顧身/五千貂錦喪胡塵/可憐無定河邊骨/猶是春閨夢裡人",
+"詠田家|聶夷中|二月賣新絲/五月糶新穀/醫得眼前瘡/剜卻心頭肉/我願君王心/化作光明燭/不照綺羅筵/只照逃亡屋",
+"除夜有懷|崔塗|迢遞三巴路/羈危萬里身/亂山殘雪夜/孤燭異鄉春/漸與骨肉遠/轉於僮僕親/那堪正飄泊/來日歲華新",
+"春宮怨|杜荀鶴|早被嬋娟誤/欲妝臨鏡慵/承恩不在貌/教妾若為容/風暖鳥聲碎/日高花影重/年年越溪女/相憶采芙蓉",
+"題鶴林寺僧舍|李涉|終日昏昏醉夢間/忽聞春盡強登山/因過竹院逢僧話/又得浮生半日閒",
+"春山夜月|於良史|春山多勝事/賞玩夜忘歸/掬水月在手/弄花香滿衣/興來無遠近/欲去惜芳菲/南望鳴鐘處/樓臺深翠微",
+"野望|王績|東皋薄暮望/徙倚欲何依/樹樹皆秋色/山山唯落暉/牧人驅犢返/獵馬帶禽歸/相顧無相識/長歌懷採薇",
+"早梅|張謂|一樹寒梅白玉條/迥臨村路傍溪橋/不知近水花先發/疑是經冬雪未銷"
+]);
+
+var SANZI=[
+"人之初|人之初,性本善。/性相近,習相遠。/苟不教,性乃遷。/教之道,貴以專。/昔孟母,擇鄰處。/子不學,斷機杼。/竇燕山,有義方。/教五子,名俱揚。",
+"教與學|養不教,父之過。/教不嚴,師之惰。/子不學,非所宜。/幼不學,老何為。/玉不琢,不成器。/人不學,不知義。/為人子,方少時。/親師友,習禮儀。",
+"孝與悌|香九齡,能溫席。/孝於親,所當執。/融四歲,能讓梨。/弟於長,宜先知。/首孝弟,次見聞。/知某數,識某文。/一而十,十而百。/百而千,千而萬。",
+"三才與四時|三才者,天地人。/三光者,日月星。/三綱者,君臣義。/父子親,夫婦順。/曰春夏,曰秋冬。/此四時,運不窮。/曰南北,曰西東。/此四方,應乎中。",
+"五行五常|曰水火,木金土。/此五行,本乎數。/曰仁義,禮智信。/此五常,不容紊。/稻粱菽,麥黍稷。/此六穀,人所食。/馬牛羊,雞犬豕。/此六畜,人所飼。",
+"七情八音|曰喜怒,曰哀懼。/愛惡欲,七情具。/匏土革,木石金。/絲與竹,乃八音。/高曾祖,父而身。/身而子,子而孫。/自子孫,至玄曾。/乃九族,人之倫。",
+"十義|父子恩,夫婦從。/兄則友,弟則恭。/長幼序,友與朋。/君則敬,臣則忠。/此十義,人所同。/凡訓蒙,須講究。/詳訓詁,明句讀。/為學者,必有初。",
+"讀書次序|小學終,至四書。/論語者,二十篇。/群弟子,記善言。/孟子者,七篇止。/講道德,說仁義。/作中庸,子思筆。/中不偏,庸不易。/作大學,乃曾子。",
+"四書六經|自修齊,至平治。/孝經通,四書熟。/如六經,始可讀。/詩書易,禮春秋。/號六經,當講求。/有連山,有歸藏。/有周易,三易詳。/有典謨,有訓誥。",
+"經與子|有誓命,書之奧。/我周公,作周禮。/著六官,存治體。/大小戴,注禮記。/述聖言,禮樂備。/曰國風,曰雅頌。/號四詩,當諷詠。/詩既亡,春秋作。",
+"諸子與史|寓褒貶,別善惡。/三傳者,有公羊。/有左氏,有穀梁。/經既明,方讀子。/撮其要,記其事。/五子者,有荀揚。/文中子,及老莊。/經子通,讀諸史。",
+"三皇五帝|考世系,知終始。/自羲農,至黃帝。/號三皇,居上世。/唐有虞,號二帝。/相揖遜,稱盛世。/夏有禹,商有湯。/周文武,稱三王。/夏傳子,家天下。",
+"夏商周|四百載,遷夏社。/湯伐夏,國號商。/六百載,至紂亡。/周武王,始誅紂。/八百載,最長久。/周轍東,王綱墜。/逞干戈,尚遊說。/始春秋,終戰國。",
+"秦漢|五霸強,七雄出。/嬴秦氏,始兼併。/傳二世,楚漢爭。/高祖興,漢業建。/至孝平,王莽篡。/光武興,為東漢。/四百年,終於獻。/魏蜀吳,爭漢鼎。",
+"三國到五代|號三國,迄兩晉。/宋齊繼,梁陳承。/為南朝,都金陵。/北元魏,分東西。/宇文周,與高齊。/迨至隋,一土宇。/不再傳,失統緒。/唐高祖,起義師。",
+"唐宋|除隋亂,創國基。/二十傳,三百載。/梁滅之,國乃改。/梁唐晉,及漢周。/稱五代,皆有由。/炎宋興,受周禪。/十八傳,南北混。/十七史,全在茲。",
+"讀史的方法|載治亂,知興衰。/讀史者,考實錄。/通古今,若親目。/口而誦,心而惟。/朝於斯,夕於斯。/昔仲尼,師項橐。/古聖賢,尚勤學。/趙中令,讀魯論。",
+"勤學故事(一)|彼既仕,學且勤。/披蒲編,削竹簡。/彼無書,且知勉。/頭懸梁,錐刺股。/彼不教,自勤苦。/如囊螢,如映雪。/家雖貧,學不輟。/如負薪,如掛角。",
+"勤學故事(二)|身雖勞,猶苦卓。/蘇老泉,二十七。/始發憤,讀書籍。/彼既老,猶悔遲。/爾小生,宜早思。/若梁灝,八十二。/對大廷,魁多士。/彼既成,眾稱異。",
+"少年有為|爾小生,宜立志。/瑩八歲,能詠詩。/泌七歲,能賦棋。/彼穎悟,人稱奇。/爾幼學,當效之。/蔡文姬,能辨琴。/謝道韞,能詠吟。/彼女子,且聰敏。",
+"勉勵|爾男子,當自警。/唐劉晏,方七歲。/舉神童,作正字。/彼雖幼,身已仕。/爾幼學,勉而致。/有為者,亦若是。/犬守夜,雞司晨。/苟不學,曷為人。",
+"結語|蠶吐絲,蜂釀蜜。/人不學,不如物。/幼而學,壯而行。/上致君,下澤民。/揚名聲,顯父母。/光於前,裕於後。/人遺子,金滿籯。/我教子,唯一經。/勤有功,戲無益。/戒之哉,宜勉力。"
+];
+var DIZI=[
+"總敘|弟子規,聖人訓。/首孝悌,次謹信。/泛愛眾,而親仁。/有餘力,則學文。",
+"入則孝(一)|父母呼,應勿緩。/父母命,行勿懶。/父母教,須敬聽。/父母責,須順承。/冬則溫,夏則凊。/晨則省,昏則定。/出必告,反必面。/居有常,業無變。",
+"入則孝(二)|事雖小,勿擅為。/苟擅為,子道虧。/物雖小,勿私藏。/苟私藏,親心傷。/親所好,力為具。/親所惡,謹為去。/身有傷,貽親憂。/德有傷,貽親羞。",
+"入則孝(三)|親愛我,孝何難。/親憎我,孝方賢。/親有過,諫使更。/怡吾色,柔吾聲。/諫不入,悅復諫。/號泣隨,撻無怨。/親有疾,藥先嘗。/晝夜侍,不離床。",
+"入則孝(四)|喪三年,常悲咽。/居處變,酒肉絕。/喪盡禮,祭盡誠。/事死者,如事生。",
+"出則弟(一)|兄道友,弟道恭。/兄弟睦,孝在中。/財物輕,怨何生。/言語忍,忿自泯。/或飲食,或坐走。/長者先,幼者後。/長呼人,即代叫。/人不在,己即到。",
+"出則弟(二)|稱尊長,勿呼名。/對尊長,勿見能。/路遇長,疾趨揖。/長無言,退恭立。/騎下馬,乘下車。/過猶待,百步餘。/長者立,幼勿坐。/長者坐,命乃坐。",
+"出則弟(三)|尊長前,聲要低。/低不聞,卻非宜。/進必趨,退必遲。/問起對,視勿移。/事諸父,如事父。/事諸兄,如事兄。",
+"謹(一)|朝起早,夜眠遲。/老易至,惜此時。/晨必盥,兼漱口。/便溺回,輒淨手。/冠必正,紐必結。/襪與履,俱緊切。/置冠服,有定位。/勿亂頓,致污穢。",
+"謹(二)|衣貴潔,不貴華。/上循分,下稱家。/對飲食,勿揀擇。/食適可,勿過則。/年方少,勿飲酒。/飲酒醉,最為醜。/步從容,立端正。/揖深圓,拜恭敬。",
+"謹(三)|勿踐閾,勿跛倚。/勿箕踞,勿搖髀。/緩揭簾,勿有聲。/寬轉彎,勿觸棱。/執虛器,如執盈。/入虛室,如有人。/事勿忙,忙多錯。/勿畏難,勿輕略。",
+"謹(四)|鬥鬧場,絕勿近。/邪僻事,絕勿問。/將入門,問孰存。/將上堂,聲必揚。/人問誰,對以名。/吾與我,不分明。/用人物,須明求。/倘不問,即為偷。/借人物,及時還。/後有急,借不難。",
+"信(一)|凡出言,信為先。/詐與妄,奚可焉。/話說多,不如少。/惟其是,勿佞巧。/奸巧語,穢污詞。/市井氣,切戒之。/見未真,勿輕言。/知未的,勿輕傳。",
+"信(二)|事非宜,勿輕諾。/苟輕諾,進退錯。/凡道字,重且舒。/勿急疾,勿模糊。/彼說長,此說短。/不關己,莫閒管。/見人善,即思齊。/縱去遠,以漸躋。",
+"信(三)|見人惡,即內省。/有則改,無加警。/唯德學,唯才藝。/不如人,當自礪。/若衣服,若飲食。/不如人,勿生戚。/聞過怒,聞譽樂。/損友來,益友卻。",
+"信(四)|聞譽恐,聞過欣。/直諒士,漸相親。/無心非,名為錯。/有心非,名為惡。/過能改,歸於無。/倘掩飾,增一辜。",
+"泛愛眾(一)|凡是人,皆須愛。/天同覆,地同載。/行高者,名自高。/人所重,非貌高。/才大者,望自大。/人所服,非言大。/己有能,勿自私。/人所能,勿輕訾。",
+"泛愛眾(二)|勿諂富,勿驕貧。/勿厭故,勿喜新。/人不閒,勿事攪。/人不安,勿話擾。/人有短,切莫揭。/人有私,切莫說。/道人善,即是善。/人知之,愈思勉。",
+"泛愛眾(三)|揚人惡,即是惡。/疾之甚,禍且作。/善相勸,德皆建。/過不規,道兩虧。/凡取與,貴分曉。/與宜多,取宜少。/將加人,先問己。/己不欲,即速已。",
+"泛愛眾(四)|恩欲報,怨欲忘。/報怨短,報恩長。/待婢僕,身貴端。/雖貴端,慈而寬。/勢服人,心不然。/理服人,方無言。",
+"親仁|同是人,類不齊。/流俗眾,仁者希。/果仁者,人多畏。/言不諱,色不媚。/能親仁,無限好。/德日進,過日少。/不親仁,無限害。/小人進,百事壞。",
+"餘力學文(一)|不力行,但學文。/長浮華,成何人。/但力行,不學文。/任己見,昧理真。/讀書法,有三到。/心眼口,信皆要。/方讀此,勿慕彼。/此未終,彼勿起。",
+"餘力學文(二)|寬為限,緊用功。/工夫到,滯塞通。/心有疑,隨札記。/就人問,求確義。/房室清,牆壁淨。/几案潔,筆硯正。/墨磨偏,心不端。/字不敬,心先病。",
+"餘力學文(三)|列典籍,有定處。/讀看畢,還原處。/雖有急,卷束齊。/有缺壞,就補之。/非聖書,屏勿視。/蔽聰明,壞心志。/勿自暴,勿自棄。/聖與賢,可馴致。"
+];
+
+var SCAT=['寓言智慧','品格好習慣','科學小百科','童話世界','節日與習俗','歷史人物','安全小英雄'];
+var STORIES=[
+{id:'s1',c:0,t:'龜兔賽跑',e:'🐢',bg:'#d8f5d0',sc:[
+ ['森林裡,有一隻跑得很快的兔子,他常常笑烏龜,走得好慢好慢。','🐇😏🐢'],
+ ['烏龜說:「我們來比賽吧!」兔子哈哈大笑,答應了。','🐢🏁🐇'],
+ ['比賽開始!兔子咻的一聲,跑得好遠。烏龜一步一步,慢慢走。','🐇💨 🐢'],
+ ['兔子回頭一看,烏龜還在很遠的後面。他想:「我先睡一覺吧!」','🐇😴🌳'],
+ ['烏龜沒有停,一步又一步,不休息,不放棄。','🐢💪'],
+ ['兔子睡醒了,跑到終點,烏龜已經先到了!','🐢🏆'],
+ ['驕傲的人會輸掉,只要不放棄,慢慢走也能成功喔。','🌟']],
+ q:['這個故事告訴我們什麼?','不放棄、不驕傲',['跑得快最重要','比賽很好玩']]},
+{id:'s2',c:0,t:'烏鴉喝水',e:'🐦‍⬛',bg:'#e3f0ff',sc:[
+ ['天氣很熱,烏鴉口渴了,飛呀飛,找不到水。','🐦‍⬛☀️'],
+ ['啊!她看到一個瓶子,裡面有一點點水。','🍶👀'],
+ ['可是,瓶口很小,水又很少,烏鴉的嘴巴,喝不到。','🐦‍⬛❌💧'],
+ ['烏鴉想了想:「有辦法了!」她叼起一顆一顆的小石子。','🪨🐦‍⬛'],
+ ['小石子丟進瓶子裡,水位慢慢升高了。','🪨⬆️💧'],
+ ['水升到瓶口,烏鴉終於喝到水了!她好開心。','🐦‍⬛😋💧']],
+ q:['烏鴉是怎麼喝到水的?','把小石子丟進瓶子',['把瓶子打破','請別人幫忙']]},
+{id:'s3',c:0,t:'狼來了',e:'🐺',bg:'#fff0d0',sc:[
+ ['山坡上,有一個放羊的小男孩,每天看著羊兒吃草,覺得好無聊。','🐑🧒'],
+ ['有一天,他大喊:「狼來了!狼來了!」','🧒📢🐺'],
+ ['村民們趕快拿著棍子跑上來幫忙,可是,沒有狼。小男孩哈哈大笑。','🏃‍♂️💦🤣'],
+ ['過了幾天,他又大喊「狼來了」,大家又跑來,又被騙了。','🧒🤥'],
+ ['後來,真的有狼來了!小男孩大聲求救,可是大家都不相信他。','🐺😱'],
+ ['羊兒都被吃掉了。小男孩哭了,他知道自己做錯了。','🧒😭']],
+ q:['為什麼沒有人來幫忙?','因為他常常說謊',['因為大家很忙','因為太遠了']]},
+{id:'s4',c:0,t:'螞蟻和蟋蟀',e:'🐜',bg:'#fff6d6',sc:[
+ ['夏天,太陽暖暖的。螞蟻們忙著搬食物,一趟又一趟。','🐜🌾'],
+ ['蟋蟀在樹下唱歌,說:「何必這麼辛苦?一起來玩!」','🦗🎶'],
+ ['螞蟻說:「冬天會來,要先準備好食物。」','🐜🏠'],
+ ['冬天到了,大雪紛飛,天好冷,田裡什麼吃的也沒有。','❄️⛄'],
+ ['蟋蟀又冷又餓,來找螞蟻,說:「可以給我一點食物嗎?」','🦗🥶'],
+ ['螞蟻分了一些給他,說:「記得,要提早準備喔。」蟋蟀點點頭。','🐜🤝🦗']],
+ q:['螞蟻為什麼夏天要搬食物?','為了準備過冬',['因為好玩','因為想比賽']]},
+{id:'s5',c:1,t:'孔融讓梨',e:'🍐',bg:'#f6f0ff',sc:[
+ ['很久很久以前,有一個四歲的小朋友,叫孔融。','👦'],
+ ['有一天,爸爸拿來一盤梨子,叫孔融先挑。','🍐🍐🍐'],
+ ['孔融沒有拿最大的,他挑了一個最小的。','👦🍐'],
+ ['爸爸問:「你為什麼不拿大的?」','👨❓'],
+ ['孔融說:「我年紀小,應該吃小的,大的要留給哥哥姐姐。」','👦💬'],
+ ['大家都稱讚他,懂得謙讓,是個好孩子。','👏👏']],
+ q:['孔融為什麼拿小梨子?','他懂得謙讓',['他不喜歡梨','梨太大拿不動']]},
+{id:'s6',c:1,t:'誠實的小米',e:'🧒',bg:'#e8fbff',sc:[
+ ['小米在家裡玩球,不小心,把媽媽心愛的花瓶打破了。','⚽🏺💥'],
+ ['他好害怕,想把碎片藏起來,假裝不知道。','🧒😰'],
+ ['可是,他的心裡,怦怦怦的,覺得好不舒服。','💓'],
+ ['媽媽回家了,小米鼓起勇氣說:「媽媽,對不起,花瓶是我打破的。」','🧒🙇‍♂️'],
+ ['媽媽抱抱他:「謝謝你說實話,你是誠實的好孩子。」','👩🤗🧒'],
+ ['說實話,心裡就像太陽一樣,暖暖的。','☀️']],
+ q:['打破花瓶後,應該怎麼做?','勇敢說實話',['藏起來','怪別人']]},
+{id:'s7',c:1,t:'小熊分蜂蜜',e:'🍯',bg:'#fff3d6',sc:[
+ ['小熊找到了一大罐蜂蜜,好開心!','🐻🍯'],
+ ['他想:「我要一個人全部吃光光!」','🐻😋'],
+ ['這時,小兔和小鳥走過來,肚子咕嚕嚕地叫。','🐰🐦🥺'],
+ ['小熊想了想,拿出三個小碗,說:「大家一起吃吧!」','🐻🥣🥣🥣'],
+ ['大家一起吃,蜂蜜甜甜的,笑聲也甜甜的。','🐻🐰🐦😄'],
+ ['分享會讓快樂,變成兩倍、三倍!','✨']],
+ q:['小熊做了什麼好事?','把蜂蜜分給朋友',['全部自己吃','把蜂蜜藏起來']]},
+{id:'s8',c:1,t:'會說謝謝的小兔',e:'🐰',bg:'#ffeef5',sc:[
+ ['小兔去森林玩,不小心,掉進了小水溝,爬不起來。','🐰💦'],
+ ['小松鼠看到了,趕快伸出尾巴,把小兔拉上來。','🐿️🤝'],
+ ['小兔說:「謝謝你!你救了我。」','🐰🙏'],
+ ['小松鼠笑著說:「不客氣,幫助別人我也很開心。」','🐿️😊'],
+ ['從此,小兔每次得到幫忙,都會說謝謝。','🐰💖'],
+ ['謝謝兩個字,讓別人覺得溫暖。','🌈']],
+ q:['別人幫助我們,要說什麼?','謝謝',['快點','不用']]},
+{id:'s9',c:2,t:'小水滴旅行',e:'💧',bg:'#dff3ff',sc:[
+ ['海洋裡,有一滴小水滴,他好想去旅行。','🌊💧'],
+ ['太陽公公把海面曬熱,小水滴變成水蒸氣,飄上了天空。','☀️⬆️💧'],
+ ['到了天空,很多小水滴抱在一起,變成了白白的雲。','☁️☁️'],
+ ['雲越來越重,小水滴變成雨,嘩啦嘩啦落下來。','🌧️'],
+ ['雨水流進小河,流進大海,又回到了家。','🏞️➡️🌊'],
+ ['水,就這樣,一直轉呀轉,這叫做水循環。','♻️💧']],
+ q:['雲裡的小水滴,後來變成什麼?','雨',['雪人','石頭']]},
+{id:'s10',c:2,t:'種子長大了',e:'🌱',bg:'#e8ffe0',sc:[
+ ['一顆小小的種子,睡在泥土裡。','🌰🟫'],
+ ['春天到了,雨水來了,種子喝飽水,伸伸懶腰。','💧🌰'],
+ ['種子先長出小小的根,往土裡鑽。','🌱⬇️'],
+ ['接著,冒出了綠色的小芽,向上伸長。','🌱⬆️'],
+ ['有了陽光和水,小芽長出葉子,慢慢長高。','🌿☀️'],
+ ['最後,開出漂亮的花,結出果實,又有新的種子。','🌻🍎']],
+ q:['植物長大,需要什麼?','陽光和水',['糖果','玩具']]},
+{id:'s11',c:2,t:'白天和黑夜',e:'🌗',bg:'#e0e8ff',sc:[
+ ['地球是圓圓的,像一顆大皮球,在太空中轉呀轉。','🌍'],
+ ['太陽像一盞大燈,照著地球。','☀️➡️🌍'],
+ ['被太陽照到的地方,就是白天。','🌞'],
+ ['沒被照到的地方,就是黑夜,這時候,我們看到月亮和星星。','🌙✨'],
+ ['地球一直轉,所以白天黑夜,輪流出現。轉一圈,就是一天。','🔄']],
+ q:['為什麼會有白天和黑夜?','因為地球一直在轉',['因為太陽睡覺','因為月亮很大']]},
+{id:'s12',c:2,t:'毛毛蟲變蝴蝶',e:'🦋',bg:'#fff0f8',sc:[
+ ['蝴蝶媽媽,在葉子上,生下很多小小的蛋。','🦋🍃🥚'],
+ ['蛋裡孵出了毛毛蟲,他每天吃很多很多葉子。','🐛🍃'],
+ ['毛毛蟲長大了,吐絲把自己包起來,變成蛹。','🐛🛏️'],
+ ['蛹裡面,在偷偷變身,過了好幾天,蛹慢慢裂開。','🫘✨'],
+ ['哇!一隻美麗的蝴蝶飛出來,在花叢裡跳舞。','🦋🌸']],
+ q:['蝴蝶小時候是什麼?','毛毛蟲',['小魚','小鳥']]},
+{id:'s13',c:3,t:'三隻小豬',e:'🐷',bg:'#fff1e0',sc:[
+ ['有三隻小豬,長大了,要自己蓋房子。','🐷🐷🐷'],
+ ['大哥偷懶,用稻草蓋房子,很快就蓋好了。','🌾🏠'],
+ ['二哥用木頭蓋房子。三弟很認真,一塊一塊,用磚頭蓋。','🪵🏠 🧱🏠'],
+ ['大野狼來了,呼!用力一吹,稻草屋飛走了。木頭屋也倒了。','🐺💨'],
+ ['兩隻小豬跑到三弟家,大野狼怎麼吹,磚頭屋都不倒。','🐺😵🧱'],
+ ['大野狼嚇跑了。認真做事,才會平平安安。','🐷🏠❤️']],
+ q:['哪一間房子最牢固?','磚頭房子',['稻草房子','木頭房子']]},
+{id:'s14',c:3,t:'醜小鴨',e:'🦢',bg:'#e6f7ff',sc:[
+ ['鴨媽媽孵出一群小鴨,有一隻,灰灰大大的,大家都叫他醜小鴨。','🦆🐥🦆'],
+ ['大家都嘲笑他,他好傷心,一個人離開了。','🐥😢'],
+ ['冬天來了,又冷又餓,醜小鴨一個人過了好辛苦的冬天。','❄️🐥'],
+ ['春天到了,湖上飛來一群美麗的天鵝。','🦢🦢'],
+ ['醜小鴨看水裡的倒影,哇!他也變成了一隻漂亮的白天鵝。','🪞🦢'],
+ ['原來,他從來就不是醜小鴨,他是一隻天鵝!','🦢✨']],
+ q:['醜小鴨長大後變成什麼?','天鵝',['公雞','小鴨']]},
+{id:'s15',c:3,t:'灰姑娘',e:'👠',bg:'#f5eaff',sc:[
+ ['有一個善良的女孩,叫辛德瑞拉,常常做家事,大家叫她灰姑娘。','🧹👧'],
+ ['王宮要舉辦舞會,她也好想去,可是她沒有漂亮衣服。','🏰💃'],
+ ['這時,仙女出現了,揮一揮魔法棒,變出了漂亮的禮服和玻璃鞋。','🧚‍♀️✨👗👠'],
+ ['仙女說:「十二點以前,一定要回家,魔法就會消失。」','🕛'],
+ ['舞會上,王子和灰姑娘跳舞。鐘聲響了,她趕快跑,掉了一隻玻璃鞋。','🤴💃👠'],
+ ['王子用玻璃鞋找到了她,兩個人幸福地在一起。善良的人,會有好結果。','🤴👸💖']],
+ q:['魔法在幾點會消失?','十二點',['六點','三點']]},
+{id:'s16',c:3,t:'國王的新衣',e:'👑',bg:'#fff8d6',sc:[
+ ['有一個國王,最愛穿新衣服。','🤴👔'],
+ ['有兩個騙子說:「我們做的衣服,笨蛋是看不見的!」','🧵🤥'],
+ ['他們假裝織布,其實什麼也沒有。大臣們都說:「好漂亮!」','👀❓'],
+ ['國王穿上「新衣」,走上街頭遊行。大家怕被說笨,都說好看。','🤴🚶'],
+ ['這時,一個小孩大聲說:「國王沒有穿衣服啊!」','👦😲'],
+ ['大家這才醒過來。誠實說出真話,是很勇敢的事。','🗣️✨']],
+ q:['誰說了真話?','一個小孩',['大臣','國王']]},
+{id:'s17',c:4,t:'年獸的故事',e:'🧨',bg:'#ffe3e3',sc:[
+ ['很久很久以前,有一隻凶猛的怪獸,叫做「年」,每到除夕夜,就會出來嚇人。','👹🌙'],
+ ['有一位老爺爺發現,年獸最怕三件事:紅色、火光、大聲響。','🔴🔥🔊'],
+ ['除夕夜,家家戶戶,在門上貼紅紙,放鞭炮,點亮燈火。','🏮🧨'],
+ ['年獸一看,嚇得逃跑了,再也不敢來。','👹💨'],
+ ['從此,過年就要貼春聯、放鞭炮、守歲,大家平平安安過好年。','🧧🎊']],
+ q:['年獸最怕什麼顏色?','紅色',['綠色','藍色']]},
+{id:'s18',c:4,t:'嫦娥奔月',e:'🌕',bg:'#e8e6ff',sc:[
+ ['傳說很久以前,天上有十個太陽,大地都被曬乾了。','☀️☀️☀️🔥'],
+ ['英雄后羿,拉開大弓,射下九個太陽,只留一個。','🏹☀️'],
+ ['西王母送給后羿,一顆長生不老藥。他的妻子嫦娥,好好收著。','💊👩'],
+ ['壞人來搶藥,嫦娥為了保護藥,把藥吃下去,身體慢慢飄起來。','👩⬆️'],
+ ['她飄到月亮上,住在廣寒宮,身邊有一隻玉兔。','🌕🐰'],
+ ['每年中秋,大家賞月、吃月餅,和家人團圓。','🥮👨‍👩‍👧']],
+ q:['中秋節,大家會做什麼?','賞月吃月餅',['放煙火過年','包粽子']]},
+{id:'s19',c:4,t:'端午節的粽子',e:'🎋',bg:'#e0f8e0',sc:[
+ ['很久以前,有一位愛國的詩人,叫屈原,他很愛他的國家。','👨‍🎓'],
+ ['他很傷心,跳進了江裡。','🌊'],
+ ['百姓們很不捨,划著小船,拚命要救他。','🚣‍♂️🥁'],
+ ['大家把飯糰包起來丟進江裡,希望魚蝦不要吃屈原。','🍙💧'],
+ ['後來,人們每年五月五日,划龍舟、吃粽子、掛艾草,來紀念他。','🐉🍙🌿']],
+ q:['端午節會做什麼?','划龍舟吃粽子',['堆雪人','放風箏']]},
+{id:'s20',c:4,t:'元宵花燈',e:'🏮',bg:'#fff0e0',sc:[
+ ['過年後的第十五天,是元宵節,又叫燈節。','🏮🌕'],
+ ['街上掛滿了漂亮的花燈,有兔子燈、魚燈,還有各種動物。','🐰🐟🏮'],
+ ['大家提著燈籠,走在街上,好熱鬧。','🧒🏮✨'],
+ ['全家人一起吃湯圓,圓圓的,代表團團圓圓。','🍡👨‍👩‍👧‍👦'],
+ ['有的地方還有猜燈謎,猜對了,有小禮物喔!','🎁❓']],
+ q:['元宵節要吃什麼?','湯圓',['粽子','月餅']]},
+{id:'s21',c:5,t:'司馬光砸缸',e:'🏺',bg:'#f0e8d8',sc:[
+ ['宋朝有一個小朋友,叫司馬光,他非常聰明。','👦📚'],
+ ['有一天,他和朋友們,在院子裡玩耍,旁邊有一口大水缸。','🏺👦👦'],
+ ['突然,一個小朋友,不小心掉進水缸裡,淹水了!','😱💦'],
+ ['大家都嚇壞了,有人哭,有人跑去叫大人。','🏃😭'],
+ ['司馬光不慌張,他拿起一塊大石頭,用力砸向水缸。','🪨💥'],
+ ['嘩啦!缸破了,水流出來,小朋友得救了!冷靜想辦法,最重要。','💧🙌']],
+ q:['司馬光怎麼救朋友?','砸破水缸',['跳進水裡','大聲哭']]},
+{id:'s22',c:5,t:'曹沖秤象',e:'🐘',bg:'#eef6ff',sc:[
+ ['三國的時候,有人送給曹操一頭好大好大的大象。','🐘🎁'],
+ ['曹操想知道大象有多重,可是,沒有那麼大的秤。','⚖️❓'],
+ ['大家想了好多方法,都沒辦法。','🤔🤔'],
+ ['這時,小小的曹沖說:「我有辦法!」','👦💡'],
+ ['他把大象牽上船,在水面,做上記號。再把大象牽下來,把石頭搬到船上,一直到水面到同樣的記號。','🐘🚢🪨'],
+ ['再把石頭一塊一塊稱重,加起來,就是大象的重量。曹沖真聰明!','⚖️🪨👏']],
+ q:['曹沖用什麼東西代替大象?','石頭',['木頭','沙子']]},
+{id:'s23',c:5,t:'愛迪生與電燈',e:'💡',bg:'#fff8d0',sc:[
+ ['愛迪生是一位很愛思考、很愛問為什麼的小朋友。','🧒❓'],
+ ['長大以後,他想發明一種,不用蠟燭、很安全的燈。','🕯️➡️💡'],
+ ['他試了一千多種材料,一次又一次,都沒有成功。','🔬❌'],
+ ['朋友問他:「你失敗那麼多次,不難過嗎?」他說:「我只是找到了,一千多種不行的方法。」','😄'],
+ ['最後,終於成功了!燈泡亮起來,照亮了黑夜。','💡✨'],
+ ['堅持和不放棄,就是成功的秘訣。','🌟']],
+ q:['愛迪生發明了什麼?','電燈泡',['電視','汽車']]},
+{id:'s24',c:5,t:'牛頓與蘋果',e:'🍎',bg:'#eaf6e0',sc:[
+ ['傳說,有一天,牛頓坐在蘋果樹下,想事情。','🌳🧑‍🔬'],
+ ['忽然,一顆蘋果,啪!掉了下來。','🍎⬇️'],
+ ['牛頓想:「為什麼蘋果會往下掉,不往上飛呢?」','❓🍎'],
+ ['他想了好久,發現,地球有一種力量,把東西拉向地面,叫做地心引力。','🌍⬇️'],
+ ['多觀察,多問為什麼,就是科學家的第一步。','🔭✨']],
+ q:['蘋果為什麼會往下掉?','因為地球會把東西往下拉',['因為蘋果太重','因為風吹']]},
+{id:'s25',c:6,t:'小熊過馬路',e:'🚦',bg:'#e0f0ff',sc:[
+ ['小熊要去找好朋友玩,路上要過一條馬路。','🐻🛣️'],
+ ['他走到路口,看到紅燈亮了,馬上停下來。','🚦🔴🐻✋'],
+ ['汽車一輛一輛開過去,嗖嗖嗖。','🚗🚌💨'],
+ ['綠燈亮了。小熊先看左邊,再看右邊,確定沒有車。','🟢👀'],
+ ['他牽著媽媽的手,走在斑馬線上,平平安安過馬路。','🐻👩🦓'],
+ ['遵守規則,就能平安到達目的地!','🏠🎉']],
+ q:['看到紅燈要怎麼辦?','停下來等',['趕快衝過去','閉眼走']]},
+{id:'s26',c:6,t:'不跟陌生人走',e:'🙅',bg:'#ffeaea',sc:[
+ ['小美在公園玩,一位不認識的叔叔走過來。','👧🧔'],
+ ['他說:「我有好多糖果,跟我來,我送你。」','🍬😏'],
+ ['小美想起老師說的話:不可以跟陌生人走,也不可以拿他們的東西。','👧💭'],
+ ['小美大聲說:「不要!」然後轉身,跑向爸爸媽媽。','👧📢🏃'],
+ ['她告訴爸爸媽媽,爸媽稱讚她很勇敢,也很聰明。','👨👩👧👏'],
+ ['記住:遇到壞人,大聲喊,快跑,找大人!','🛡️']],
+ q:['陌生人要帶你走,怎麼辦?','大聲說不要,找大人',['跟他走','收下糖果']]},
+{id:'s27',c:6,t:'火災逃生',e:'🔥',bg:'#fff0e0',sc:[
+ ['半夜,家裡突然有煙,警報器大聲響了:嗶嗶嗶!','🚨🌫️'],
+ ['小明醒來,知道這是火災,他不慌張。','🧒😳'],
+ ['他壓低身體,用濕毛巾,摀住嘴巴和鼻子。','🧒🧻'],
+ ['不搭電梯,走樓梯,趕快往外跑。大聲叫:「失火了!」','🏃🚪📢'],
+ ['跑到外面,打電話一一九,找消防員叔叔幫忙。','📞🚒'],
+ ['記得,逃出來以後,不要再回去拿東西喔!','🙅‍♂️🏠']],
+ q:['發現火災,要打幾號電話?','一一九',['一一零','一二三']]},
+{id:'s28',c:6,t:'插座很危險',e:'🔌',bg:'#fffbd8',sc:[
+ ['小動看到牆上,有一個小洞洞,好奇地想,裡面是什麼?','🧒🔌'],
+ ['他想把手指,或是小鐵片,伸進去看看。','☝️⚡'],
+ ['媽媽趕快說:「等一下!這個很危險!」','👩✋'],
+ ['插座裡面有電,碰到,會被電到,很痛,也很危險。','⚡😖'],
+ ['小動說:「我知道了,我不會亂摸插座。」','🧒👍'],
+ ['有電的東西,要請大人幫忙,不要自己亂碰。','🚫🔌']],
+ q:['插座可以用手指去戳嗎?','不可以,會觸電',['可以','可以用鐵片']]}
+];
 
 var R={},stack=[],cur=null,TM=[];
 function later(f,ms){var t=setTimeout(f,ms);TM.push(t);return t;}
@@ -519,7 +1495,7 @@ R.teach=function(lid){
 };
 function sfxTick(){beep([[700,.08]]);}
 // ---- 闖關 ----
-var PRAISE=['答對了!你好棒!','太厲害了!','沒錯!就是這個!','耶!你真聰明!','好棒好棒!'];
+var PRAISE=['耶!答對了,你好棒喔!','哇!太厲害了!','沒錯沒錯!就是這個!','耶耶耶!你真聰明!','好棒好棒,給你拍拍手!','哇塞!你是小天才!'];
 R.play=function(lid){
   var L=LES[lid];setTitle(L.e+' '+L.t+' 闖關');
   if(L.game){$('main').innerHTML=mascot('sm')+'<div class="bubble" id="bub"></div><div id="gm"></div>';GAMES[L.game](L,function(w){finish(lid,w);});return;}
@@ -534,6 +1510,7 @@ R.play=function(lid){
     var op=$('opts');op.className='opts'+(short&&q.o.length===3?' three':'');op.innerHTML=oh;
     var bs=op.querySelectorAll('.opt');for(var k=0;k<bs.length;k++)(function(b){b.onclick=function(){pickA(b,parseInt(b.getAttribute('data-j'),10));};})(bs[k]);
     say(q.q);
+    later(function(){if(!locked){mood('giggle');hush();say('慢慢想,不用急喔。'+q.q);}},22000);
   }
   function nextQ(){i++;show();}
   function pickA(b,j){
@@ -541,14 +1518,14 @@ R.play=function(lid){
     if(j===q.a){locked=true;b.className='opt ok';sfxOk();mood('cheer');hush();say(pick(PRAISE)+q.e,function(){later(nextQ,300);});}
     else{wrong++;tries++;b.className='opt no';b.disabled=true;sfxNo();mood('oops');hush();
       if(tries>=2){locked=true;bs[q.a].className='opt ok';say('沒關係!答案是,'+q.sp+'。'+q.e,function(){later(nextQ,300);});}
-      else say('再想一想喔,你可以的!');}
+      else say(pick(['哎呀,再想一想喔,你可以的!','嗯嗯,差一點點,再試一次!','沒關係沒關係,再看看圖片!']));}
   }
   show();
 };
 function finish(lid,wrong){
-  var st=wrong<=1?3:wrong<=3?2:1,prev=ST.prog[lid]||0,isNew=prev===0;
+  var st=wrong<=1?3:wrong<=3?2:1,prev=ST.prog[lid]||0,isNew=prev===0,prevStars=ST.stars;
   if(st>prev){ST.stars+=st-prev;ST.prog[lid]=st;}
-  ST.wrong[lid]=(ST.wrong[lid]||0)+wrong;var d=today();ST.days[d]=(ST.days[d]||0)+1;save();
+  ST.wrong[lid]=(ST.wrong[lid]||0)+wrong;ST.tpos=ST.tpos||{};ST.tpos[lid]=0;var oldHat=curHat();var d=today();ST.days[d]=(ST.days[d]||0)+1;save();if(ST.stars>0)checkHat(prevStars);
   repl('done',{lid:lid,st:st,isNew:isNew});
 }
 R.done=function(a){
@@ -564,7 +1541,7 @@ R.stickers=function(){
   $('main').innerHTML=h+'</div>';
 };
 // ---- 遊戲 ----
-var GAMES={};
+
 GAMES.memory=function(L,fin){
   var E=shuffle(['🐶','🐱','🐰','🐻','🐼','🦁','🐸','🐵','🍎','🍌','🚗','⭐']).slice(0,6),cards=window.__cards=shuffle(E.concat(E)),open=[],moves=0,found=0,busy=false;
   $('bub').textContent='翻開兩張一樣的牌!';say('翻開兩張一樣的牌,要記住位置喔!');
@@ -622,7 +1599,7 @@ R.parent=function(){
 };
 function parentDash(){
   var h='<div class="msg">今天完成 <b>'+(ST.days[today()]||0)+'</b> 課。累計星星 <b>'+ST.stars+'</b> 顆。</div>';
-  TOPICS.forEach(function(t){h+='<div class="card" style="text-align:left"><b style="font-size:24px">'+t.e+' '+t.n+'</b><table class="pt">';
+  TOPICS.forEach(function(t){if(!ORDER[t.id].length)return;h+='<div class="card" style="text-align:left"><b style="font-size:24px">'+t.e+' '+t.n+'</b><table class="pt">';
     ORDER[t.id].forEach(function(l){var w=ST.wrong[l]||0,p=ST.prog[l]||0;h+='<tr><td>'+LES[l].t+'</td><td>'+(p?starStr(p):'尚未學')+'</td><td>'+(w>=4?'<span style="color:#e00">⚠ 錯 '+w+' 次,建議複習</span>':(p?'錯 '+w+' 次':''))+'</td></tr>';});
     h+='</table></div>';});
   h+='<div class="row"><button class="btn o" id="ua">'+(ST.unlockAll?'🔓 已全部解鎖(點一下恢復)':'🔓 全部解鎖')+'</button><button class="btn r" id="rs">🗑 清除進度</button></div>'+
@@ -632,6 +1609,183 @@ function parentDash(){
   var armed=false;$('rs').onclick=function(){if(!armed){armed=true;$('rs').textContent='再按一次確認清除';return;}ST.stars=0;ST.prog={};ST.wrong={};ST.days={};save();updStars();toast('已清除');parentDash();};
   $('cp').onclick=function(){var v=$('np').value;if(/^[0-9]{4,8}$/.test(v)){ST.pin=v;save();toast('密碼已更新');}else toast('請輸入 4~8 個數字');};
 }
+
+// ===== 第二部分:九寶互動、續讀、國學詩歌、故事屋 =====
+ST.lit=ST.lit||{};ST.watched=ST.watched||{};ST.tpos=ST.tpos||{};ST.hat=ST.hat||0;
+function checkHat(prev){HATS.forEach(function(h,i){if(h[1]>prev&&h[1]<=ST.stars&&i>0){toast('🎩 解鎖新帽子:'+h[0]+'!');ST.hat=i;save();}});}
+function setResume(name,arg,label){ST.resume={n:name,a:arg,l:label};save();}
+var IDLE=['你在想什麼呢?要不要選一個來玩?','我肚子餓了,不過我是機器人,吃星星就飽了!','今天我們學一點點新東西,好不好?','要不要聽故事呢?我最愛聽故事了!','嘿嘿,我在這裡等你喔!'];
+var POKE=['哈哈,好癢喔!','嘻嘻嘻,不要戳我啦!','你好呀,小朋友!','我在這裡喔!','咦?你叫我嗎?','今天也要開開心心的!'];
+function pokeMascot(el,home){var n=0,t=null;el.onclick=function(){n++;clearTimeout(t);t=setTimeout(function(){n=0;},1500);
+  if(!home){mood('giggle');beep([[880,.08],[1175,.1]]);return;}
+  hush();if(n>=5){n=0;mood('love');floatEmoji('💖',8);say('哇!我最喜歡你了!');}else{mood('giggle');floatEmoji(pick(['⭐','💛','✨']),3);var t2=pick(POKE);if($('bub'))$('bub').textContent=t2;say(t2);}};}
+// ---- 首頁 ----
+function dayIdx(){return Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/86400000);}
+function todayStory(){return STORIES[dayIdx()%STORIES.length];}
+R.home=function(){
+  setTitle('Jiu Bao 成長樂園');updStars();stack=[];bk();
+  var ts=todayStory(),h=mascot('')+'<div class="bubble" id="bub">'+HI[0]+'</div><div class="msg" style="text-align:center">(點一點九寶,他會跟你玩喔!)</div>';
+  if(ST.resume)h+='<button class="lesson resume" onclick="goResume()"><span class="ic">▶️</span><span>繼續上次學習<small>'+esc(ST.resume.l||'')+'</small></span></button>';
+  h+='<button class="lesson" style="background:#fff3c4" onclick="go(\'story\',\''+ts.id+'\')"><span class="ic">🎬</span><span>今日故事:'+esc(ts.t)+'<small>'+SCAT[ts.c]+(ST.watched[ts.id]?'・已看過':'・新的一天,新的故事')+'</small></span><span class="st">▶</span></button>';
+  STAGES.forEach(function(s){
+    if(s.open){var tot=allLessons().length,dn=allLessons().filter(function(l){return ST.prog[l];}).length;
+      h+='<button class="lesson" onclick="go(\'stage\',1)"><span class="ic">'+s.e+'</span><span>第 '+s.id+' 關:'+s.n+'<small>'+s.age+'・已完成 '+dn+' / '+tot+' 課</small></span><span class="st">▶</span></button>';}
+    else h+='<button class="lesson lock" onclick="soon()"><span class="ic">'+s.e+'</span><span>第 '+s.id+' 關:'+s.n+'<small>'+s.age+'・準備中</small></span><span class="st">🔒</span></button>';
+  });
+  var nh=HATS.filter(function(x){return ST.stars>=x[1];}).length;
+  h+='<div class="row"><button class="btn o" onclick="go(\'stickers\')">🏅 貼紙</button><button class="btn r" id="hatb">🎩 換帽子('+nh+'/'+HATS.length+')</button></div><div class="row"><button class="btn b" id="spd" onclick="cycSpd()">'+speedLbl()+'</button><button class="btn gray" onclick="go(\'parent\')">👨‍👩‍👧 家長區</button></div>';
+  $('main').innerHTML=h;pokeMascot($('mas'),1);$('bub').onclick=$('mas').onclick;
+  $('hatb').onclick=function(){var k=ST.hat||0,n=0;do{k=(k+1)%HATS.length;n++;}while(ST.stars<HATS[k][1]&&n<20);ST.hat=k;save();$('hat').innerHTML=HATS[k][2];mood('giggle');toast('戴上:'+HATS[k][0]);};
+  later(function(){var t=pick(IDLE);$('bub').textContent=t;mood('giggle');say(t);},26000);
+};
+window.goResume=function(){var r=ST.resume;if(!r)return;go(r.n,r.a);};
+// ---- 關卡與主題 ----
+function litDone(){var n=0;Object.keys(ST.lit).forEach(function(c){n+=Object.keys((ST.lit[c]||{}).done||{}).length;});return n;}
+var LITTOT=function(){return NURS.length+TANG.length+SANZI.length+DIZI.length;};
+R.stage=function(){
+  setTitle('第 1 關:大班 ~ 小一');var h='<div class="grid">';
+  TOPICS.forEach(function(t){var sub=t.id==='lit'?litDone()+' / '+LITTOT()+' 篇背熟':t.id==='story'?Object.keys(ST.watched).length+' / '+STORIES.length+' 則已看':doneCount(t.id)+' / '+ORDER[t.id].length+' 課';
+    h+='<button class="big '+t.c+'" onclick="go(\'topic\',\''+t.id+'\')"><span class="ic">'+t.e+'</span>'+t.n+'<small>'+t.d+'</small><small>'+sub+'</small></button>';});
+  $('main').innerHTML=h+'</div>';
+};
+var _topic=R.topic;
+R.topic=function(tid){if(tid==='lit')return R.litmenu();if(tid==='story')return R.storyhome();_topic(tid);};
+// ---- 教學(含互動) ----
+R.teach=function(lid){
+  var L=LES[lid],sc=L.teach.slice(),idx=0,auto=true,askOk=true;setTitle(L.e+' '+L.t);setResume('teach',lid,L.e+' '+L.t);
+  if(L.qs&&sc.length>=3){var aq=null;try{aq=L.qs()[0];}catch(e){}if(aq)sc.splice(Math.ceil(sc.length/2),0,{s:'九寶考考你!'+aq.q,ask:aq,html:aq.v});}
+  $('main').innerHTML=mascot('sm')+'<div class="bubble" id="bub"></div><div class="prop" id="prop"></div><div class="opts" id="tq"></div><div class="prog"><i id="pg" style="width:0"></i></div>'+
+   '<div class="ctl"><button id="pv">⏮</button><button id="pp">⏸</button><button id="nx">⏭</button><button id="rp">🔁</button></div><div class="row"><button class="btn g" id="gs">🎮 開始闖關</button></div>';
+  pokeMascot($('mas'),0);
+  function show(i){
+    if(i>=sc.length){hush();ST.tpos[lid]=0;save();mood('cheer');$('bub').textContent='學完囉!我們去闖關吧!';$('prop').style.display='none';$('tq').innerHTML='';$('pg').style.width='100%';say('學完囉!我們去闖關吧!');return;}
+    idx=i;ST.tpos[lid]=i;save();hush();var s=sc[i];$('bub').textContent=s.s;$('tq').innerHTML='';renderProp(s);$('pg').style.width=Math.round(i/sc.length*100)+'%';
+    if(s.count){var its=document.querySelectorAll('#prop .it'),gap=s.fast?380:640;for(var k=0;k<its.length;k++)(function(el,k){later(function(){el.className='it pop';el.style.animationDelay='0s';sfxTick();},400+k*gap);})(its[k],k);}
+    var t=tok;
+    if(s.tap){var its2=document.querySelectorAll('#prop .it'),got=0,total=its2.length;for(var k2=0;k2<its2.length;k2++)(function(el,k2){el.className='it pop tapn';el.onclick=function(){if(el.getAttribute('data-d'))return;el.setAttribute('data-d','1');got++;el.className='it tapd tapn';el.innerHTML=el.innerHTML+'<span class="n">'+got+'</span>';sfxTick();say(cn(got));if(got===total){later(function(){sfxOk();mood('cheer');say('一共有'+cn(total)+'個!你數對了!',function(){later(function(){show(idx+1);},500);});},900);}};})(its2[k2],k2);
+      say(s.s);return;}
+    if(s.ask){say(s.s);askUI(s.ask,function(){later(function(){show(idx+1);},400);});return;}
+    say(s.s,function(){var e=$('eq');if(e)e.className='eq pop';if(auto)later(function(){if(tok===t)show(idx+1);},700);});
+  }
+  function askUI(q,done){
+    var tr=0,locked=false,box=$('tq'),short=q.o.every(function(o){return o.indexOf('<svg')===0||o.replace(/<[^>]*>/g,'').length<=4;});box.className='opts'+(short&&q.o.length===3?' three':'');
+    box.innerHTML=q.o.map(function(o,j){return '<button class="opt" data-j="'+j+'">'+o+'</button>';}).join('');
+    var bs=box.querySelectorAll('.opt');for(var k=0;k<bs.length;k++)(function(b){b.onclick=function(){if(locked)return;var j=+b.getAttribute('data-j');
+      if(j===q.a){locked=true;b.className='opt ok';sfxOk();mood('cheer');hush();say(pick(PRAISE)+q.e,done);}
+      else{tr++;b.className='opt no';b.disabled=true;sfxNo();mood('oops');hush();if(tr>=2){locked=true;bs[q.a].className='opt ok';say('答案是,'+q.sp+'。'+q.e,done);}else say('再想想看喔!');}};})(bs[k]);
+  }
+  $('pv').onclick=function(){show(Math.max(0,idx-1));};
+  $('nx').onclick=function(){show(idx+1);};
+  $('rp').onclick=function(){show(idx);};
+  $('pp').onclick=function(){auto=!auto;$('pp').textContent=auto?'⏸':'▶️';if(auto)show(idx);else toast('已暫停');};
+  $('gs').onclick=function(){ST.tpos[lid]=0;repl('play',lid);};
+  var st0=ST.tpos[lid]||0;if(st0>=sc.length||st0<0)st0=0;
+  if(st0>0){toast('從上次的第 '+(st0+1)+' 句繼續');}
+  show(st0);
+};
+var _play=R.play;R.play=function(lid){var L=LES[lid];setResume('teach',lid,L.e+' '+L.t);_play(lid);pokeMascot($('mas'),0);};
+// 數數互動:在數數課程加入「點一點」
+(function(){
+ function tapScene(e,n,txt){return {s:txt,items:rep(e,n),tap:1};}
+ LES.m1.teach.splice(3,0,tapScene('🍎',6,'換你來數!請用手指,點一點每一顆蘋果。'));
+ LES.m2.teach.splice(2,0,tapScene('⭐',12,'換你來數!點一點每一顆星星,數到十二。'));
+ LES.n7.teach.push({s:'你數數看!點一點每個小方塊。',items:rep('🟧',7),tap:1});
+})();
+// ---- 國學與詩歌 ----
+var LIT={nurs:{n:'兒歌童謠',e:'🎵',d:NURS,c:'c1',sub:'朗讀版・原創'},tang:{n:'唐詩',e:'🏯',d:TANG,c:'c2',sub:'經典名篇'},sanzi:{n:'三字經',e:'📕',d:SANZI,c:'c5',sub:'分段學習'},dizi:{n:'弟子規',e:'📗',d:DIZI,c:'c6',sub:'分段學習'}};
+function litItem(c,i){var r=LIT[c].d[i].split('|');if(c==='tang')return {t:r[0],a:r[1],lines:r[2].split('/')};return {t:r[0],a:'',lines:r[1].split('/')};}
+function litSt(c){ST.lit[c]=ST.lit[c]||{last:0,done:{}};return ST.lit[c];}
+R.litmenu=function(){
+  setTitle('📜 國學與詩歌');var h='<div class="msg">聽老師念,跟著念,再玩填空,背熟就得星星!</div>';
+  if(ST.resume&&/^lit/.test(ST.resume.n))h+='<button class="lesson resume" onclick="goResume()"><span class="ic">▶️</span><span>繼續上次<small>'+esc(ST.resume.l)+'</small></span></button>';
+  h+='<div class="grid">';
+  Object.keys(LIT).forEach(function(c){var d=Object.keys(litSt(c).done).length;h+='<button class="big '+LIT[c].c+'" onclick="go(\'litlist\',{c:\''+c+'\',p:'+Math.floor(litSt(c).last/20)+'})"><span class="ic">'+LIT[c].e+'</span>'+LIT[c].n+'<small>'+LIT[c].d.length+(c==='sanzi'||c==='dizi'?' 段':' 首')+'・'+d+' 已背熟</small></button>';});
+  $('main').innerHTML=h+'</div>';
+};
+R.litlist=function(a){
+  var c=a.c,p=a.p||0,D=LIT[c].d,per=20,pages=Math.ceil(D.length/per);setTitle(LIT[c].e+' '+LIT[c].n);var S=litSt(c);
+  var h='<div style="text-align:center">';for(var k=0;k<pages;k++)h+='<button class="chip'+(k===p?' on':'')+'" onclick="repl(\'litlist\',{c:\''+c+'\',p:'+k+'})">'+(k*per+1)+'-'+Math.min(D.length,(k+1)*per)+'</button>';h+='</div>';
+  for(var i=p*per;i<Math.min(D.length,(p+1)*per);i++){var it=litItem(c,i);h+='<button class="lesson" onclick="go(\'litread\',{c:\''+c+'\',i:'+i+'})"><span class="ic" style="font-size:26px;min-width:44px">'+(i+1)+'</span><span>'+esc(it.t)+'<small>'+esc(it.a||'')+(S.last===i?' ・上次讀到這裡':'')+'</small></span><span class="st">'+(S.done[i]?'⭐':(S.last===i?'▶':''))+'</span></button>';}
+  $('main').innerHTML=h;
+};
+R.litread=function(a){
+  var c=a.c,i=a.i,it=litItem(c,i),S=litSt(c),n=LIT[c].d.length;S.last=i;save();setResume('litread',{c:c,i:i},LIT[c].n+':'+it.t);
+  setTitle(LIT[c].e+' '+it.t);var echo=false,playing=false;
+  var h=mascot('sm')+'<div class="bubble" id="bub">'+esc(it.t)+(it.a?'　'+esc(it.a):'')+'</div><div class="card"><div class="poem" id="pm">'+it.lines.map(function(l,k){return '<div data-k="'+k+'">'+esc(l)+'</div>';}).join('')+'</div></div>'+
+   '<div class="row"><button class="btn g" id="lp">▶ 聽老師念</button><button class="btn o" id="le">🎤 跟著念</button></div>'+
+   '<div class="row"><button class="btn b" id="lq">🧠 填空小測驗</button><button class="btn '+(S.done[i]?'gray':'r')+'" id="ld">'+(S.done[i]?'✅ 已背熟':'⭐ 我背熟了')+'</button></div>'+
+   '<div class="ctl"><button id="lpv">⏮ 上一篇</button><button id="lnx">下一篇 ⏭</button></div>';
+  $('main').innerHTML=h;pokeMascot($('mas'),0);
+  function hl(k){var ds=document.querySelectorAll('#pm div');for(var j=0;j<ds.length;j++)ds[j].className=(j===k?'hl':'');}
+  function runLines(k,first){
+    if(k>=it.lines.length){hl(-1);playing=false;mood('cheer');$('lp').textContent='▶ 再聽一次';if(echo){say('太棒了!你念得真好!');}return;}
+    hl(k);var t=tok;
+    say(it.lines[k],function(){if(echo){$('bub').textContent='換你念!';mood('giggle');later(function(){if(tok===t){$('bub').textContent=esc(it.t);runLines(k+1);}},Math.max(2600,it.lines[k].length*520));}else later(function(){if(tok===t)runLines(k+1);},350);});
+  }
+  function start(e){hush();echo=e;playing=true;$('lp').textContent='⏸ 暫停';var intro=it.t+(it.a?',唐,'+it.a:'');if(c==='sanzi'||c==='dizi')intro=LIT[c].n+','+it.t;say(intro+'。',function(){later(function(){runLines(0);},350);});}
+  $('lp').onclick=function(){if(playing){hush();hl(-1);playing=false;$('lp').textContent='▶ 聽老師念';}else start(false);};
+  $('le').onclick=function(){start(true);toast('我念一句,換你念一句!');};
+  $('lq').onclick=function(){go('litquiz',a);};
+  $('ld').onclick=function(){if(!S.done[i]){S.done[i]=1;ST.stars+=1;updStars();save();checkHat(ST.stars-1);mood('cheer');confetti();toast('太棒了!得到 1 顆星星');}else{delete S.done[i];save();}R.litread(a);};
+  $('lpv').onclick=function(){repl('litread',{c:c,i:(i-1+n)%n});};
+  $('lnx').onclick=function(){repl('litread',{c:c,i:(i+1)%n});};
+};
+R.litquiz=function(a){
+  var c=a.c,i=a.i,it=litItem(c,i),S=litSt(c),L=it.lines,D=LIT[c].d;setTitle('🧠 填空:'+it.t);
+  var nq=Math.min(3,L.length),idxs=shuffle(L.map(function(_,k){return k;})).slice(0,nq),qi=0,wrong=0,tries=0,locked=false;
+  $('main').innerHTML=mascot('sm')+'<div class="prog"><i id="pg" style="width:0"></i></div><div class="bubble" id="bub"></div><div class="card"><div class="poem" id="pm"></div></div><div class="opts" id="opts" style="grid-template-columns:1fr"></div>';pokeMascot($('mas'),0);
+  function allLines(){var o=[];for(var k=0;k<D.length;k++){if(k===i)continue;var r=litItem(c,k);r.lines.forEach(function(l){o.push(l);});}return o;}
+  var POOL=null;
+  function show(){
+    if(qi>=nq){var ok=wrong<=1;if(ok&&!S.done[i]){S.done[i]=1;ST.stars+=1;updStars();save();checkHat(ST.stars-1);}
+      $('main').innerHTML=mascot('')+'<div class="bubble">'+(ok?'你背得好熟!':'再多聽幾次,就會更熟喔!')+'</div><div class="row"><button class="btn o" onclick="repl(\'litquiz\',{c:\''+c+'\',i:'+i+'})">🔁 再玩一次</button><button class="btn b" onclick="goBack()">📖 回去讀</button></div>';if(ok){confetti();mood('cheer');sfxOk();say('太棒了!這一首你背熟了,得到一顆星星!');}else say('再多聽幾次,就會更熟喔!');return;}
+    var bl=idxs[qi];tries=0;locked=false;$('pg').style.width=Math.round(qi/nq*100)+'%';
+    $('pm').innerHTML=L.map(function(l,k){return '<div style="'+(k===bl?'color:#ef476f':'')+'">'+(k===bl?'(  ?  )':esc(l))+'</div>';}).join('');$('bub').textContent='空格裡面是哪一句呢?';
+    if(!POOL)POOL=allLines();var target=L[bl],wr=shuffle(POOL.filter(function(x){return x!==target&&Math.abs(x.length-target.length)<=2;})).slice(0,2);if(wr.length<2)wr=shuffle(POOL).slice(0,2);
+    var q=mk('',' ',target,wr,'');var ob=$('opts');ob.innerHTML=q.o.map(function(o,j){return '<button class="opt" style="font-size:26px" data-j="'+j+'">'+esc(o)+'</button>';}).join('');
+    var bs=ob.querySelectorAll('.opt');for(var k=0;k<bs.length;k++)(function(b){b.onclick=function(){if(locked)return;var j=+b.getAttribute('data-j');
+      if(j===q.a){locked=true;b.className='opt ok';sfxOk();mood('cheer');hush();say(target,function(){later(function(){qi++;show();},500);});}
+      else{wrong++;tries++;b.className='opt no';b.disabled=true;sfxNo();mood('oops');if(tries>=2){locked=true;bs[q.a].className='opt ok';hush();say('答案是,'+target,function(){later(function(){qi++;show();},500);});}}};})(bs[k]);
+    say('空格裡面是哪一句呢?');
+  }
+  show();
+};
+// ---- 故事屋 ----
+function sc(c){return STORIES.filter(function(s){return s.c===c;});}
+R.storyhome=function(){
+  setTitle('🎬 故事屋');var ts=todayStory(),h='<div class="msg">每天都有新故事!看完回答問題,可以得星星。</div>';
+  h+='<button class="lesson" style="background:#fff3c4" onclick="go(\'story\',\''+ts.id+'\')"><span class="ic">🌟</span><span>今日故事:'+esc(ts.t)+'<small>'+SCAT[ts.c]+'</small></span><span class="st">▶</span></button>';
+  SCAT.forEach(function(name,ci){h+='<div class="msg" style="font-weight:bold;font-size:22px">'+name+'</div>';sc(ci).forEach(function(s){h+='<button class="lesson" onclick="go(\'story\',\''+s.id+'\')"><span class="ic">'+s.e+'</span><span>'+esc(s.t)+'<small>'+(s.sc.length)+' 幕</small></span><span class="st">'+(ST.watched[s.id]?'⭐':'')+'</span></button>';});});
+  $('main').innerHTML=h;
+};
+R.story=function(id){
+  var S=STORIES.filter(function(x){return x.id===id;})[0],idx=0,auto=true;setTitle('🎬 '+S.t);setResume('story',id,'故事:'+S.t);
+  $('main').innerHTML=mascot('sm')+'<div class="bubble" id="bub"></div><div class="stage"><div class="prop" id="prop" style="background:linear-gradient(#fff,'+S.bg+')"></div></div><div class="opts" id="tq"></div><div class="prog"><i id="pg" style="width:0"></i></div>'+
+   '<div class="ctl"><button id="pv">⏮</button><button id="pp">⏸</button><button id="nx">⏭</button><button id="rp">🔁</button></div>';
+  pokeMascot($('mas'),0);
+  function show(i){
+    if(i>=S.sc.length){return end();}
+    idx=i;hush();var s=S.sc[i];$('bub').textContent=s.length?s[0]:'';$('bub').textContent=s[0];$('prop').style.display='flex';$('prop').innerHTML='<div class="pop" style="font-size:78px;line-height:1.2;text-align:center;width:100%;animation:pop .6s both,bob 2.6s ease-in-out .6s infinite">'+s[1]+'</div>';$('pg').style.width=Math.round(i/S.sc.length*100)+'%';
+    var t=tok;say(s[0],function(){if(auto)later(function(){if(tok===t)show(idx+1);},800);});
+  }
+  function end(){
+    hush();var q=S.q,tr=0,locked=false;$('prop').innerHTML='<div class="pop" style="font-size:70px">🎉</div>';$('bub').textContent='故事結束囉!九寶考考你:'+q[0];$('pg').style.width='100%';
+    var o=mk(q[0],'',q[1],q[2],'');var box=$('tq');box.innerHTML=o.o.map(function(x,j){return '<button class="opt" data-j="'+j+'" style="font-size:26px">'+esc(x)+'</button>';}).join('');
+    say('故事結束囉!九寶考考你。'+q[0]);
+    var bs=box.querySelectorAll('.opt');for(var k=0;k<bs.length;k++)(function(b){b.onclick=function(){if(locked)return;var j=+b.getAttribute('data-j');
+      if(j===o.a){locked=true;b.className='opt ok';sfxOk();mood('cheer');confetti();var first=!ST.watched[S.id];ST.watched[S.id]=1;if(first){ST.stars+=1;updStars();checkHat(ST.stars-1);}save();hush();say(pick(PRAISE)+(first?'你得到一顆星星!':''),function(){later(function(){box.innerHTML='<button class="btn o" id="again">🔁 再看一次</button><button class="btn g" id="nextS">▶ 下一則</button>';$('again').onclick=function(){R.story(id);};$('nextS').onclick=function(){var k2=(STORIES.indexOf(S)+1)%STORIES.length;repl('story',STORIES[k2].id);};box.className='row';},400);});}
+      else{tr++;b.className='opt no';b.disabled=true;sfxNo();mood('oops');hush();if(tr>=2){locked=true;bs[o.a].className='opt ok';say('答案是,'+q[1],function(){later(function(){R.story(id);},900);});}else say('再想想看喔!');}};})(bs[k]);
+  }
+  $('pv').onclick=function(){show(Math.max(0,idx-1));};
+  $('nx').onclick=function(){show(idx+1);};
+  $('rp').onclick=function(){show(idx);};
+  $('pp').onclick=function(){auto=!auto;$('pp').textContent=auto?'⏸':'▶️';if(auto)show(idx);else toast('已暫停');};
+  show(0);
+};
+// 家長區補充
+var _pd=parentDash;
+parentDash=function(){_pd();var d=document.createElement('div');d.className='card';d.style.textAlign='left';d.innerHTML='<b style="font-size:22px">📜 國學與故事</b><div class="msg">兒歌背熟 '+Object.keys(litSt('nurs').done).length+' 首・唐詩背熟 '+Object.keys(litSt('tang').done).length+' 首・三字經 '+Object.keys(litSt('sanzi').done).length+' 段・弟子規 '+Object.keys(litSt('dizi').done).length+' 段・故事看過 '+Object.keys(ST.watched).length+' 則</div>';$('main').insertBefore(d,$('main').children[1]);};
+
 $('back').onclick=goBack;
 cur=['home'];R.home();bk();
 </script></body></html>
