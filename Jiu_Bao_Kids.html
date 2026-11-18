@@ -2567,7 +2567,7 @@ var _home3=R.home;R.home=function(){if(ST.resume&&(ST.resume.n==='teach'||ST.res
 
 // ===== 發音修正(注音)+ 可選的雲端好聽聲音(Gemini 語音)=====
 // 1) 注音符號不能直接叫機器人唸,要換成標準讀音的字
-var ZYC={'ㄅ':'玻','ㄆ':'坡','ㄇ':'摸','ㄈ':'佛','ㄉ':'得','ㄊ':'特','ㄋ':'訥','ㄌ':'勒','ㄍ':'哥','ㄎ':'科','ㄏ':'喝','ㄐ':'雞','ㄑ':'七','ㄒ':'希','ㄓ':'知','ㄔ':'吃','ㄕ':'獅','ㄖ':'日','ㄗ':'資','ㄘ':'雌','ㄙ':'思','ㄧ':'衣','ㄨ':'烏','ㄩ':'魚','ㄚ':'啊','ㄛ':'喔','ㄜ':'鵝','ㄝ':'耶','ㄞ':'哀','ㄟ':'欸','ㄠ':'熬','ㄡ':'歐','ㄢ':'安','ㄣ':'恩','ㄤ':'骯','ㄥ':'亨','ㄦ':'兒'};
+var ZYC={'ㄅ':'爸','ㄆ':'蘋','ㄇ':'貓','ㄈ':'飛','ㄉ':'大','ㄊ':'兔','ㄋ':'牛','ㄌ':'老','ㄍ':'狗','ㄎ':'咖','ㄏ':'花','ㄐ':'雞','ㄑ':'汽','ㄒ':'西','ㄓ':'豬','ㄔ':'吃','ㄕ':'獅','ㄖ':'日','ㄗ':'紫','ㄘ':'草','ㄙ':'傘','ㄧ':'衣','ㄨ':'烏','ㄩ':'魚','ㄚ':'啊','ㄛ':'喔','ㄜ':'鵝','ㄝ':'耶','ㄞ':'哀','ㄟ':'欸','ㄠ':'熬','ㄡ':'歐','ㄢ':'安','ㄣ':'恩','ㄤ':'骯','ㄥ':'亨','ㄦ':'兒'};
 var ZYSYL={};PYW.forEach(function(p){ZYSYL[p[2]]=p[0];});
 var ZYRE=/[ㄅ-ㄭ]+[ˊˇˋ˙]?/g;
 function zySpeak(t){return String(t).replace(ZYRE,function(m){var core=m.replace(/[ˊˇˋ˙]/g,'');if(ZYC[core])return ZYC[core];if(ZYSYL[core])return ZYSYL[core];
@@ -2576,7 +2576,7 @@ function zySpeak(t){return String(t).replace(ZYRE,function(m){var core=m.replace
 var GV=['Leda','Puck','Aoede','Sadachbia','Laomedeia','Achird'],GVN=['Leda 年輕女孩','Puck 活潑','Aoede 輕快','Sadachbia 有精神','Laomedeia 開朗','Achird 友善'];
 var GT_MODELS=['gemini-3.8-flash-lite-tts','gemini-3.8-flash-tts','gemini-3.1-flash-tts-preview'];
 var GT_STYLE='用可愛、開朗、親切的兒童節目姊姊口吻,語速稍慢,咬字清楚,用臺灣國語';
-var gtBad=0,gtOffUntil=0,gtAudio=null,gtDB=null,gtMem={};
+var gtWhy='',gtToast=0,gtBad=0,gtOffUntil=0,gtAudio=null,gtDB=null,gtMem={};
 function gtOn(){return ST.cloudVoice!==false&&!!gkey()&&Date.now()>gtOffUntil&&typeof Audio!=='undefined';}
 function gtDBopen(cb){if(gtDB!==null){cb(gtDB||null);return;}try{var r=indexedDB.open('zbkid_tts',1);r.onupgradeneeded=function(){r.result.createObjectStore('a');};r.onsuccess=function(){gtDB=r.result;cb(gtDB);};r.onerror=function(){gtDB=false;cb(null);};}catch(e){gtDB=false;cb(null);}}
 function gtGet(k,cb){if(gtMem[k]){cb(gtMem[k]);return;}gtDBopen(function(db){if(!db){cb(null);return;}try{var q=db.transaction('a').objectStore('a').get(k);q.onsuccess=function(){if(q.result)gtMem[k]=q.result;cb(q.result||null);};q.onerror=function(){cb(null);};}catch(e){cb(null);}});}
@@ -2593,8 +2593,8 @@ function gtFetch(text,cb){
       .then(function(x){clearTimeout(tm);var d=null;
         try{(x.j.steps||[]).forEach(function(st){(st.content||[]).forEach(function(c){if(c&&c.data&&(c.type==='audio'||/audio/.test(c.mime_type||'')))d=c.data;});});}catch(e){}
         if(d){gtPut(key,d);cb(d);return;}
-        if(x.s===403||x.s===401||x.s===429){cb(null,x.s);return;}
-        next();}).catch(function(){clearTimeout(tm);next();});
+        gtWhy='代碼 '+x.s+' '+((x.j&&x.j.error&&x.j.error.message)||'').slice(0,80);if(x.s===403||x.s===401||x.s===429){cb(null,x.s);return;}
+        next();}).catch(function(e){clearTimeout(tm);gtWhy='連線失敗或逾時';next();});
     })();});
 }
 function b64blob(d){var bin=atob(d),n=bin.length,u=new Uint8Array(n),i;for(i=0;i<n;i++)u[i]=bin.charCodeAt(i);return new Blob([u],{type:'audio/wav'});}
@@ -2606,12 +2606,12 @@ say=function(text,cb){
   if(!gtOn()){dev();return;}
   var done=false,wait=setTimeout(function(){if(!done){done=true;gtBad++;if(gtBad>=3){gtOffUntil=Date.now()+600000;gtBad=0;}dev();}},13000);
   gtFetch(t,function(d,st){if(done)return;done=true;clearTimeout(wait);if(my!==tok)return;
-    if(!d){if(st===429||st===403||st===401)gtOffUntil=Date.now()+(st===429?300000:3600000);else gtBad++;dev();return;}
+    if(!d){if(st===429||st===403||st===401)gtOffUntil=Date.now()+(st===429?90000:3600000);else gtBad++;if(Date.now()-gtToast>60000){gtToast=Date.now();toast(st===429?'雲端聲音額度暫時用完,先用機器人聲音':'雲端聲音沒成功,先用機器人聲音');}dev();return;}
     gtBad=0;
     try{var u=URL.createObjectURL(b64blob(d)),a=new Audio(u);gtAudio=a;a.playbackRate=ST.speed==='slow'?0.9:1;
       var fin=function(){try{URL.revokeObjectURL(u);}catch(e){}if(gtAudio===a)gtAudio=null;if(spk[id]&&my===tok){var f=spk[id];delete spk[id];f();}};
-      a.onended=fin;a.onerror=function(){gtAudio=null;gtBad++;dev();};
-      var p=a.play();if(p&&p.catch)p.catch(function(){gtAudio=null;gtOffUntil=Date.now()+600000;dev();});
+      a.onended=fin;a.onerror=function(){gtAudio=null;gtBad++;gtWhy='聲音檔播放失敗';dev();};
+      var p=a.play();if(p&&p.catch)p.catch(function(){gtAudio=null;gtWhy='瀏覽器不讓自動播放';gtOffUntil=Date.now()+600000;dev();});
     }catch(e){dev();}});
 };
 var _hush2=hush;hush=function(){if(gtAudio){try{gtAudio.onended=null;gtAudio.onerror=null;gtAudio.pause();}catch(e){}gtAudio=null;}_hush2();};
@@ -2625,7 +2625,7 @@ parentDash=function(){_pd3();var d=document.createElement('div');d.className='ca
   $('cvt').onclick=function(){ST.cloudVoice=ST.cloudVoice===false;gtOffUntil=0;save();parentDash();};
   $('cvv').onclick=function(){var i=(GV.indexOf(ST.gv||'Leda')+1)%GV.length;ST.gv=GV[i];save();parentDash();};
   $('cvp').onclick=function(){gtOffUntil=0;gtBad=0;$('cvm').textContent=has?'⏳ 產生聲音中…':'請先設定金鑰';hush();if(!has)return;var t0=Date.now();say('哈囉,我是九寶,今天我們一起學新東西,好不好?',function(){});
-    setTimeout(function(){$('cvm').textContent=gtOn()?'':'⚠ 雲端聲音暫時連不上,已改用機器人原本的聲音。';},9000);};
+    setTimeout(function(){$('cvm').textContent=gtOn()?'✅ 如果剛剛聽到的是新聲音,就成功了。':'⚠ 雲端聲音沒成功,已改用機器人原本的聲音。原因:'+(gtWhy||'未知');},9000);};
 };
 
 $('back').onclick=goBack;
