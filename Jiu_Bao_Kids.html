@@ -2565,6 +2565,69 @@ var _home3=R.home;R.home=function(){if(ST.resume&&(ST.resume.n==='teach'||ST.res
   var d=document.createElement('div');d.className='row';d.innerHTML='<button class="btn b" onclick="go(\'hw\')">📚 作業小老師</button><button class="btn r" onclick="go(\'code\')">⛏️ 方塊學程式</button>';
   var m=$('main'),ref=m.querySelector('.row');m.insertBefore(d,ref);};
 
+// ===== 發音修正(注音)+ 可選的雲端好聽聲音(Gemini 語音)=====
+// 1) 注音符號不能直接叫機器人唸,要換成標準讀音的字
+var ZYC={'ㄅ':'玻','ㄆ':'坡','ㄇ':'摸','ㄈ':'佛','ㄉ':'得','ㄊ':'特','ㄋ':'訥','ㄌ':'勒','ㄍ':'哥','ㄎ':'科','ㄏ':'喝','ㄐ':'雞','ㄑ':'七','ㄒ':'希','ㄓ':'知','ㄔ':'吃','ㄕ':'獅','ㄖ':'日','ㄗ':'資','ㄘ':'雌','ㄙ':'思','ㄧ':'衣','ㄨ':'烏','ㄩ':'魚','ㄚ':'啊','ㄛ':'喔','ㄜ':'鵝','ㄝ':'耶','ㄞ':'哀','ㄟ':'欸','ㄠ':'熬','ㄡ':'歐','ㄢ':'安','ㄣ':'恩','ㄤ':'骯','ㄥ':'亨','ㄦ':'兒'};
+var ZYSYL={};PYW.forEach(function(p){ZYSYL[p[2]]=p[0];});
+var ZYRE=/[ㄅ-ㄭ]+[ˊˇˋ˙]?/g;
+function zySpeak(t){return String(t).replace(ZYRE,function(m){var core=m.replace(/[ˊˇˋ˙]/g,'');if(ZYC[core])return ZYC[core];if(ZYSYL[core])return ZYSYL[core];
+  if(core.length===1)return core;return core.split('').map(function(c){return ZYC[c]||c;}).join('');});}
+// 2) 雲端語音
+var GV=['Leda','Puck','Aoede','Sadachbia','Laomedeia','Achird'],GVN=['Leda 年輕女孩','Puck 活潑','Aoede 輕快','Sadachbia 有精神','Laomedeia 開朗','Achird 友善'];
+var GT_MODELS=['gemini-3.8-flash-lite-tts','gemini-3.8-flash-tts','gemini-3.1-flash-tts-preview'];
+var GT_STYLE='用可愛、開朗、親切的兒童節目姊姊口吻,語速稍慢,咬字清楚,用臺灣國語';
+var gtBad=0,gtOffUntil=0,gtAudio=null,gtDB=null,gtMem={};
+function gtOn(){return ST.cloudVoice!==false&&!!gkey()&&Date.now()>gtOffUntil&&typeof Audio!=='undefined';}
+function gtDBopen(cb){if(gtDB!==null){cb(gtDB||null);return;}try{var r=indexedDB.open('zbkid_tts',1);r.onupgradeneeded=function(){r.result.createObjectStore('a');};r.onsuccess=function(){gtDB=r.result;cb(gtDB);};r.onerror=function(){gtDB=false;cb(null);};}catch(e){gtDB=false;cb(null);}}
+function gtGet(k,cb){if(gtMem[k]){cb(gtMem[k]);return;}gtDBopen(function(db){if(!db){cb(null);return;}try{var q=db.transaction('a').objectStore('a').get(k);q.onsuccess=function(){if(q.result)gtMem[k]=q.result;cb(q.result||null);};q.onerror=function(){cb(null);};}catch(e){cb(null);}});}
+function gtPut(k,v){gtMem[k]=v;gtDBopen(function(db){if(!db)return;try{db.transaction('a','readwrite').objectStore('a').put(v,k);}catch(e){}});}
+function gtFetch(text,cb){
+  var key=(ST.gv||'Leda')+'|'+text,mi=0;
+  gtGet(key,function(hit){if(hit){cb(hit);return;}
+    (function next(){
+      if(mi>=GT_MODELS.length){cb(null);return;}var m=ST.gtModel||GT_MODELS[mi];mi++;
+      var ctl=window.AbortController?new AbortController():null,tm=setTimeout(function(){if(ctl)ctl.abort();},12000);
+      fetch('https://generativelanguage.googleapis.com/v1beta/interactions',{method:'POST',signal:ctl?ctl.signal:undefined,headers:{'content-type':'application/json','x-goog-api-key':gkey()},
+        body:JSON.stringify({model:m,input:[{type:'user_input',content:[{type:'text',text:text,annotations:[{type:'speech_metadata',style:GT_STYLE}]}]}],response_format:{type:'audio'},generation_config:{speech_config:[{voice:ST.gv||'Leda'}]}})})
+      .then(function(r){return r.json().then(function(j){return {s:r.status,j:j};});})
+      .then(function(x){clearTimeout(tm);var d=null;
+        try{(x.j.steps||[]).forEach(function(st){(st.content||[]).forEach(function(c){if(c&&c.data&&(c.type==='audio'||/audio/.test(c.mime_type||'')))d=c.data;});});}catch(e){}
+        if(d){gtPut(key,d);cb(d);return;}
+        if(x.s===403||x.s===401||x.s===429){cb(null,x.s);return;}
+        next();}).catch(function(){clearTimeout(tm);next();});
+    })();});
+}
+function b64blob(d){var bin=atob(d),n=bin.length,u=new Uint8Array(n),i;for(i=0;i<n;i++)u[i]=bin.charCodeAt(i);return new Blob([u],{type:'audio/wav'});}
+var _devSay=null;
+say=function(text,cb){
+  var id=++sid,my=tok,t=zySpeak(text);
+  function dev(){if(my!==tok)return;try{EN.speakL(t,RATES[ST.speed],id,'zh-TW');}catch(e){if(spk[id])spk[id]();}}
+  spk[id]=function(){talkOff();if(cb&&my===tok)cb();};talkOn();
+  if(!gtOn()){dev();return;}
+  var done=false,wait=setTimeout(function(){if(!done){done=true;gtBad++;if(gtBad>=3){gtOffUntil=Date.now()+600000;gtBad=0;}dev();}},13000);
+  gtFetch(t,function(d,st){if(done)return;done=true;clearTimeout(wait);if(my!==tok)return;
+    if(!d){if(st===429||st===403||st===401)gtOffUntil=Date.now()+(st===429?300000:3600000);else gtBad++;dev();return;}
+    gtBad=0;
+    try{var u=URL.createObjectURL(b64blob(d)),a=new Audio(u);gtAudio=a;a.playbackRate=ST.speed==='slow'?0.9:1;
+      var fin=function(){try{URL.revokeObjectURL(u);}catch(e){}if(gtAudio===a)gtAudio=null;if(spk[id]&&my===tok){var f=spk[id];delete spk[id];f();}};
+      a.onended=fin;a.onerror=function(){gtAudio=null;gtBad++;dev();};
+      var p=a.play();if(p&&p.catch)p.catch(function(){gtAudio=null;gtOffUntil=Date.now()+600000;dev();});
+    }catch(e){dev();}});
+};
+var _hush2=hush;hush=function(){if(gtAudio){try{gtAudio.onended=null;gtAudio.onerror=null;gtAudio.pause();}catch(e){}gtAudio=null;}_hush2();};
+// 家長區:聲音設定
+var _pd3=parentDash;
+parentDash=function(){_pd3();var d=document.createElement('div');d.className='card';d.style.textAlign='left';
+  var has=!!gkey();
+  d.innerHTML='<b style="font-size:22px">🎤 九寶的聲音</b><div class="msg" style="text-align:left">☁ 雲端好聽聲音:用 Gemini 唸出可愛的兒童聲音。第一次唸會稍微等一下,唸過的句子會存起來,下次就很快,也不用網路。如果連不上或額度用完,會自動換回機器人原本的聲音。'+(has?'':'<br>⚠ 要先到「AI 設定」貼上 Gemini 金鑰。')+'</div>'+
+   '<div class="row"><button class="btn '+(ST.cloudVoice===false||!has?'gray':'g')+'" id="cvt">'+(ST.cloudVoice===false?'☁ 雲端聲音:關':'☁ 雲端聲音:開')+'</button><button class="btn b" id="cvv">🎙 '+GVN[Math.max(0,GV.indexOf(ST.gv||'Leda'))]+'</button></div><div class="row"><button class="btn o" id="cvp">▶ 試聽</button></div><div class="msg" id="cvm"></div>';
+  var m=$('main');m.insertBefore(d,m.firstChild.nextSibling);
+  $('cvt').onclick=function(){ST.cloudVoice=ST.cloudVoice===false;gtOffUntil=0;save();parentDash();};
+  $('cvv').onclick=function(){var i=(GV.indexOf(ST.gv||'Leda')+1)%GV.length;ST.gv=GV[i];save();parentDash();};
+  $('cvp').onclick=function(){gtOffUntil=0;gtBad=0;$('cvm').textContent=has?'⏳ 產生聲音中…':'請先設定金鑰';hush();if(!has)return;var t0=Date.now();say('哈囉,我是九寶,今天我們一起學新東西,好不好?',function(){});
+    setTimeout(function(){$('cvm').textContent=gtOn()?'':'⚠ 雲端聲音暫時連不上,已改用機器人原本的聲音。';},9000);};
+};
+
 $('back').onclick=goBack;
 cur=['home'];R.home();bk();
 startPix();
